@@ -4,3 +4,10 @@
 *.log
 *.gz
 *.toc
+*.gitignore
+*.classpath
+*.project
+
+Code/RestaurantUI/target/
+Code/RestaurantUI/.settings/*
+Code/RestaurantUI/.metadata/*
