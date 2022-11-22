@@ -1,18 +1,28 @@
 package restaurantUI;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.OWLLogicalAxiom;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
+import org.semanticweb.owlapi.reasoner.InferenceType;
+import org.semanticweb.owlapi.reasoner.Node;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
+import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
 
 public class OntologyManager {
 	
@@ -21,6 +31,7 @@ public class OntologyManager {
 	private OWLDataFactory df;
 	private IRI iri;
 	private String ontologyLocation = "..\\Ontology\\Menu.owl";
+	private OWLReasoner reasoner;
 	
 	public OntologyManager() {
 		man = OWLManager.createOWLOntologyManager();
@@ -29,6 +40,8 @@ public class OntologyManager {
 			ontology = man.loadOntologyFromOntologyDocument(file);
 			df = ontology.getOWLOntologyManager().getOWLDataFactory();
 			iri = ontology.getOntologyID().getOntologyIRI().get();
+			OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
+			reasoner = reasonerFactory.createReasoner(ontology);
 		} catch (OWLOntologyCreationException e) {
 			e.printStackTrace();
 		}
@@ -97,5 +110,42 @@ public class OntologyManager {
 			ontology.add(dishHasIng);
 		}
 		saveOntology();
+	}
+	
+	
+	List<Node<OWLClass>> getDishes() {
+		
+		ArrayList<Node<OWLClass>> dishes = new ArrayList<Node<OWLClass>>();
+//		ontology.signature().filter((e->!e.isBuiltIn() && 
+//									 e.getIRI().getRemainder().orElse("").contains("Dish") &&
+//									 !e.getIRI().getRemainder().orElse("").equals("Dish")))
+//			.forEach(dishes::add);
+		
+		reasoner.getSubClasses(df.getOWLClass(iri + "#Dish"), false).forEach(dishes::add);
+//		reasoner.getSubClass
+		
+		return dishes;
+	}
+	
+	List<OWLEntity> getEntities(String search) {
+		ArrayList<OWLEntity> entities = new ArrayList<OWLEntity>();
+		ontology.signature().filter((e->!e.isBuiltIn() && 
+									 e.getIRI().getRemainder().orElse("").contains(search)))
+			.forEach(entities::add);
+		
+		return entities;
+	}
+	
+	Set<OWLAxiom> getAllAxioms() {
+		return ontology.getAxioms();
+	}
+	
+	boolean runReasoner() {
+		reasoner.precomputeInferences(InferenceType.CLASS_HIERARCHY);
+		return reasoner.isConsistent();
+	}
+	
+	void test() {
+		reasoner.getSubClasses(df.getOWLClass(iri + "#Dish"), false).forEach(System.out::println);
 	}
 }
