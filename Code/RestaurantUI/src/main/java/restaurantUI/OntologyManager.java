@@ -57,6 +57,14 @@ public class OntologyManager {
 		}
 	}
 	
+	void removeIngredient(String ingredient, IngredientType ingType) {
+		OWLClass ing = df.getOWLClass(iri + "#" + ingredient + "Ingredient");
+		OWLClass type = df.getOWLClass(iri + "#" + ingType + "Ingredient");
+		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(ing, type);
+		ontology.remove(axiom);
+		saveOntology();
+	}
+	
 	void addIngredient(
 			String ingredient,
 			IngredientType ingType,
@@ -121,10 +129,45 @@ public class OntologyManager {
 //									 !e.getIRI().getRemainder().orElse("").equals("Dish")))
 //			.forEach(dishes::add);
 		
-		reasoner.getSubClasses(df.getOWLClass(iri + "#Dish"), false).forEach(dishes::add);
+		reasoner.getSubClasses(df.getOWLClass(iri + "#NamedDish"), false).forEach(dishes::add);
 //		reasoner.getSubClass
 		
 		return dishes;
+	}
+
+	List<String> getAllDishNames() {
+		List<String> dishNames = new ArrayList<>();
+		List<Node<OWLClass>> dishes = getDishes();
+
+		for(Node<OWLClass> dish: dishes) {
+			if (dish.entities().findFirst().get().getIRI().getShortForm().equals("Nothing")) {
+				continue;
+			}
+			dishNames.add(dish.entities().findFirst().get().getIRI().getShortForm());
+
+		}
+		return dishNames;
+	}
+
+
+	List<String> getCustomerTypes() {
+		ArrayList<Node<OWLClass>> customers = new ArrayList<Node<OWLClass>>();
+		reasoner.getSubClasses(df.getOWLClass(iri + "#Customer"), false).forEach(customers::add);
+		ArrayList<String> customerTypes = new ArrayList<>();
+		for(Node<OWLClass> customer: customers) {
+			if (customer.entities().findFirst().get().getIRI().getShortForm().equals("Nothing")) {
+				continue;
+			}
+			customerTypes.add(customer.entities().findFirst().get().getIRI().getShortForm());
+		}
+		return customerTypes;
+	}
+	
+	List<Node<OWLClass>> getIngredientsOfType(IngredientType type) {
+		ArrayList<Node<OWLClass>> ingredients = new ArrayList<Node<OWLClass>>();		
+		reasoner.getSubClasses(df.getOWLClass(iri + "#" + type + "Ingredient"), false).forEach(ingredients::add);
+		
+		return ingredients;
 	}
 	
 	List<OWLEntity> getEntities(String search) {
@@ -146,6 +189,6 @@ public class OntologyManager {
 	}
 	
 	void test() {
-		reasoner.getSubClasses(df.getOWLClass(iri + "#Dish"), false).forEach(System.out::println);
+		reasoner.getSubClasses(df.getOWLClass(iri + "#NamedDish"), false).forEach(System.out::println);
 	}
 }
