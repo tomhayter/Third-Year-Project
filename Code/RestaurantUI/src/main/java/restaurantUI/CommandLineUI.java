@@ -152,15 +152,15 @@ public class CommandLineUI {
 		int choice = PrintMenu(IngredientTypeMenu, 6);
 		IngredientType type = IntToIngredientType.get(choice);
 		
-		List<Node<OWLClass>> ingredientsOfType = om.getIngredientsOfType(type);
-		
-		System.out.println("Choose one of the following to remove:");
-		for(Node<OWLClass> node: ingredientsOfType) {
-			Set<OWLClass> ents = node.getEntities();
-			for(OWLClass ent: ents) {
-				System.out.println(ent.getIRI().getFragment().replace("Ingredient", ""));
-			}
-		}
+//		List<Node<OWLClass>> ingredientsOfType = om.getIngredientsOfType(type);
+//		
+//		System.out.println("Choose one of the following to remove:");
+//		for(Node<OWLClass> node: ingredientsOfType) {
+//			Set<OWLClass> ents = node.getEntities();
+//			for(OWLClass ent: ents) {
+//				System.out.println(ent.getIRI().getFragment().replace("Ingredient", ""));
+//			}
+//		}
 		
 		BufferedReader reader = new BufferedReader(
 	            new InputStreamReader(System.in));

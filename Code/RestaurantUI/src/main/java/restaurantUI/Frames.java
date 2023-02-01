@@ -33,8 +33,10 @@ public class Frames {
         createMainFrame();
 
         createAddFrame();
-
         createAddIngFrame();
+        
+        createRemoveFrame();
+        createRemoveIngFrame();
 
         createQueryFrame();
 
@@ -87,8 +89,7 @@ public class Frames {
 
     private void createAddFrame() {
         addFrame = new JFrame("Add to ontology");
-        addFrame.setSize(width, height);
-        addFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        applyBasicFrameSettings(addFrame);
 
         JLabel title = new JLabel("What would you like to add to the ontology?");
         addFrame.add(title, BorderLayout.NORTH);
@@ -142,6 +143,80 @@ public class Frames {
             }
         });
         addIngFrame.add(addButton, BorderLayout.SOUTH);
+    }
+    
+    private void createRemoveFrame() {
+        removeFrame = new JFrame("Remove from ontology");
+        applyBasicFrameSettings(removeFrame);
+
+        JLabel title = new JLabel("What would you like to remove from the ontology?");
+        removeFrame.add(title, BorderLayout.NORTH);
+
+        JButton removeIng = new JButton("Ingredient");
+        removeIng.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwitchToFrame(removeIngFrame);
+            }
+        });
+        removeFrame.add(removeIng, BorderLayout.CENTER);
+
+        JButton backToMain = new JButton("Back to Main Menu");
+        backToMain.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwitchToFrame(mainFrame);
+            }
+        });
+        removeFrame.add(backToMain, BorderLayout.SOUTH);
+    }
+    
+    private void createRemoveIngFrame() {
+        removeIngFrame = new JFrame("Remove Ingredient");
+        applyBasicFrameSettings(removeIngFrame);
+        String[] ingTypesList = {"Meat", "Vegetable", "All"};
+        JComboBox<String> ingTypes = new JComboBox<String>(ingTypesList);
+        removeIngFrame.add(ingTypes, BorderLayout.NORTH);
+
+        
+        
+        JComboBox<String>ingName = new JComboBox<String>();
+        
+        ingTypes.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent e) {
+        		String selection = ingTypes.getSelectedItem().toString();
+        		List<String> ings = new ArrayList<String>();
+        		if (selection.equals("All")) {
+        			ings = om.getAllIngredientNames();
+        		}
+        		else {
+        			ings = om.getIngredientNamesOfType(IngredientType.valueOf(selection));
+        		}
+        		ingName.removeAllItems();
+        		for(String item: ings) {
+        			ingName.addItem(item);
+        		}
+        	}
+        });
+        
+        
+        removeIngFrame.add(ingName, BorderLayout.CENTER);
+        JButton addButton = new JButton("Remove Ingredient");
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	if (ingTypes.getSelectedItem().toString().equals("All")) {
+            		
+            	} else {
+            		om.removeIngredient(ingName.getSelectedItem().toString(), IngredientType.valueOf(ingTypes.getSelectedItem().toString()));
+            	}
+                
+            	System.out.println("Deleting " + ingName.getSelectedItem().toString());
+                SwitchToFrame(mainFrame);
+            }
+        });
+        removeIngFrame.add(addButton, BorderLayout.SOUTH);
     }
 
     private void createQueryFrame() {

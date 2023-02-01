@@ -63,6 +63,7 @@ public class OntologyManager {
 		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(ing, type);
 		ontology.remove(axiom);
 		saveOntology();
+		runReasoner();
 	}
 	
 	void addIngredient(
@@ -76,6 +77,7 @@ public class OntologyManager {
 		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(ing,  type);
 		ontology.add(axiom);
 		saveOntology();
+		runReasoner();
 	}
 	
 	void addIngredient(String ingredient, String ingType) {
@@ -163,11 +165,43 @@ public class OntologyManager {
 		return customerTypes;
 	}
 	
-	List<Node<OWLClass>> getIngredientsOfType(IngredientType type) {
-		ArrayList<Node<OWLClass>> ingredients = new ArrayList<Node<OWLClass>>();		
+	List<String> getIngredientNamesOfType(IngredientType type) {
+		ArrayList<Node<OWLClass>> ingredients = new ArrayList<Node<OWLClass>>();	
+		ArrayList<String> names = new ArrayList<String>();
 		reasoner.getSubClasses(df.getOWLClass(iri + "#" + type + "Ingredient"), false).forEach(ingredients::add);
-		
-		return ingredients;
+		for(Node<OWLClass> ing: ingredients) {
+			String name = ing.entities().findFirst().get().getIRI().getShortForm().replace("Ingredient", "");
+			if (name.equals("Nothing")) {
+				continue;
+			}
+			names.add(name);
+		}
+		return names;
+	}
+	
+	List<Node<OWLClass>> getIngredientTypes() {
+		ArrayList<Node<OWLClass>> ingredientTypes = new ArrayList<Node<OWLClass>>();	
+		reasoner.getSubClasses(df.getOWLClass(iri + "#Ingredient"), true).forEach(ingredientTypes::add);
+		return ingredientTypes;
+	}
+	
+	List<String> getAllIngredientNames() {
+		List<Node<OWLClass>> types = getIngredientTypes();
+		ArrayList<String> names = new ArrayList<String>();
+		for(Node<OWLClass> ingType: types) {
+			ArrayList<Node<OWLClass>> ingredients = new ArrayList<Node<OWLClass>>();
+			reasoner.getSubClasses(df.getOWLClass(ingType.entities().findFirst().get().getIRI()), false).forEach(ingredients::add);
+			
+			for(Node<OWLClass> ing: ingredients) {
+				ing.forEach(System.out::println);
+				String name = ing.entities().findFirst().get().getIRI().getShortForm().replace("Ingredient", "");
+				if (name.equals("Nothing")) {
+					continue;
+				}
+				names.add(name);
+			}
+		}
+		return names;
 	}
 	
 	List<OWLEntity> getEntities(String search) {
