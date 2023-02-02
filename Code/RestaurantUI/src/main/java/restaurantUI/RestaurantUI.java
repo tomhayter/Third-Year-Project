@@ -1,21 +1,10 @@
 package restaurantUI;
-import javax.swing.*;
+
+import restaurantUI.gui.*;
 
 public class RestaurantUI {
 
-
-
-    public RestaurantUI() {
-
-    }
-
-    public void Start() {
-        Frames f = new Frames();
-
-    }
-
     public static void main(String[] args) {
-        RestaurantUI ui = new RestaurantUI();
-        ui.Start();
+        UI ui = new UI();
     }
 }

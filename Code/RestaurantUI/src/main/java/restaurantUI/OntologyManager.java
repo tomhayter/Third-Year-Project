@@ -57,7 +57,7 @@ public class OntologyManager {
 		}
 	}
 	
-	void removeIngredient(String ingredient, IngredientType ingType) {
+	public void removeIngredient(String ingredient, IngredientType ingType) {
 		OWLClass ing = df.getOWLClass(iri + "#" + ingredient + "Ingredient");
 		OWLClass type = df.getOWLClass(iri + "#" + ingType + "Ingredient");
 		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(ing, type);
@@ -66,7 +66,7 @@ public class OntologyManager {
 		runReasoner();
 	}
 	
-	void addIngredient(
+	public void addIngredient(
 			String ingredient,
 			IngredientType ingType,
 			String[] allergens,
@@ -80,7 +80,7 @@ public class OntologyManager {
 		runReasoner();
 	}
 	
-	void addIngredient(String ingredient, String ingType) {
+	public void addIngredient(String ingredient, String ingType) {
 		OWLClass ing = df.getOWLClass(iri + "#" + ingredient + "Ingredient");
 		OWLClass type = df.getOWLClass(iri + "#" + ingType + "Ingredient");
 		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(ing,  type);
@@ -137,7 +137,7 @@ public class OntologyManager {
 		return dishes;
 	}
 
-	List<String> getAllDishNames() {
+	public List<String> getAllDishNames() {
 		List<String> dishNames = new ArrayList<>();
 		List<Node<OWLClass>> dishes = getDishes();
 
@@ -165,7 +165,7 @@ public class OntologyManager {
 		return customerTypes;
 	}
 	
-	List<String> getIngredientNamesOfType(IngredientType type) {
+	public List<String> getIngredientNamesOfType(IngredientType type) {
 		ArrayList<Node<OWLClass>> ingredients = new ArrayList<Node<OWLClass>>();	
 		ArrayList<String> names = new ArrayList<String>();
 		reasoner.getSubClasses(df.getOWLClass(iri + "#" + type + "Ingredient"), false).forEach(ingredients::add);
@@ -185,7 +185,7 @@ public class OntologyManager {
 		return ingredientTypes;
 	}
 	
-	List<String> getAllIngredientNames() {
+	public List<String> getAllIngredientNames() {
 		List<Node<OWLClass>> types = getIngredientTypes();
 		ArrayList<String> names = new ArrayList<String>();
 		for(Node<OWLClass> ingType: types) {
