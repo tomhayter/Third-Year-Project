@@ -4,6 +4,9 @@
 *.log
 *.gz
 *.toc
+*.lof
+*.lot
+*.out
 *.gitignore
 *.classpath
 *.project
