@@ -9,6 +9,7 @@ import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassAxiom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLLogicalAxiom;
@@ -18,6 +19,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
+import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.reasoner.InferenceType;
 import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
@@ -57,10 +59,14 @@ public class OntologyManager {
 		}
 	}
 	
-	public void removeIngredient(String ingredient, IngredientType ingType) {
+	public void removeIngredient(String ingredient) {
 		OWLClass ing = df.getOWLClass(iri + "#" + ingredient + "Ingredient");
-		OWLClass type = df.getOWLClass(iri + "#" + ingType + "Ingredient");
-		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(ing, type);
+		Set<OWLClassAxiom> allAxiomsForClass = ontology.getAxioms(ing, Imports.INCLUDED);
+		for (OWLClassAxiom axiom: allAxiomsForClass) {
+			ontology.remove(axiom);
+		}
+		boolean result = saveOntology();
+		System.out.println(result);
 		ontology.remove(axiom);
 		saveOntology();
 		runReasoner();
@@ -176,6 +182,20 @@ public class OntologyManager {
 			}
 			names.add(name);
 		}
+		return names;
+	}
+	
+	public List<String> getIngredientTypeNames() {
+		ArrayList<String> names = new ArrayList<String>();
+		List<Node<OWLClass>> types = getIngredientTypes();
+		for(Node<OWLClass> type: types) {
+			String name = type.entities().findFirst().get().getIRI().getShortForm().replace("Ingredient", "");
+			if (name.equals("Nothing")) {
+				continue;
+			}
+			names.add(name);
+		}
+		
 		return names;
 	}
 	

@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import restaurantUI.IngredientType;
@@ -21,11 +22,24 @@ public class RemoveIngredientPage extends JPanel {
 		this.ui = ui;
 		
 		setName("Remove Ingredient");
-        String[] ingTypesList = {"Meat", "Vegetable", "All"};
-        JComboBox<String> ingTypes = new JComboBox<String>(ingTypesList);
-        add(ingTypes, BorderLayout.NORTH);
+		JLabel title = new JLabel("Select an ingredient to remove");
+		add(title, BorderLayout.NORTH);
+		
+		List<String> ingTypesList = ui.om.getIngredientTypeNames();
+		ingTypesList.add("All");
+		
+        String[] ingTypesArray = new String[ingTypesList.size()];
+        ingTypesArray = ingTypesList.toArray(ingTypesArray);
+        JComboBox<String> ingTypes = new JComboBox<String>(ingTypesArray);
+        ingTypes.setSelectedItem("All");
+        add(ingTypes);
         
         JComboBox<String>ingName = new JComboBox<String>();
+        
+        List<String> allIngs = ui.om.getAllIngredientNames();
+        for (String ing: allIngs) {
+        	ingName.addItem(ing);
+        }
         
         ingTypes.addActionListener(new ActionListener() {
         	@Override
@@ -44,24 +58,23 @@ public class RemoveIngredientPage extends JPanel {
         		}
         	}
         });
-        
-        
         add(ingName, BorderLayout.CENTER);
-        JButton addButton = new JButton("Remove Ingredient");
-        addButton.addActionListener(new ActionListener() {
+        
+        JButton removeButton = new JButton("Remove Ingredient");
+        removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	if (ingTypes.getSelectedItem().toString().equals("All")) {
             		
             	} else {
-            		ui.om.removeIngredient(ingName.getSelectedItem().toString(), IngredientType.valueOf(ingTypes.getSelectedItem().toString()));
+            		ui.om.removeIngredient(ingName.getSelectedItem().toString());
             	}
                 
             	System.out.println("Deleting " + ingName.getSelectedItem().toString());
                 ui.SwitchToFrame(UI.MAINPAGE);
             }
         });
-        add(addButton, BorderLayout.SOUTH);
+        add(removeButton, BorderLayout.SOUTH);
 	}
 
 }
