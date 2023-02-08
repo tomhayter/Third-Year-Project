@@ -1,6 +1,7 @@
 package restaurantUI.gui;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,6 +24,8 @@ public class AddPage extends JPanel {
         titlePanel.add(title, BorderLayout.CENTER);
         add(title, BorderLayout.NORTH);
 
+        JPanel buttons = new JPanel(new GridLayout(4, 1, 20, 20));
+        
         JButton addIng = new JButton("Ingredient");
         addIng.setSize(2, 4);
         addIng.addActionListener(new ActionListener() {
@@ -31,7 +34,27 @@ public class AddPage extends JPanel {
                 ui.SwitchToFrame(UI.ADDINGREDIENTPAGE);
             }
         });
-        add(addIng, BorderLayout.CENTER);
+        buttons.add(addIng);
+        
+        JButton addComp = new JButton("Component");
+        addComp.setSize(2, 4);
+        addComp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ui.SwitchToFrame(UI.ADDCOMPONENTPAGE);
+            }
+        });
+        buttons.add(addComp);
+        
+        JButton addDish = new JButton("Dish");
+        addDish.setSize(2, 4);
+        addDish.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ui.SwitchToFrame(UI.ADDDISHPAGE);
+            }
+        });
+        buttons.add(addDish);
 
         JButton backToMain = new JButton("Back to Main Menu");
         backToMain.addActionListener(new ActionListener() {
@@ -40,6 +63,8 @@ public class AddPage extends JPanel {
                 ui.SwitchToFrame(UI.MAINPAGE);
             }
         });
-        add(backToMain, BorderLayout.SOUTH);
+        buttons.add(backToMain);
+        
+        add(buttons);
 	}
 }

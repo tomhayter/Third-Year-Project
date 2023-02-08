@@ -24,6 +24,8 @@ public class UI {
 	final static String MAINPAGE = "MainPage";
 	final static String ADDPAGE = "AddPage";
 	final static String ADDINGREDIENTPAGE = "AddIngredientPage";
+	final static String ADDCOMPONENTPAGE = "AddComponentPage";
+	final static String ADDDISHPAGE = "AddDishPage";
 	final static String REMOVEPAGE = "RemovePage";
 	final static String REMOVEINGREDIENTPAGE = "RemoveIngredientPage";
 	final static String QUERYPAGE = "QueryPage";
@@ -38,7 +40,7 @@ public class UI {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		frame.setName("Restaurant Ontology Manager");
+		frame.setTitle("Restaurant Ontology Manager");
 		cardLayout = new CardLayout();
 		cards = new JPanel(cardLayout);
 		
@@ -50,6 +52,12 @@ public class UI {
 		
 		AddIngredientPage card3 = new AddIngredientPage(this);
 		cards.add(card3, ADDINGREDIENTPAGE);
+		
+		AddComponentPage card7 = new AddComponentPage(this);
+		cards.add(card7, ADDCOMPONENTPAGE);
+		
+		AddDishPage card8 = new AddDishPage(this);
+		cards.add(card8, ADDDISHPAGE);
 		
 		RemovePage card4 = new RemovePage(this);
 		cards.add(card4, REMOVEPAGE);
@@ -66,6 +74,7 @@ public class UI {
 	}
 	
 	public void SwitchToFrame(String page) {
+		System.out.println("Switching to " + page);
 		cardLayout.show(cards, page);
 	}
 	
