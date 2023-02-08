@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,9 +21,12 @@ public class AddIngredientPage extends JPanel {
 		this.ui = ui;
 		
 		setName("Add Ingredient");
-	    String[] ingTypesList = {"Meat", "Vegetable"};
-	    JComboBox<String> ingTypes = new JComboBox<String>(ingTypesList);
-	    add(ingTypes, BorderLayout.NORTH);
+		List<String> ingTypesList = ui.om.getIngredientTypeNames();		
+        String[] ingTypesArray = new String[ingTypesList.size()];
+        ingTypesArray = ingTypesList.toArray(ingTypesArray);
+        JComboBox<String> ingTypes = new JComboBox<String>(ingTypesArray);
+        add(ingTypes);
+        
 	    JTextField ingName = new JTextField("Enter Ingredient Name");
 	    ingName.addFocusListener(new FocusListener() {
 	        @Override
