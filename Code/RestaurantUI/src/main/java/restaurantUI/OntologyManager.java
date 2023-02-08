@@ -224,6 +224,23 @@ public class OntologyManager {
 		return names;
 	}
 	
+	public List<String> getAllComponentNames() {
+		ArrayList<String> names = new ArrayList<String>();
+		ArrayList<Node<OWLClass>> components = new ArrayList<Node<OWLClass>>();
+		reasoner.getSubClasses(df.getOWLClass(iri + "#Component"), false).forEach(components::add);
+		
+		for(Node<OWLClass> comp: components) {
+			comp.forEach(System.out::println);
+			String name = comp.entities().findFirst().get().getIRI().getShortForm().replace("Component", "");
+			if (name.equals("Nothing")) {
+				continue;
+			}
+			names.add(name);
+		}
+		return names;
+	}
+	
+	
 	List<OWLEntity> getEntities(String search) {
 		ArrayList<OWLEntity> entities = new ArrayList<OWLEntity>();
 		ontology.signature().filter((e->!e.isBuiltIn() && 
