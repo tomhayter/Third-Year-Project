@@ -29,7 +29,9 @@ public class UI {
 	private AddDishPage AddDishPage;
 	private RemovePage RemovePage;
 	private RemoveIngredientPage RemoveIngredientPage;
+//	private RemoveComponentPage RemoveComponentPage;
 	private RemoveDishPage RemoveDishPage;
+	private QueryPage QueryPage;
 	
 
 	public UI() {
@@ -70,6 +72,8 @@ public class UI {
 		RemoveDishPage = new RemoveDishPage(this);
 		cards.add(RemoveDishPage, RemoveDishPage.CARD);
 		
+		QueryPage = new QueryPage(this);
+		cards.add(QueryPage, QueryPage.CARD);
 		
 		frame.add(cards, BorderLayout.CENTER);
 		frame.setVisible(true);
