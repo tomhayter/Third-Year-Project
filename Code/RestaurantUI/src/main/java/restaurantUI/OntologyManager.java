@@ -59,17 +59,25 @@ public class OntologyManager {
 		}
 	}
 	
-	public void removeIngredient(String ingredient) {
-		OWLClass ing = df.getOWLClass(iri + "#" + ingredient + "Ingredient");
-		Set<OWLClassAxiom> allAxiomsForClass = ontology.getAxioms(ing, Imports.INCLUDED);
+	void removeClass(OWLClass owlClass) {
+		Set<OWLClassAxiom> allAxiomsForClass = ontology.getAxioms(owlClass, Imports.INCLUDED);
 		for (OWLClassAxiom axiom: allAxiomsForClass) {
-			ontology.remove(axiom);
+			System.out.println(axiom);
+			man.removeAxiom(ontology, axiom);
+			
 		}
-		boolean result = saveOntology();
-		System.out.println(result);
-		ontology.remove(axiom);
 		saveOntology();
 		runReasoner();
+	}
+	
+	public void removeIngredient(String ingredient) {
+		OWLClass ing = df.getOWLClass(iri + "#" + ingredient + "Ingredient");
+		removeClass(ing);
+	}
+	
+	public void removeDish(String dish) {
+		OWLClass dishClass = df.getOWLClass(iri + "#" + dish + "Dish");
+		removeClass(dishClass);
 	}
 	
 	public void addIngredient(
@@ -94,7 +102,7 @@ public class OntologyManager {
 		saveOntology();
 	}
 	
-	void addComponent(String component, String[] ingredients) {
+	public void addComponent(String component, String[] ingredients) {
 		OWLClass genComp = df.getOWLClass(iri + "#Component");
 		OWLClass comp = df.getOWLClass(iri + "#" + component + "Component");
 		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(comp,  genComp);
@@ -108,8 +116,8 @@ public class OntologyManager {
 		saveOntology();
 	}
 	
-	void addDish(String dishName, String[] components, String[] ingredients) {
 		OWLClass genDish = df.getOWLClass(iri + "#Dish");
+	public void addDish(String dishName, String[] components, String[] ingredients) {
 		OWLClass dish = df.getOWLClass(iri + "#" + dishName + "Dish");
 		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(dish,  genDish);
 		ontology.add(axiom);
@@ -128,30 +136,18 @@ public class OntologyManager {
 		saveOntology();
 	}
 	
-	
-	List<Node<OWLClass>> getDishes() {
-		
-		ArrayList<Node<OWLClass>> dishes = new ArrayList<Node<OWLClass>>();
-//		ontology.signature().filter((e->!e.isBuiltIn() && 
-//									 e.getIRI().getRemainder().orElse("").contains("Dish") &&
-//									 !e.getIRI().getRemainder().orElse("").equals("Dish")))
-//			.forEach(dishes::add);
-		
-		reasoner.getSubClasses(df.getOWLClass(iri + "#NamedDish"), false).forEach(dishes::add);
-//		reasoner.getSubClass
-		
-		return dishes;
-	}
 
 	public List<String> getAllDishNames() {
 		List<String> dishNames = new ArrayList<>();
-		List<Node<OWLClass>> dishes = getDishes();
+		List<Node<OWLClass>> dishes = new ArrayList<Node<OWLClass>>();
+		
+		reasoner.getSubClasses(df.getOWLClass(iri + "#NamedDish"), false).forEach(dishes::add);
 
 		for(Node<OWLClass> dish: dishes) {
 			if (dish.entities().findFirst().get().getIRI().getShortForm().equals("Nothing")) {
 				continue;
 			}
-			dishNames.add(dish.entities().findFirst().get().getIRI().getShortForm());
+			dishNames.add(dish.entities().findFirst().get().getIRI().getShortForm().replace("Dish", ""));
 
 		}
 		return dishNames;
