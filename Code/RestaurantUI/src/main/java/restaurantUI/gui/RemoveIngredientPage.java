@@ -17,6 +17,8 @@ import restaurantUI.IngredientType;
 public class RemoveIngredientPage extends JPanel {
 	
 	UI ui;
+	final static String CARD = "RemoveIngredientPage";
+	JComboBox<String> ingName;
 	
 	public RemoveIngredientPage(UI ui) {
 		this.ui = ui;
@@ -34,7 +36,7 @@ public class RemoveIngredientPage extends JPanel {
         ingTypes.setSelectedItem("All");
         add(ingTypes);
         
-        JComboBox<String>ingName = new JComboBox<String>();
+        ingName = new JComboBox<String>();
         
         List<String> allIngs = ui.om.getAllIngredientNames();
         for (String ing: allIngs) {
@@ -64,14 +66,10 @@ public class RemoveIngredientPage extends JPanel {
         removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	if (ingTypes.getSelectedItem().toString().equals("All")) {
-            		
-            	} else {
-            		ui.om.removeIngredient(ingName.getSelectedItem().toString());
-            	}
+        		ui.om.removeIngredient(ingName.getSelectedItem().toString());
                 
             	System.out.println("Deleting " + ingName.getSelectedItem().toString());
-                ui.SwitchToFrame(UI.MAINPAGE);
+                ui.SwitchToFrame(MainPage.CARD);
             }
         });
         add(removeButton, BorderLayout.SOUTH);

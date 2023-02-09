@@ -21,14 +21,15 @@ public class UI {
 	
 	private JPanel cards;
 	private CardLayout cardLayout;
-	final static String MAINPAGE = "MainPage";
-	final static String ADDPAGE = "AddPage";
-	final static String ADDINGREDIENTPAGE = "AddIngredientPage";
-	final static String ADDCOMPONENTPAGE = "AddComponentPage";
-	final static String ADDDISHPAGE = "AddDishPage";
-	final static String REMOVEPAGE = "RemovePage";
-	final static String REMOVEINGREDIENTPAGE = "RemoveIngredientPage";
-	final static String QUERYPAGE = "QueryPage";
+	
+	private MainPage MainPage;
+	private AddPage AddPage;
+	private AddIngredientPage AddIngredientPage;
+	private AddComponentPage AddComponentPage;
+	private AddDishPage AddDishPage;
+	private RemovePage RemovePage;
+	private RemoveIngredientPage RemoveIngredientPage;
+	
 
 	public UI() {
 		
@@ -44,31 +45,32 @@ public class UI {
 		cardLayout = new CardLayout();
 		cards = new JPanel(cardLayout);
 		
-		MainPage card1 = new MainPage(this);
-		cards.add(card1, MAINPAGE);
+		MainPage = new MainPage(this);
+		cards.add(MainPage, MainPage.CARD);
 		
-		AddPage card2 = new AddPage(this);
-		cards.add(card2, ADDPAGE);
+		AddPage = new AddPage(this);
+		cards.add(AddPage, AddPage.CARD);
 		
-		AddIngredientPage card3 = new AddIngredientPage(this);
-		cards.add(card3, ADDINGREDIENTPAGE);
+		AddIngredientPage = new AddIngredientPage(this);
+		cards.add(AddIngredientPage, AddIngredientPage.CARD);
 		
-		AddComponentPage card7 = new AddComponentPage(this);
-		cards.add(card7, ADDCOMPONENTPAGE);
+		AddComponentPage = new AddComponentPage(this);
+		cards.add(AddComponentPage, AddComponentPage.CARD);
 		
-		AddDishPage card8 = new AddDishPage(this);
-		cards.add(card8, ADDDISHPAGE);
+		AddDishPage = new AddDishPage(this);
+		cards.add(AddDishPage, AddDishPage.CARD);
 		
-		RemovePage card4 = new RemovePage(this);
-		cards.add(card4, REMOVEPAGE);
+		RemovePage = new RemovePage(this);
+		cards.add(RemovePage, RemovePage.CARD);
 		
-		RemoveIngredientPage card5 = new RemoveIngredientPage(this);
-		cards.add(card5, REMOVEINGREDIENTPAGE);
+		RemoveIngredientPage = new RemoveIngredientPage(this);
+		cards.add(RemoveIngredientPage, RemoveIngredientPage.CARD);
+		
 		
 		
 		frame.add(cards, BorderLayout.CENTER);
 		frame.setVisible(true);
-		cardLayout.show(cards, MAINPAGE);
+		cardLayout.show(cards, MainPage.CARD);
 
 		
 	}

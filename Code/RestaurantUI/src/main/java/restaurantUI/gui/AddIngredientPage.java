@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 public class AddIngredientPage extends JPanel {
 	
 	UI ui;
+	public final static String CARD = "AddIngredientPage";
 	
 	public AddIngredientPage(UI ui) {
 		this.ui = ui;
@@ -47,7 +48,8 @@ public class AddIngredientPage extends JPanel {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 	            ui.om.addIngredient(ingName.getText(),ingTypes.getSelectedItem().toString());
-	            ui.SwitchToFrame(UI.MAINPAGE);
+	            ui.newIngredient();
+	            ui.SwitchToFrame(MainPage.CARD);
 	        }
 	    });
 	    add(addButton, BorderLayout.SOUTH);

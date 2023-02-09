@@ -7,6 +7,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -15,6 +16,8 @@ import javax.swing.JTextField;
 public class AddComponentPage extends JPanel {
 	
 	UI ui;
+	final static String CARD = "AddComponentPage";
+	DefaultListModel<String> list;
 	
 	public AddComponentPage(UI ui) {
 
@@ -39,13 +42,14 @@ public class AddComponentPage extends JPanel {
     add(compName);
     
     
-    
-    
     List<String> allIngs = ui.om.getAllIngredientNames();
-    String[] ingredientsList = new String[allIngs.size()];
-    ingredientsList = allIngs.toArray(ingredientsList);
     
-    JList<String> ingredients = new JList<String>(ingredientsList);
+    list = new DefaultListModel<String>();
+    for(String ing:allIngs) {
+    	list.addElement(ing);
+    }
+    
+    JList<String> ingredients = new JList<String>(list);
     
     add(ingredients);
     
@@ -58,7 +62,7 @@ public class AddComponentPage extends JPanel {
         	selected = ingredients.getSelectedValuesList().toArray(selected);
         	
             ui.om.addComponent(compName.getText(),selected);
-            ui.SwitchToFrame(UI.MAINPAGE);
+            ui.SwitchToFrame(MainPage.CARD);
         }
     });
     add(addButton, BorderLayout.SOUTH);

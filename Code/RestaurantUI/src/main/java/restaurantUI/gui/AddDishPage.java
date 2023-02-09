@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 public class AddDishPage extends JPanel {
 
 	UI ui;
+	final static String CARD = "AddDishPage";
 	
 	public AddDishPage(UI ui) {
 
@@ -59,11 +60,13 @@ public class AddDishPage extends JPanel {
 	        	selected = ingredients.getSelectedValuesList().toArray(selected);
 	        	
 	            ui.om.addDish(dishName.getText(),selected, new String[0]);
-	            ui.SwitchToFrame(UI.MAINPAGE);
+	            ui.newDish();
+	            ui.SwitchToFrame(MainPage.CARD);
 	        }
 	    });
 	    add(addButton, BorderLayout.SOUTH);
 
 	}
+
 	
 }

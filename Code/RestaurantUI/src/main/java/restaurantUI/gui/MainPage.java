@@ -14,6 +14,7 @@ import javax.swing.*;
 public class MainPage extends JPanel {
 	
 	UI ui;
+	public final static String CARD = "MainPage";
 	
 	public MainPage(UI ui) {
 		this.ui = ui;
@@ -38,7 +39,7 @@ public class MainPage extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
             	
-                ui.SwitchToFrame(UI.ADDPAGE);
+                ui.SwitchToFrame(AddPage.CARD);
             }
         });
         buttonsPanel.add(goToAddButton);
@@ -50,7 +51,7 @@ public class MainPage extends JPanel {
         goToRemoveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ui.SwitchToFrame(UI.REMOVEPAGE);
+                ui.SwitchToFrame(RemovePage.CARD);
             }
         });
         buttonsPanel.add(goToRemoveButton);
@@ -62,7 +63,7 @@ public class MainPage extends JPanel {
         goToQueryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ui.SwitchToFrame(UI.QUERYPAGE);
+                ui.SwitchToFrame(QueryPage.CARD);
             }
         });
         buttonsPanel.add(goToQueryButton);

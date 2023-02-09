@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 public class RemovePage extends JPanel {
 	
 	UI ui;
+	final static String CARD = "RemovePage";
 	
 	public RemovePage(UI ui) {
 		this.ui = ui;
@@ -29,7 +30,7 @@ public class RemovePage extends JPanel {
         removeIng.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ui.SwitchToFrame(UI.REMOVEINGREDIENTPAGE);
+                ui.SwitchToFrame(RemoveIngredientPage.CARD);
             }
         });
         add(removeIng, BorderLayout.CENTER);
@@ -38,7 +39,7 @@ public class RemovePage extends JPanel {
         removeComp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ui.SwitchToFrame(UI.REMOVECOMPONENTPAGE);
+//                ui.SwitchToFrame(UI.REMOVECOMPONENTPAGE);
             }
         });
         add(removeComp);
@@ -47,7 +48,7 @@ public class RemovePage extends JPanel {
         removeDish.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ui.SwitchToFrame(UI.REMOVEDISHPAGE);
+                ui.SwitchToFrame(RemoveDishPage.CARD);
             }
         });
         add(removeDish);
@@ -57,7 +58,7 @@ public class RemovePage extends JPanel {
         backToMain.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ui.SwitchToFrame(UI.MAINPAGE);
+                ui.SwitchToFrame(MainPage.CARD);
             }
         });
         add(backToMain, BorderLayout.SOUTH);

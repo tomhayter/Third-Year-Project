@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 public class AddPage extends JPanel {
 	
 	UI ui;
+	public final static String CARD = "AddPage";
 
 	public AddPage(UI ui) {
 		this.ui = ui;
@@ -31,7 +32,7 @@ public class AddPage extends JPanel {
         addIng.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ui.SwitchToFrame(UI.ADDINGREDIENTPAGE);
+                ui.SwitchToFrame(AddIngredientPage.CARD);
             }
         });
         buttons.add(addIng);
@@ -41,7 +42,7 @@ public class AddPage extends JPanel {
         addComp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ui.SwitchToFrame(UI.ADDCOMPONENTPAGE);
+                ui.SwitchToFrame(AddComponentPage.CARD);
             }
         });
         buttons.add(addComp);
@@ -51,7 +52,7 @@ public class AddPage extends JPanel {
         addDish.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ui.SwitchToFrame(UI.ADDDISHPAGE);
+                ui.SwitchToFrame(AddDishPage.CARD);
             }
         });
         buttons.add(addDish);
@@ -60,7 +61,7 @@ public class AddPage extends JPanel {
         backToMain.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ui.SwitchToFrame(UI.MAINPAGE);
+                ui.SwitchToFrame(MainPage.CARD);
             }
         });
         buttons.add(backToMain);
