@@ -75,4 +75,13 @@ public class RemoveIngredientPage extends JPanel {
         add(removeButton, BorderLayout.SOUTH);
 	}
 
+	
+	protected void reload() {
+        ingName.removeAllItems();
+		
+		List<String> allIngs = ui.om.getAllIngredientNames();
+        for (String ing: allIngs) {
+        	ingName.addItem(ing);
+        }
+	}
 }

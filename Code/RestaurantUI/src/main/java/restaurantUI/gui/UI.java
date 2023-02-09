@@ -84,4 +84,13 @@ public class UI {
 		frame.dispose();
 	}
 	
+	public void newIngredient() {
+		AddComponentPage.reload();
+		RemoveIngredientPage.reload();
+	}
+	
+	public void newDish() {
+		RemoveDishPage.reload();
+	}
+	
 }

@@ -68,4 +68,12 @@ public class AddComponentPage extends JPanel {
     add(addButton, BorderLayout.SOUTH);
 
 	}
+	
+	void reload() {
+		list.removeAllElements();
+		List<String> allIngs = ui.om.getAllIngredientNames();
+	    for(String ing: allIngs) {
+	    	list.addElement(ing);
+	    }
+	}
 }
