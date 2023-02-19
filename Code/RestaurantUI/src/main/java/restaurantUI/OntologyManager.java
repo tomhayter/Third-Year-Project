@@ -11,6 +11,7 @@ import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassAxiom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLLogicalAxiom;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
@@ -66,6 +67,8 @@ public class OntologyManager {
 			man.removeAxiom(ontology, axiom);
 			
 		}
+		OWLDeclarationAxiom delcaration = df.getOWLDeclarationAxiom(owlClass);
+		man.removeAxiom(ontology, delcaration);
 		saveOntology();
 		runReasoner();
 	}
