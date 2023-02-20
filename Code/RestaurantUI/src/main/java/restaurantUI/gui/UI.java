@@ -4,7 +4,6 @@ import restaurantUI.*;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Container;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
