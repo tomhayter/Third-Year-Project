@@ -24,6 +24,7 @@ public class UI {
 	
 	private MainPage MainPage;
 	private AddPage AddPage;
+	private AddAllergenPage AddAllergenPage;
 	private AddIngredientPage AddIngredientPage;
 	private AddComponentPage AddComponentPage;
 	private AddDishPage AddDishPage;
@@ -53,6 +54,9 @@ public class UI {
 		
 		AddPage = new AddPage(this);
 		cards.add(AddPage, AddPage.CARD);
+		
+		AddAllergenPage = new AddAllergenPage(this);
+		cards.add(AddAllergenPage, AddAllergenPage.CARD);
 		
 		AddIngredientPage = new AddIngredientPage(this);
 		cards.add(AddIngredientPage, AddIngredientPage.CARD);

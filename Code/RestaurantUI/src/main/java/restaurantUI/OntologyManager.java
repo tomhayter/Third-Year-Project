@@ -97,6 +97,14 @@ public class OntologyManager {
 		runReasoner();
 	}
 	
+	public void addAllergen(String name) {
+		OWLClass nutrient = df.getOWLClass(iri + "#Nutrient");
+		OWLClass allergen = df.getOWLClass(iri + "#" + name + "Nutrient");
+		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(allergen, nutrient);
+		ontology.add(axiom);
+		saveOntology();
+	}
+	
 	public void addIngredient(String ingredient, String ingType) {
 		OWLClass ing = df.getOWLClass(iri + "#" + ingredient + "Ingredient");
 		OWLClass type = df.getOWLClass(iri + "#" + ingType + "Ingredient");

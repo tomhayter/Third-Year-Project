@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <rdf:RDF xmlns="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#"
      xml:base="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
@@ -18,10 +18,12 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
+
     
 
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasAllergen -->
+
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasAllergen">
         <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasPart"/>
@@ -35,6 +37,7 @@
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasComponent -->
 
+
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasComponent">
         <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasPart"/>
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#isComponentOf"/>
@@ -45,6 +48,7 @@
 
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasIngredient -->
+
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasIngredient">
         <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasPart"/>
@@ -57,6 +61,7 @@
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasPart -->
 
+
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasPart">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#isIn"/>
@@ -67,6 +72,7 @@
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#inIngredient -->
 
+
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#inIngredient">
         <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#isIn"/>
     </owl:ObjectProperty>
@@ -74,6 +80,7 @@
 
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#isComponentOf -->
+
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#isComponentOf">
         <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#isIn"/>
@@ -83,6 +90,7 @@
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#isIn -->
 
+
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#isIn">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
@@ -91,6 +99,7 @@
 
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#isIngredientOf -->
+
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#isIngredientOf">
         <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#isIn"/>
@@ -106,10 +115,12 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
+
     
 
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#BroccoliIngredient -->
+
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#BroccoliIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VegetableIngredient"/>
@@ -119,6 +130,7 @@
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#CarbohydrateIngredient -->
 
+
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#CarbohydrateIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Ingredient"/>
     </owl:Class>
@@ -127,6 +139,7 @@
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#CheeseIngredient -->
 
+
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#CheeseIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#DairyIngredient"/>
     </owl:Class>
@@ -134,6 +147,7 @@
 
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#CheeseOnionPieComponent -->
+
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#CheeseOnionPieComponent">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Component"/>
@@ -160,6 +174,7 @@
 
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#CheeseOnionPieDish -->
+
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#CheeseOnionPieDish">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#NamedDish"/>
@@ -195,6 +210,7 @@
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#ChickenIngredient -->
 
+
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#ChickenIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MeatIngredient"/>
     </owl:Class>
@@ -202,6 +218,7 @@
 
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#ChickenPieComponent -->
+
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#ChickenPieComponent">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Component"/>
@@ -229,17 +246,20 @@
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Component -->
 
+
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Component"/>
     
 
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Customer -->
 
+
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Customer"/>
     
 
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#DairyIngredient -->
+
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#DairyIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Ingredient"/>
@@ -249,11 +269,22 @@
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Dish -->
 
+
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Dish"/>
     
 
 
+    <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#EggNutrient -->
+
+
+    <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#EggNutrient">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#FatIngredient -->
+
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#FatIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Ingredient"/>
@@ -261,16 +292,26 @@
     
 
 
+    <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#FishNutrient -->
+
+
+    <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#FishNutrient">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#GlutenNutrient -->
+
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#GlutenNutrient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#PeanutNutrient"/>
     </owl:Class>
     
 
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Ingredient -->
+
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Ingredient"/>
     
@@ -278,13 +319,24 @@
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MeatIngredient -->
 
+
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MeatIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Ingredient"/>
     </owl:Class>
     
 
 
+    <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MilkNutrient -->
+
+
+    <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MilkNutrient">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MushroomIngredient -->
+
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MushroomIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VegetableIngredient"/>
@@ -294,6 +346,7 @@
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#NamedDish -->
 
+
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#NamedDish">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Dish"/>
     </owl:Class>
@@ -302,11 +355,13 @@
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient -->
 
+
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
     
 
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#OnionIngredient -->
+
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#OnionIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VegetableIngredient"/>
@@ -316,6 +371,7 @@
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#OtherIngredient -->
 
+
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#OtherIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Ingredient"/>
     </owl:Class>
@@ -323,6 +379,7 @@
 
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#PastryIngredient -->
+
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#PastryIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#OtherIngredient"/>
@@ -332,6 +389,7 @@
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#PeanutNutrient -->
 
+
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#PeanutNutrient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
     </owl:Class>
@@ -339,6 +397,7 @@
 
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#PorkIngredient -->
+
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#PorkIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MeatIngredient"/>
@@ -348,13 +407,42 @@
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#RoastPotatoesIngredient -->
 
+
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#RoastPotatoesIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#CarbohydrateIngredient"/>
     </owl:Class>
     
 
 
+    <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#ShellfishNutrient -->
+
+
+    <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#ShellfishNutrient">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#SoyNutrient -->
+
+
+    <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#SoyNutrient">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#TreeNutNutrient -->
+
+
+    <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#TreeNutNutrient">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VeganCustomer -->
+
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VeganCustomer">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Customer"/>
@@ -364,6 +452,7 @@
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VeganDish -->
 
+
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VeganDish">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Dish"/>
     </owl:Class>
@@ -371,6 +460,7 @@
 
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VegetableIngredient -->
+
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VegetableIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Ingredient"/>
@@ -380,6 +470,7 @@
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VegetarianCustomer -->
 
+
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VegetarianCustomer">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Customer"/>
     </owl:Class>
@@ -387,6 +478,7 @@
 
 
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VegetarianDish -->
+
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VegetarianDish">
         <owl:equivalentClass>
@@ -416,6 +508,7 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
+
     <rdf:Description>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
         <owl:members rdf:parseType="Collection">
@@ -441,5 +534,6 @@
 
 
 
-<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+<!-- Generated by the OWL API (version 5.0.0.20160228-2008) https://github.com/owlcs/owlapi/ -->
+
 

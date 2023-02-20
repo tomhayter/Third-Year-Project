@@ -25,7 +25,17 @@ public class AddPage extends JPanel {
         titlePanel.add(title, BorderLayout.CENTER);
         add(title, BorderLayout.NORTH);
 
-        JPanel buttons = new JPanel(new GridLayout(4, 1, 20, 20));
+        JPanel buttons = new JPanel(new GridLayout(5, 1, 20, 20));
+        
+        JButton addAllergen = new JButton("Allergen");
+        addAllergen.setSize(2, 4);
+        addAllergen.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ui.SwitchToFrame(AddAllergenPage.CARD);
+            }
+        });
+        buttons.add(addAllergen);
         
         JButton addIng = new JButton("Ingredient");
         addIng.setSize(2, 4);
