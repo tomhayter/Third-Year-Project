@@ -90,14 +90,23 @@ public class OntologyManager {
 	
 	public void addIngredient(
 			String ingredient,
-			IngredientType ingType,
-			String[] allergens,
-			boolean isSpicy
+			String ingType,
+			String[] allergens
 			) {
 		OWLClass ing = df.getOWLClass(iri + "#" + ingredient + "Ingredient");
 		OWLClass type = df.getOWLClass(iri + "#" + ingType + "Ingredient");
 		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(ing,  type);
 		ontology.add(axiom);
+		
+		for (String allergen : allergens) {
+			System.out.println(allergen);
+			OWLClass nutrient = df.getOWLClass(iri + "#" + allergen + "Nutrient");
+			OWLObjectProperty hasNutrient = df.getOWLObjectProperty(iri + "#hasNutrient");
+			OWLSubClassOfAxiom ingHasNutrient = df.getOWLSubClassOfAxiom(ing, df.getOWLObjectSomeValuesFrom(hasNutrient, nutrient));
+			System.out.println(ingHasNutrient);
+			ontology.add(ingHasNutrient);
+		}
+		
 		saveOntology();
 		runReasoner();
 	}
@@ -184,6 +193,23 @@ public class OntologyManager {
 		return customerTypes;
 	}
 	
+	
+	public List<String> getAllAllergenNames() {
+		ArrayList<String> names = new ArrayList<String>();
+		ArrayList<Node<OWLClass>> allergens = new ArrayList<Node<OWLClass>>();
+		reasoner.getSubClasses(df.getOWLClass(iri + "#Nutrient"), false).forEach(allergens::add);
+		
+		for(Node<OWLClass> comp: allergens) {
+			String name = comp.entities().findFirst().get().getIRI().getShortForm().replace("Nutrient", "");
+			if (name.equals("Nothing")) {
+				continue;
+			}
+			names.add(name);
+		}
+		return names;
+	}
+	
+	
 	public List<String> getIngredientNamesOfType(IngredientType type) {
 		ArrayList<Node<OWLClass>> ingredients = new ArrayList<Node<OWLClass>>();	
 		ArrayList<String> names = new ArrayList<String>();
@@ -226,7 +252,6 @@ public class OntologyManager {
 			reasoner.getSubClasses(df.getOWLClass(ingType.entities().findFirst().get().getIRI()), false).forEach(ingredients::add);
 			
 			for(Node<OWLClass> ing: ingredients) {
-				ing.forEach(System.out::println);
 				String name = ing.entities().findFirst().get().getIRI().getShortForm().replace("Ingredient", "");
 				if (name.equals("Nothing")) {
 					continue;
@@ -243,7 +268,6 @@ public class OntologyManager {
 		reasoner.getSubClasses(df.getOWLClass(iri + "#Component"), false).forEach(components::add);
 		
 		for(Node<OWLClass> comp: components) {
-			comp.forEach(System.out::println);
 			String name = comp.entities().findFirst().get().getIRI().getShortForm().replace("Component", "");
 			if (name.equals("Nothing")) {
 				continue;

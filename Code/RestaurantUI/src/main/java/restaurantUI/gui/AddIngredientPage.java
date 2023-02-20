@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -43,13 +44,29 @@ public class AddIngredientPage extends JPanel {
 	        }
 	    });
 	    add(ingName, BorderLayout.CENTER);
+	    
+	    
+	    List<String> allAllergens = ui.om.getAllAllergenNames();
+	    String[] allergenList = new String[allAllergens.size()];
+	    allergenList = allAllergens.toArray(allergenList);
+	    
+	    JList<String> allergens = new JList<String>(allergenList);
+	    
+	    add(allergens);
+	    
+	    
+	    
 	    JButton addButton = new JButton("Add Ingredient");
 	    addButton.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	            ui.om.addIngredient(ingName.getText(),ingTypes.getSelectedItem().toString());
+	        	String[] selected = new String[allergens.getSelectedValuesList().size()];
+	        	selected = allergens.getSelectedValuesList().toArray(selected);
+	        	
+	            ui.om.addIngredient(ingName.getText(),ingTypes.getSelectedItem().toString(), selected);
 	            ui.newIngredient();
 	            ui.SwitchToFrame(MainPage.CARD);
+	            ingName.setText("Enter Ingredient Name");
 	        }
 	    });
 	    add(addButton, BorderLayout.SOUTH);
