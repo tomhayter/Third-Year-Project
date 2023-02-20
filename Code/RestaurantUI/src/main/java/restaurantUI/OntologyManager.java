@@ -78,6 +78,11 @@ public class OntologyManager {
 		removeClass(ing);
 	}
 	
+	public void removeComponent(String component) {
+		OWLClass comp = df.getOWLClass(iri + "#" + component + "Component");
+		removeClass(comp);
+	}
+	
 	public void removeDish(String dish) {
 		OWLClass dishClass = df.getOWLClass(iri + "#" + dish + "Dish");
 		removeClass(dishClass);

@@ -25,7 +25,7 @@ public class RemovePage extends JPanel {
         
 //        JPanel buttonsPanel = new JPanel(new GridLayout(4, 3, 20, 20));
         
-
+        
         JButton removeIng = new JButton("Ingredient");
         removeIng.addActionListener(new ActionListener() {
             @Override
@@ -39,7 +39,7 @@ public class RemovePage extends JPanel {
         removeComp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                ui.SwitchToFrame(UI.REMOVECOMPONENTPAGE);
+                ui.SwitchToFrame(RemoveComponentPage.CARD);
             }
         });
         add(removeComp);

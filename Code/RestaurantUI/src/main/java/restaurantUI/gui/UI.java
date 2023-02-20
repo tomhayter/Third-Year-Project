@@ -30,7 +30,7 @@ public class UI {
 	private AddDishPage AddDishPage;
 	private RemovePage RemovePage;
 	private RemoveIngredientPage RemoveIngredientPage;
-//	private RemoveComponentPage RemoveComponentPage;
+	private RemoveComponentPage RemoveComponentPage;
 	private RemoveDishPage RemoveDishPage;
 	private QueryPage QueryPage;
 	
@@ -72,6 +72,9 @@ public class UI {
 		
 		RemoveIngredientPage = new RemoveIngredientPage(this);
 		cards.add(RemoveIngredientPage, RemoveIngredientPage.CARD);
+		
+		RemoveComponentPage = new RemoveComponentPage(this);
+		cards.add(RemoveComponentPage, RemoveComponentPage.CARD);
 		
 		RemoveDishPage = new RemoveDishPage(this);
 		cards.add(RemoveDishPage, RemoveDishPage.CARD);
