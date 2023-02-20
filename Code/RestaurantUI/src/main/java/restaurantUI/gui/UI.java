@@ -98,12 +98,21 @@ public class UI {
 		frame.dispose();
 	}
 	
-	public void newIngredient() {
+	public void updateAllergens() {
+		AddIngredientPage.reload();
+	}
+	
+	public void updateIngredients() {
 		AddComponentPage.reload();
 		RemoveIngredientPage.reload();
 	}
 	
-	public void newDish() {
+	public void updateComponents() {
+		AddDishPage.reload();
+		RemoveComponentPage.reload();
+	}
+	
+	public void updateDishes() {
 		RemoveDishPage.reload();
 	}
 	

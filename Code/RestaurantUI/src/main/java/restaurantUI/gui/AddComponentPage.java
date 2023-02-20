@@ -62,6 +62,7 @@ public class AddComponentPage extends JPanel {
         	selected = ingredients.getSelectedValuesList().toArray(selected);
         	
             ui.om.addComponent(compName.getText(),selected);
+            ui.updateComponents();
             ui.SwitchToFrame(MainPage.CARD);
         }
     });

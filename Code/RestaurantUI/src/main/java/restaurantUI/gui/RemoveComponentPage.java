@@ -37,6 +37,7 @@ public class RemoveComponentPage extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
         		ui.om.removeComponent(compName.getSelectedItem().toString());
+        		ui.updateComponents();
                 
             	System.out.println("Deleting " + compName.getSelectedItem().toString());
                 ui.SwitchToFrame(MainPage.CARD);

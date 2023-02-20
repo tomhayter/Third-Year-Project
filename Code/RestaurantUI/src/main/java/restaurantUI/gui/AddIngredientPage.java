@@ -7,6 +7,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -18,6 +19,7 @@ public class AddIngredientPage extends JPanel {
 	
 	UI ui;
 	public final static String CARD = "AddIngredientPage";
+	DefaultListModel<String> list;
 	
 	public AddIngredientPage(UI ui) {
 		this.ui = ui;
@@ -47,10 +49,12 @@ public class AddIngredientPage extends JPanel {
 	    
 	    
 	    List<String> allAllergens = ui.om.getAllAllergenNames();
-	    String[] allergenList = new String[allAllergens.size()];
-	    allergenList = allAllergens.toArray(allergenList);
+	    list = new DefaultListModel<String>();
+	    for(String allergen: allAllergens) {
+	    	list.addElement(allergen);
+	    }
 	    
-	    JList<String> allergens = new JList<String>(allergenList);
+	    JList<String> allergens = new JList<String>(list);
 	    
 	    add(allergens);
 	    
@@ -64,11 +68,19 @@ public class AddIngredientPage extends JPanel {
 	        	selected = allergens.getSelectedValuesList().toArray(selected);
 	        	
 	            ui.om.addIngredient(ingName.getText(),ingTypes.getSelectedItem().toString(), selected);
-	            ui.newIngredient();
+	            ui.updateIngredients();
 	            ui.SwitchToFrame(MainPage.CARD);
 	            ingName.setText("Enter Ingredient Name");
 	        }
 	    });
 	    add(addButton, BorderLayout.SOUTH);
+	}
+	
+	void reload() {
+		list.removeAllElements();
+		List<String> allAllergens = ui.om.getAllAllergenNames();
+	    for(String allergen: allAllergens) {
+	    	list.addElement(allergen);
+	    }
 	}
 }

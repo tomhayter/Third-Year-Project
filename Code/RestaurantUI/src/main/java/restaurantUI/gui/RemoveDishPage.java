@@ -40,7 +40,7 @@ public class RemoveDishPage extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
         		ui.om.removeDish(dishName.getSelectedItem().toString());
-                
+                ui.updateDishes();
             	System.out.println("Deleting " + dishName.getSelectedItem().toString());
                 ui.SwitchToFrame(MainPage.CARD);
             }

@@ -7,6 +7,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -16,6 +17,7 @@ public class AddDishPage extends JPanel {
 
 	UI ui;
 	final static String CARD = "AddDishPage";
+	DefaultListModel<String> list;
 	
 	public AddDishPage(UI ui) {
 
@@ -41,31 +43,39 @@ public class AddDishPage extends JPanel {
 	    add(dishName);
 	    
 	    
+	    List<String> allComps = ui.om.getAllComponentNames();	    
+	    list = new DefaultListModel<String>();
+	    for(String comp: allComps) {
+	    	list.addElement(comp);
+	    }
 	    
+	    JList<String> components = new JList<String>(list);
 	    
-	    List<String> allComps = ui.om.getAllComponentNames();
-	    String[] compsList = new String[allComps.size()];
-	    compsList = allComps.toArray(compsList);
-	    
-	    JList<String> ingredients = new JList<String>(compsList);
-	    
-	    add(ingredients);
+	    add(components);
 	    
 	    
 	    JButton addButton = new JButton("Add Dish");
 	    addButton.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	String[] selected = new String[ingredients.getSelectedValuesList().size()];
-	        	selected = ingredients.getSelectedValuesList().toArray(selected);
+	        	String[] selected = new String[components.getSelectedValuesList().size()];
+	        	selected = components.getSelectedValuesList().toArray(selected);
 	        	
 	            ui.om.addDish(dishName.getText(),selected, new String[0]);
-	            ui.newDish();
+	            ui.updateDishes();
 	            ui.SwitchToFrame(MainPage.CARD);
 	        }
 	    });
 	    add(addButton, BorderLayout.SOUTH);
 
+	}
+	
+	void reload() {
+		list.removeAllElements();
+		List<String> allComps = ui.om.getAllComponentNames();
+	    for(String comp: allComps) {
+	    	list.addElement(comp);
+	    }
 	}
 
 	
