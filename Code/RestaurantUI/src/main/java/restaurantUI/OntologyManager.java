@@ -143,7 +143,7 @@ public class OntologyManager {
 	
 		
 	public void addDish(String dishName, String[] components, String[] ingredients) {
-		OWLClass genDish = df.getOWLClass(iri + "#Dish");
+		OWLClass genDish = df.getOWLClass(iri + "#NamedDish");
 		OWLClass dish = df.getOWLClass(iri + "#" + dishName + "Dish");
 		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(dish,  genDish);
 		ontology.add(axiom);
