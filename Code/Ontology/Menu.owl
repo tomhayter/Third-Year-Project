@@ -22,19 +22,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasAllergen -->
-
-
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient">
-        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasPart"/>
-        <owl:inverseOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#inIngredient"/>
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Ingredient"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
-    </owl:ObjectProperty>
-    
-
-
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasComponent -->
 
 
@@ -62,7 +49,13 @@
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient -->
 
 
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasPart"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#inIngredient"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Ingredient"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+    </owl:ObjectProperty>
     
 
 

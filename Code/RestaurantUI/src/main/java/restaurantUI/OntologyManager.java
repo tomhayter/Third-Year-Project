@@ -50,6 +50,7 @@ public class OntologyManager {
 		}
 	}
 	
+	
 	private boolean saveOntology() {
 		try {
 			man.saveOntology(ontology);
@@ -59,6 +60,7 @@ public class OntologyManager {
 			return false;
 		}
 	}
+	
 	
 	void removeClass(OWLClass owlClass) {
 		Set<OWLClassAxiom> allAxiomsForClass = ontology.getAxioms(owlClass, Imports.INCLUDED);
@@ -73,20 +75,24 @@ public class OntologyManager {
 		runReasoner();
 	}
 	
+	
 	public void removeIngredient(String ingredient) {
 		OWLClass ing = df.getOWLClass(iri + "#" + ingredient + "Ingredient");
 		removeClass(ing);
 	}
+	
 	
 	public void removeComponent(String component) {
 		OWLClass comp = df.getOWLClass(iri + "#" + component + "Component");
 		removeClass(comp);
 	}
 	
+	
 	public void removeDish(String dish) {
 		OWLClass dishClass = df.getOWLClass(iri + "#" + dish + "Dish");
 		removeClass(dishClass);
 	}
+	
 	
 	public void addIngredient(
 			String ingredient,
@@ -111,6 +117,7 @@ public class OntologyManager {
 		runReasoner();
 	}
 	
+	
 	public void addAllergen(String name) {
 		OWLClass nutrient = df.getOWLClass(iri + "#Nutrient");
 		OWLClass allergen = df.getOWLClass(iri + "#" + name + "Nutrient");
@@ -119,13 +126,6 @@ public class OntologyManager {
 		saveOntology();
 	}
 	
-	public void addIngredient(String ingredient, String ingType) {
-		OWLClass ing = df.getOWLClass(iri + "#" + ingredient + "Ingredient");
-		OWLClass type = df.getOWLClass(iri + "#" + ingType + "Ingredient");
-		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(ing,  type);
-		ontology.add(axiom);
-		saveOntology();
-	}
 	
 	public void addComponent(String component, String[] ingredients) {
 		OWLClass genComp = df.getOWLClass(iri + "#Component");
@@ -244,6 +244,7 @@ public class OntologyManager {
 		return ingredientTypes;
 	}
 	
+	
 	public List<String> getAllIngredientNames() {
 		List<Node<OWLClass>> types = getIngredientTypes();
 		ArrayList<String> names = new ArrayList<String>();
@@ -262,6 +263,7 @@ public class OntologyManager {
 		return names;
 	}
 	
+	
 	public List<String> getAllComponentNames() {
 		ArrayList<String> names = new ArrayList<String>();
 		ArrayList<Node<OWLClass>> components = new ArrayList<Node<OWLClass>>();
@@ -278,25 +280,8 @@ public class OntologyManager {
 	}
 	
 	
-	List<OWLEntity> getEntities(String search) {
-		ArrayList<OWLEntity> entities = new ArrayList<OWLEntity>();
-		ontology.signature().filter((e->!e.isBuiltIn() && 
-									 e.getIRI().getRemainder().orElse("").contains(search)))
-			.forEach(entities::add);
-		
-		return entities;
-	}
-	
-	Set<OWLAxiom> getAllAxioms() {
-		return ontology.getAxioms();
-	}
-	
 	boolean runReasoner() {
 		reasoner.precomputeInferences(InferenceType.CLASS_HIERARCHY);
 		return reasoner.isConsistent();
-	}
-	
-	void test() {
-		reasoner.getSubClasses(df.getOWLClass(iri + "#NamedDish"), false).forEach(System.out::println);
 	}
 }
