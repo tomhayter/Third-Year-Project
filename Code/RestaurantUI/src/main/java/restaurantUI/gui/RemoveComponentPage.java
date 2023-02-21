@@ -36,10 +36,9 @@ public class RemoveComponentPage extends JPanel {
         removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	System.out.println("Deleting " + compName.getSelectedItem().toString());
         		ui.om.removeComponent(compName.getSelectedItem().toString());
         		ui.updateComponents();
-                
-            	System.out.println("Deleting " + compName.getSelectedItem().toString());
                 ui.SwitchToFrame(MainPage.CARD);
             }
         });

@@ -65,9 +65,9 @@ public class RemoveIngredientPage extends JPanel {
         removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	System.out.println("Deleting " + ingName.getSelectedItem().toString());
         		ui.om.removeIngredient(ingName.getSelectedItem().toString());
                 ui.updateIngredients();
-            	System.out.println("Deleting " + ingName.getSelectedItem().toString());
                 ui.SwitchToFrame(MainPage.CARD);
             }
         });

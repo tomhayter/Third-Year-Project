@@ -36,9 +36,9 @@ public class RemoveDishPage extends JPanel {
         removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	System.out.println("Deleting " + dishName.getSelectedItem().toString());
         		ui.om.removeDish(dishName.getSelectedItem().toString());
                 ui.updateDishes();
-            	System.out.println("Deleting " + dishName.getSelectedItem().toString());
                 ui.SwitchToFrame(MainPage.CARD);
             }
         });
