@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -53,6 +54,12 @@ public class AddDishPage extends JPanel {
 	    
 	    add(components);
 	    
+	    JCheckBox halal = new JCheckBox("Is this dish halal?");
+	    JCheckBox kosher = new JCheckBox("Is this dish kosher?");
+	    
+	    add(halal);
+	    add(kosher);
+	    
 	    
 	    JButton addButton = new JButton("Add Dish");
 	    addButton.addActionListener(new ActionListener() {
@@ -61,7 +68,11 @@ public class AddDishPage extends JPanel {
 	        	String[] selected = new String[components.getSelectedValuesList().size()];
 	        	selected = components.getSelectedValuesList().toArray(selected);
 	        	
-	            ui.om.addDish(dishName.getText(),selected, new String[0]);
+	            ui.om.addDish(dishName.getText(),
+	            			  selected,
+	            			  new String[0],
+	            			  halal.isSelected(),
+	            			  kosher.isSelected());
 	            ui.updateDishes();
 	            ui.SwitchToFrame(MainPage.CARD);
 	        }

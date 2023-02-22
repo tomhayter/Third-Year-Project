@@ -139,7 +139,7 @@ public class OntologyManager {
 	}
 	
 		
-	public void addDish(String dishName, String[] components, String[] ingredients) {
+	public void addDish(String dishName, String[] components, String[] ingredients, boolean halal, boolean kosher) {
 		OWLClass genDish = df.getOWLClass(iri + "#NamedDish");
 		OWLClass dish = df.getOWLClass(iri + "#" + dishName + "Dish");
 		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(dish,  genDish);
@@ -156,6 +156,21 @@ public class OntologyManager {
 			OWLSubClassOfAxiom dishHasIng = df.getOWLSubClassOfAxiom(dish, df.getOWLObjectSomeValuesFrom(hasIng, ing));
 			ontology.add(dishHasIng);
 		}
+		
+		if (halal) {
+			OWLClass halalMethod = df.getOWLClass(iri + "#HalalPreparationMethod");
+			OWLObjectProperty hasMethod = df.getOWLObjectProperty(iri + "#hasPreparationMethod");
+			OWLSubClassOfAxiom dishIsHalal = df.getOWLSubClassOfAxiom(dish, df.getOWLObjectSomeValuesFrom(hasMethod, halalMethod));
+			ontology.add(dishIsHalal);
+		}
+		
+		if (kosher) {
+			OWLClass kosherMethod = df.getOWLClass(iri + "#KosherPreparationMethod");
+			OWLObjectProperty hasMethod = df.getOWLObjectProperty(iri + "#hasPreparationMethod");
+			OWLSubClassOfAxiom dishIsKosher = df.getOWLSubClassOfAxiom(dish, df.getOWLObjectSomeValuesFrom(hasMethod, kosherMethod));
+			ontology.add(dishIsKosher);
+		}
+		
 		saveOntology();
 	}
 	
