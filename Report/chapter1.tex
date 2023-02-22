@@ -1,14 +1,17 @@
 \chapter{Introduction}
 
-\section{Requirements of the ontology}
+\section{Requirements}
 
-These are the requirements of the ontology so that it can store all the information that I would like it to:
+\subsection{Functional Requirements}
+
+These are the requirements of the ontology:
 
 \begin{itemize}
-\item Ingredient list for every meal on a menu, split into the components of the dish.
+\item Each dish, split into the components and ingredients that the dish contains.
+\item Allergen information for each dish.
+\item Meals that are suitable for various diets e.g. Vegetarian dishes.
+\item Types of customer e.g. Vegans and those with Coelaic disease.
 \item Calorific content of each meal.
-\item Allergen information for each meal.
-\item Types of customer e.g. Vegetarians and those with Coelaic disease.
 \end{itemize}
 
 These are possible additions that could be made to the ontology, but are not necessary for the MVP:
@@ -25,15 +28,23 @@ The requirements of the user interface for restaurant owner:
 \item Add and remove ingredients and components, in same page as above and separate.
 \item Add and remove customer types (dietry requirements and allergens).
 \item Query the ontology.
+\item A settings menu to have the option to hide calory information.
+\end{itemize}
+
+Some additional possible bonuses to the user interface are:
+
+\begin{itemize}
+\item A view for each dish, where the restaurant owner can edit the dish.
+\item The ability to add and remove dietary requirements as new ones become available.
 \end{itemize}
 
 Dietary Requirements to filter by:
 
 \begin{itemize}
 \item Vegetarian
-\item Pescetarian
 \item Vegan
-\item
+\item Pescetarian
+\item Religious diets e.g. Halal / Kosher preparation, Hindu and Sikh.
 \end{itemize}
 
 Allergies\cite{burks2001food}:
@@ -48,6 +59,15 @@ Allergies\cite{burks2001food}:
 \item Shellfish
 \item Tree nuts
 \item Soybeans
+\end{itemize}
+
+\subsection{Non-Functional Requirements}
+
+The non-functional requirements of the project are that it must:
+
+\begin{itemize}
+\item The UI must be intuitive, easy to use, and provide appropriate feedback when changes are made to the ontology.
+\item There must not be any redundant parts of the ontology, as the aim is to reduce the size of the memory
 \end{itemize}
 
 \section{Evaluation Plan}
