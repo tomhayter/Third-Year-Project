@@ -49,43 +49,43 @@ public class UI {
 		cards = new JPanel(cardLayout);
 		
 		MainPage = new MainPage(this);
-		cards.add(MainPage, MainPage.CARD);
+		cards.add(MainPage, restaurantUI.gui.MainPage.CARD);
 		
 		AddPage = new AddPage(this);
-		cards.add(AddPage, AddPage.CARD);
+		cards.add(AddPage, restaurantUI.gui.AddPage.CARD);
 		
 		AddAllergenPage = new AddAllergenPage(this);
-		cards.add(AddAllergenPage, AddAllergenPage.CARD);
+		cards.add(AddAllergenPage, restaurantUI.gui.AddAllergenPage.CARD);
 		
 		AddIngredientPage = new AddIngredientPage(this);
-		cards.add(AddIngredientPage, AddIngredientPage.CARD);
+		cards.add(AddIngredientPage, restaurantUI.gui.AddIngredientPage.CARD);
 		
 		AddComponentPage = new AddComponentPage(this);
-		cards.add(AddComponentPage, AddComponentPage.CARD);
+		cards.add(AddComponentPage, restaurantUI.gui.AddComponentPage.CARD);
 		
 		AddDishPage = new AddDishPage(this);
-		cards.add(AddDishPage, AddDishPage.CARD);
+		cards.add(AddDishPage, restaurantUI.gui.AddDishPage.CARD);
 		
 		RemovePage = new RemovePage(this);
-		cards.add(RemovePage, RemovePage.CARD);
+		cards.add(RemovePage, restaurantUI.gui.RemovePage.CARD);
 		
 		RemoveIngredientPage = new RemoveIngredientPage(this);
-		cards.add(RemoveIngredientPage, RemoveIngredientPage.CARD);
+		cards.add(RemoveIngredientPage, restaurantUI.gui.RemoveIngredientPage.CARD);
 		
 		RemoveComponentPage = new RemoveComponentPage(this);
-		cards.add(RemoveComponentPage, RemoveComponentPage.CARD);
+		cards.add(RemoveComponentPage, restaurantUI.gui.RemoveComponentPage.CARD);
 		
 		RemoveDishPage = new RemoveDishPage(this);
-		cards.add(RemoveDishPage, RemoveDishPage.CARD);
+		cards.add(RemoveDishPage, restaurantUI.gui.RemoveDishPage.CARD);
 		
 		QueryPage = new QueryPage(this);
-		cards.add(QueryPage, QueryPage.CARD);
-		
+		cards.add(QueryPage, restaurantUI.gui.QueryPage.CARD);		
+	}
+	
+	public void Start() { 
 		frame.add(cards, BorderLayout.CENTER);
 		frame.setVisible(true);
-		cardLayout.show(cards, MainPage.CARD);
-
-		
+		cardLayout.show(cards, restaurantUI.gui.MainPage.CARD);
 	}
 	
 	public void SwitchToFrame(String page) {

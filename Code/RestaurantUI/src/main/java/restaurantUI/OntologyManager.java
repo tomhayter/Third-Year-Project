@@ -2,6 +2,7 @@ package restaurantUI;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassAxiom;
+import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
@@ -63,11 +65,11 @@ public class OntologyManager {
 		Set<OWLClassAxiom> allAxiomsForClass = ontology.getAxioms(owlClass, Imports.INCLUDED);
 		for (OWLClassAxiom axiom: allAxiomsForClass) {
 			System.out.println(axiom);
-			man.removeAxiom(ontology, axiom);
+			ontology.remove(axiom);
 			
 		}
 		OWLDeclarationAxiom delcaration = df.getOWLDeclarationAxiom(owlClass);
-		man.removeAxiom(ontology, delcaration);
+		ontology.remove(delcaration);
 		saveOntology();
 		runReasoner();
 	}
@@ -127,14 +129,23 @@ public class OntologyManager {
 	public void addComponent(String component, String[] ingredients) {
 		OWLClass genComp = df.getOWLClass(iri + "#Component");
 		OWLClass comp = df.getOWLClass(iri + "#" + component + "Component");
+		OWLObjectProperty hasIng = df.getOWLObjectProperty(iri + "#hasIngredient");
+		
 		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(comp,  genComp);
 		ontology.add(axiom);
+		
+		List<OWLClass> allIngs = new ArrayList<OWLClass>();
+		
 		for (String ingredient : ingredients) {
 			OWLClass ing = df.getOWLClass(iri + "#" + ingredient + "Ingredient");
-			OWLObjectProperty hasIng = df.getOWLObjectProperty(iri + "#hasIngredient");
+			allIngs.add(ing);
 			OWLSubClassOfAxiom compHasIng = df.getOWLSubClassOfAxiom(comp, df.getOWLObjectSomeValuesFrom(hasIng, ing));
 			ontology.add(compHasIng);
 		}
+		
+		OWLClassExpression combination = df.getOWLObjectUnionOf(allIngs);;
+		OWLSubClassOfAxiom compMustHaveIngs = df.getOWLSubClassOfAxiom(comp, df.getOWLObjectAllValuesFrom(hasIng, combination));
+		ontology.add(compMustHaveIngs);
 		saveOntology();
 	}
 	
@@ -142,11 +153,14 @@ public class OntologyManager {
 	public void addDish(String dishName, String[] components, String[] ingredients, boolean halal, boolean kosher) {
 		OWLClass genDish = df.getOWLClass(iri + "#NamedDish");
 		OWLClass dish = df.getOWLClass(iri + "#" + dishName + "Dish");
+		OWLObjectProperty hasComp = df.getOWLObjectProperty(iri + "#hasComponent");
 		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(dish,  genDish);
 		ontology.add(axiom);
+		
+		List<OWLClass> allComps = new ArrayList<OWLClass>();
 		for (String component : components) {
 			OWLClass comp = df.getOWLClass(iri + "#" + component + "Component");
-			OWLObjectProperty hasComp = df.getOWLObjectProperty(iri + "#hasComponent");
+			allComps.add(comp);
 			OWLSubClassOfAxiom dishHasComp = df.getOWLSubClassOfAxiom(dish, df.getOWLObjectSomeValuesFrom(hasComp, comp));
 			ontology.add(dishHasComp);
 		}
@@ -159,17 +173,21 @@ public class OntologyManager {
 		
 		if (halal) {
 			OWLClass halalMethod = df.getOWLClass(iri + "#HalalPreparationMethod");
-			OWLObjectProperty hasMethod = df.getOWLObjectProperty(iri + "#hasPreparationMethod");
+			OWLObjectProperty hasMethod = df.getOWLObjectProperty(iri + "#preparedUsingMethod");
 			OWLSubClassOfAxiom dishIsHalal = df.getOWLSubClassOfAxiom(dish, df.getOWLObjectSomeValuesFrom(hasMethod, halalMethod));
 			ontology.add(dishIsHalal);
 		}
 		
 		if (kosher) {
 			OWLClass kosherMethod = df.getOWLClass(iri + "#KosherPreparationMethod");
-			OWLObjectProperty hasMethod = df.getOWLObjectProperty(iri + "#hasPreparationMethod");
+			OWLObjectProperty hasMethod = df.getOWLObjectProperty(iri + "#preparedUsingMethod");
 			OWLSubClassOfAxiom dishIsKosher = df.getOWLSubClassOfAxiom(dish, df.getOWLObjectSomeValuesFrom(hasMethod, kosherMethod));
 			ontology.add(dishIsKosher);
 		}
+		
+		OWLClassExpression combination = df.getOWLObjectUnionOf(allComps);;
+		OWLSubClassOfAxiom dishMustHaveComps = df.getOWLSubClassOfAxiom(dish, df.getOWLObjectAllValuesFrom(hasComp, combination));
+		ontology.add(dishMustHaveComps);
 		
 		saveOntology();
 	}
@@ -282,8 +300,10 @@ public class OntologyManager {
 		reasoner.getSubClasses(df.getOWLClass(iri + "#Component"), false).forEach(components::add);
 		
 		for(Node<OWLClass> comp: components) {
+			
 			String name = comp.entities().findFirst().get().getIRI().getShortForm().replace("Component", "");
-			if (name.equals("Nothing")) {
+			List<String> invalid_names = Arrays.asList("Nothing", "Vegan", "Pescetarian", "Vegetarian");
+			if (invalid_names.contains(name)) {
 				continue;
 			}
 			names.add(name);
