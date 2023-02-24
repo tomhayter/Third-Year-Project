@@ -17,7 +17,7 @@ public class AddComponentPage extends JPanel {
 	
 	UI ui;
 	final static String CARD = "AddComponentPage";
-	DefaultListModel<String> list;
+	DefaultListModel<String> list = new DefaultListModel<String>();
 	
 	public AddComponentPage(UI ui) {
 
@@ -44,7 +44,6 @@ public class AddComponentPage extends JPanel {
     
     List<String> allIngs = ui.om.getAllIngredientNames();
     
-    list = new DefaultListModel<String>();
     for(String ing:allIngs) {
     	list.addElement(ing);
     }

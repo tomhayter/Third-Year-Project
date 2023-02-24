@@ -5,7 +5,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -17,6 +19,9 @@ public class QueryPage extends JPanel {
 	
 	UI ui;
 	final static String CARD = "QueryPage";
+	DefaultListModel<String> list = new DefaultListModel<String>();
+	List<JCheckBox> allergenBoxes = new ArrayList<JCheckBox>();
+	
 	
 	public QueryPage(UI ui) {
 		this.ui = ui;
@@ -28,15 +33,15 @@ public class QueryPage extends JPanel {
 		JLabel title = new JLabel("Results:");
 		results.add(title, BorderLayout.NORTH);
 		
-		ArrayList<String> resultDishes = new ArrayList<String>();
-//		resultDishes = ui.om.search();
-		resultDishes.add("ChickenCurry");
-		resultDishes.add("Spaghetti Bolognese");
+		List<String> allDishes = ui.om.getAllDishNames();
+		for(String s: allDishes) {
+			list.addElement(s);
+		}
 		
-		JList list = new JList(resultDishes.toArray());
-		list.setLayoutOrientation(JList.VERTICAL_WRAP);
+		JList<String> resultsList = new JList<String>(list);
+		resultsList.setLayoutOrientation(JList.VERTICAL_WRAP);
 		
-		results.add(list);
+		results.add(resultsList);
 		
 		JButton back = new JButton("Back to Main Menu");
 		back.addActionListener(new ActionListener() {
@@ -57,6 +62,10 @@ public class QueryPage extends JPanel {
 		dietPanel.add(vege);
 		JCheckBox vegan = new JCheckBox("Vegan");
 		dietPanel.add(vegan);
+		JCheckBox halal = new JCheckBox("Halal");
+		dietPanel.add(halal);
+		JCheckBox kosher = new JCheckBox("Kosher");
+		dietPanel.add(kosher);
 		
 		options.add(dietPanel);
 		
@@ -74,13 +83,32 @@ public class QueryPage extends JPanel {
 		
 		JPanel allergenPanel = new JPanel();
 		allergenPanel.add(new JLabel("Allergen:"));
-		JCheckBox gluten = new JCheckBox("Gluten");
-		allergenPanel.add(gluten);
-		JCheckBox peanut = new JCheckBox("Peanut");
-		allergenPanel.add(peanut);
+		List<String> allergens = ui.om.getAllAllergenNames();
+		for (String allergen: allergens) {
+			JCheckBox box = new JCheckBox(allergen);
+			allergenBoxes.add(box);
+			allergenPanel.add(box);
+		}
 		options.add(allergenPanel);
 		
 		JButton search = new JButton("Search");
+		search.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	list.removeAllElements();
+            	List<String> selectedAllergens = new ArrayList<String>();
+            	for(JCheckBox box: allergenBoxes) {
+            		if (box.isSelected()) {
+            			selectedAllergens.add(box.getText());
+            		}
+            	}
+            	System.out.println(selectedAllergens);
+                List<String> dishes = ui.om.dishSearch(selectedAllergens, vege.isSelected(), vegan.isSelected(), kosher.isSelected(), halal.isSelected());
+                for(String s: dishes) {
+                	list.addElement(s);
+                }
+            }
+        });
 		options.add(search);
 		add(options);
 		

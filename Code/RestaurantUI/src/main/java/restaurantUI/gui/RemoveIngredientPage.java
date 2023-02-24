@@ -51,7 +51,7 @@ public class RemoveIngredientPage extends JPanel {
         			ings = ui.om.getAllIngredientNames();
         		}
         		else {
-        			ings = ui.om.getIngredientNamesOfType(IngredientType.valueOf(selection));
+        			ings = ui.om.getIngredientNamesOfType(selection);
         		}
         		ingName.removeAllItems();
         		for(String item: ings) {

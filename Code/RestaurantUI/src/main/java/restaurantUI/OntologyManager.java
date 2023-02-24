@@ -3,9 +3,12 @@ package restaurantUI;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+//import org.semanticweb.HermiT.Reasoner;
+import org.semanticweb.HermiT.ReasonerFactory;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -23,8 +26,8 @@ import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.reasoner.InferenceType;
 import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
-import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
-import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
+//import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
+//import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
 
 public class OntologyManager {
 	
@@ -34,6 +37,8 @@ public class OntologyManager {
 	private IRI iri;
 	private String ontologyLocation = "..\\Ontology\\Menu.owl";
 	private OWLReasoner reasoner;
+	private List<String> invalid_names = Arrays.asList("Nothing", "Vegan", "Pescetarian", "Vegetarian");
+	
 	
 	public OntologyManager() {
 		man = OWLManager.createOWLOntologyManager();
@@ -42,7 +47,8 @@ public class OntologyManager {
 			ontology = man.loadOntologyFromOntologyDocument(file);
 			df = ontology.getOWLOntologyManager().getOWLDataFactory();
 			iri = ontology.getOntologyID().getOntologyIRI().get();
-			OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
+			
+			ReasonerFactory reasonerFactory = new ReasonerFactory();
 			reasoner = reasonerFactory.createReasoner(ontology);
 		} catch (OWLOntologyCreationException e) {
 			e.printStackTrace();
@@ -208,6 +214,7 @@ public class OntologyManager {
 		}
 		return dishNames;
 	}
+			
 
 
 	List<String> getCustomerTypes() {
@@ -240,7 +247,7 @@ public class OntologyManager {
 	}
 	
 	
-	public List<String> getIngredientNamesOfType(IngredientType type) {
+	public List<String> getIngredientNamesOfType(String type) {
 		ArrayList<Node<OWLClass>> ingredients = new ArrayList<Node<OWLClass>>();	
 		ArrayList<String> names = new ArrayList<String>();
 		reasoner.getSubClasses(df.getOWLClass(iri + "#" + type + "Ingredient"), false).forEach(ingredients::add);
@@ -302,13 +309,104 @@ public class OntologyManager {
 		for(Node<OWLClass> comp: components) {
 			
 			String name = comp.entities().findFirst().get().getIRI().getShortForm().replace("Component", "");
-			List<String> invalid_names = Arrays.asList("Nothing", "Vegan", "Pescetarian", "Vegetarian");
+			
 			if (invalid_names.contains(name)) {
 				continue;
 			}
 			names.add(name);
 		}
 		return names;
+	}
+	
+	public List<String> dishSearch(List<String> allergens, boolean vegetarian, boolean vegan, boolean kosher, boolean halal) {
+		List<String> results = new ArrayList<String>();
+		runReasoner();
+		HashSet<String> allDishes = new HashSet<String>(getAllDishNames());
+		
+		List<HashSet<String>> dishGroups = new ArrayList<HashSet<String>>();
+		
+		if (vegetarian) {
+			ArrayList<Node<OWLClass>> vegeDishNodes = new ArrayList<Node<OWLClass>>();
+			reasoner.getSubClasses(df.getOWLClass(iri + "#VegetarianDish"), false).forEach(vegeDishNodes::add);
+			HashSet<String> vegeDishes = new HashSet<String>();
+			for(Node<OWLClass> dish: vegeDishNodes) {
+				System.out.println(dish);
+				String name = dish.entities().findFirst().get().getIRI().getShortForm().replace("Dish", "");
+				if (invalid_names.contains(name)) {
+					continue;
+				}
+				System.out.println(name);
+				vegeDishes.add(name);
+			}
+			dishGroups.add(vegeDishes);
+		}
+		
+		if (vegan) {
+			ArrayList<Node<OWLClass>> veganDishNodes = new ArrayList<Node<OWLClass>>();
+			reasoner.getSubClasses(df.getOWLClass(iri + "#VeganDish"), false).forEach(veganDishNodes::add);
+			HashSet<String> veganDishes = new HashSet<String>();
+			for(Node<OWLClass> dish: veganDishNodes) {
+				System.out.println(dish);
+				String name = dish.entities().findFirst().get().getIRI().getShortForm().replace("Dish", "");
+				if (invalid_names.contains(name)) {
+					continue;
+				}
+				System.out.println(name);
+				veganDishes.add(name);
+			}
+			dishGroups.add(veganDishes);
+		}
+		
+		
+		if (kosher) {
+			ArrayList<Node<OWLClass>> kosherDishNodes = new ArrayList<Node<OWLClass>>();
+			reasoner.getSubClasses(df.getOWLClass(iri + "#KosherDish"), false).forEach(kosherDishNodes::add);
+			HashSet<String> kosherDishes = new HashSet<String>();
+			for(Node<OWLClass> dish: kosherDishNodes) {
+				System.out.println(dish);
+				String name = dish.entities().findFirst().get().getIRI().getShortForm().replace("Dish", "");
+				if (invalid_names.contains(name)) {
+					continue;
+				}
+				System.out.println(name);
+				kosherDishes.add(name);
+			}
+			dishGroups.add(kosherDishes);
+		}
+		
+		
+		if (halal) {
+			ArrayList<Node<OWLClass>> halalDishNodes = new ArrayList<Node<OWLClass>>();
+			reasoner.getSubClasses(df.getOWLClass(iri + "#HalalDish"), false).forEach(halalDishNodes::add);
+			HashSet<String> halalDishes = new HashSet<String>();
+			for(Node<OWLClass> dish: halalDishNodes) {
+				System.out.println(dish);
+				String name = dish.entities().findFirst().get().getIRI().getShortForm().replace("Dish", "");
+				if (invalid_names.contains(name)) {
+					continue;
+				}
+				System.out.println(name);
+				halalDishes.add(name);
+			}
+			dishGroups.add(halalDishes);
+		}
+		
+//		for(String allergen: allergens) {
+//			HashSet<String> allowed = new HashSet<String>();
+//			
+//			
+//			dishGroups.add(allowed);
+//		}
+		
+		
+		
+		for(HashSet<String> group: dishGroups) {
+			System.out.println(group);
+			allDishes.retainAll(group);
+		}
+		
+		
+		return new ArrayList<String>(allDishes);
 	}
 	
 	
