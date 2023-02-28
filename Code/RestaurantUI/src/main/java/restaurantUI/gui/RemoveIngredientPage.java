@@ -11,8 +11,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import restaurantUI.IngredientType;
-
 public class RemoveIngredientPage extends JPanel {
 	
 	UI ui;

@@ -18,6 +18,8 @@ public class UI {
 	
 	JFrame frame;
 	
+	public boolean showCalories = true;
+	
 	private JPanel cards;
 	private CardLayout cardLayout;
 	
@@ -32,6 +34,7 @@ public class UI {
 	private RemoveComponentPage RemoveComponentPage;
 	private RemoveDishPage RemoveDishPage;
 	private QueryPage QueryPage;
+	private SettingsPage SettingsPage;
 	
 
 	public UI() {
@@ -79,7 +82,10 @@ public class UI {
 		cards.add(RemoveDishPage, restaurantUI.gui.RemoveDishPage.CARD);
 		
 		QueryPage = new QueryPage(this);
-		cards.add(QueryPage, restaurantUI.gui.QueryPage.CARD);		
+		cards.add(QueryPage, restaurantUI.gui.QueryPage.CARD);
+		
+		SettingsPage = new SettingsPage(this);
+		cards.add(SettingsPage, restaurantUI.gui.SettingsPage.CARD);
 	}
 	
 	public void Start() { 
@@ -113,6 +119,10 @@ public class UI {
 	
 	public void updateDishes() {
 		RemoveDishPage.reload();
+	}
+	
+	public void updateSettings() {
+		QueryPage.refresh();
 	}
 	
 }

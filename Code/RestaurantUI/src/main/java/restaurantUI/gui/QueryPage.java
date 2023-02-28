@@ -22,6 +22,11 @@ public class QueryPage extends JPanel {
 	DefaultListModel<String> list = new DefaultListModel<String>();
 	List<JCheckBox> allergenBoxes = new ArrayList<JCheckBox>();
 	
+	JPanel options;
+	JPanel calPanel;
+	JPanel allergenPanel;
+	JButton search;
+	
 	
 	public QueryPage(UI ui) {
 		this.ui = ui;
@@ -54,7 +59,7 @@ public class QueryPage extends JPanel {
 		
 		add(results);
 		
-		JPanel options = new JPanel(new GridLayout(0, 1, 10, 10));
+		options = new JPanel(new GridLayout(0, 1, 10, 10));
 		
 		JPanel dietPanel = new JPanel();
 		dietPanel.add(new JLabel("Diets:"));
@@ -69,19 +74,21 @@ public class QueryPage extends JPanel {
 		
 		options.add(dietPanel);
 		
-		JPanel calPanel = new JPanel();
-		calPanel.add(new JLabel("Calories"));
-		JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 1000, 0);
-		slider.setMinorTickSpacing(50);
-		slider.setMajorTickSpacing(200);
-		slider.setPaintTicks(true);
-		slider.setPaintLabels(true);
-		calPanel.add(slider);
+		if (ui.showCalories) {
+			calPanel = new JPanel();
+			calPanel.add(new JLabel("Calories"));
+			JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 1000, 0);
+			slider.setMinorTickSpacing(50);
+			slider.setMajorTickSpacing(200);
+			slider.setPaintTicks(true);
+			slider.setPaintLabels(true);
+			calPanel.add(slider);
+			
+			options.add(calPanel);
+		}
 		
-		options.add(calPanel);
 		
-		
-		JPanel allergenPanel = new JPanel();
+		allergenPanel = new JPanel();
 		allergenPanel.add(new JLabel("Allergen:"));
 		List<String> allergens = ui.om.getAllAllergenNames();
 		for (String allergen: allergens) {
@@ -91,7 +98,7 @@ public class QueryPage extends JPanel {
 		}
 		options.add(allergenPanel);
 		
-		JButton search = new JButton("Search");
+		search = new JButton("Search");
 		search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -111,6 +118,23 @@ public class QueryPage extends JPanel {
         });
 		options.add(search);
 		add(options);
+		
+	}
+	
+	public void refresh() {
+		if (ui.showCalories) {
+			options.remove(calPanel);
+			options.remove(allergenPanel);
+			options.remove(search);
+			options.add(calPanel);
+			options.add(allergenPanel);
+			options.add(search);
+		} else {
+			options.remove(calPanel);
+		}
+		
+		revalidate();
+		repaint();
 		
 	}
 }

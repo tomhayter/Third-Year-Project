@@ -28,7 +28,7 @@ public class MainPage extends JPanel {
         
         
 
-        JPanel buttonsPanel = new JPanel(new GridLayout(4, 3, 20, 20));
+        JPanel buttonsPanel = new JPanel(new GridLayout(5, 3, 10, 10));
         buttonsPanel.add(new JLabel(""));
         
         
@@ -70,8 +70,19 @@ public class MainPage extends JPanel {
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));        
         
+        JButton settings = new JButton("Settings");
+        settings.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent e) {
+        		ui.SwitchToFrame(SettingsPage.CARD);
+        	}
+        });
+        buttonsPanel.add(settings);
+        
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));        
+        
         JButton quit = new JButton("Quit");
-        quit.setPreferredSize(new Dimension(10,50));
         quit.addActionListener(new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent e) {
