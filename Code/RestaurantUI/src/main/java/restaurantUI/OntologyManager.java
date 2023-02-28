@@ -106,17 +106,23 @@ public class OntologyManager {
 			) {
 		OWLClass ing = df.getOWLClass(iri + "#" + ingredient + "Ingredient");
 		OWLClass type = df.getOWLClass(iri + "#" + ingType + "Ingredient");
+		OWLObjectProperty hasNutrient = df.getOWLObjectProperty(iri + "#hasNutrient");
 		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(ing,  type);
 		ontology.add(axiom);
 		
+		List<OWLClass> allAllergens = new ArrayList<OWLClass>();
 		for (String allergen : allergens) {
 			System.out.println(allergen);
 			OWLClass nutrient = df.getOWLClass(iri + "#" + allergen + "Nutrient");
-			OWLObjectProperty hasNutrient = df.getOWLObjectProperty(iri + "#hasNutrient");
+			allAllergens.add(nutrient);
 			OWLSubClassOfAxiom ingHasNutrient = df.getOWLSubClassOfAxiom(ing, df.getOWLObjectSomeValuesFrom(hasNutrient, nutrient));
 			System.out.println(ingHasNutrient);
 			ontology.add(ingHasNutrient);
 		}
+		OWLClassExpression combination = df.getOWLObjectUnionOf(allAllergens);
+		OWLSubClassOfAxiom compMustHaveIngs = df.getOWLSubClassOfAxiom(ing, df.getOWLObjectAllValuesFrom(hasNutrient, combination));
+		ontology.add(compMustHaveIngs);
+		
 		
 		saveOntology();
 		runReasoner();
@@ -149,7 +155,7 @@ public class OntologyManager {
 			ontology.add(compHasIng);
 		}
 		
-		OWLClassExpression combination = df.getOWLObjectUnionOf(allIngs);;
+		OWLClassExpression combination = df.getOWLObjectUnionOf(allIngs);
 		OWLSubClassOfAxiom compMustHaveIngs = df.getOWLSubClassOfAxiom(comp, df.getOWLObjectAllValuesFrom(hasIng, combination));
 		ontology.add(compMustHaveIngs);
 		saveOntology();

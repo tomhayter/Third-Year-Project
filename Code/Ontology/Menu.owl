@@ -130,6 +130,12 @@
                 <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MilkNutrient"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MilkNutrient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -154,6 +160,20 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
                 <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#TreeNutNutrient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#EggNutrient"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MilkNutrient"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#TreeNutNutrient"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -271,6 +291,12 @@
                 <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#BeefNutrient"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#BeefNutrient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -289,6 +315,19 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
                 <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MilkNutrient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#EggNutrient"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MilkNutrient"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -411,6 +450,19 @@
                 <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MilkNutrient"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#FishNutrient"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MilkNutrient"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -451,6 +503,19 @@
                 <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#SoyNutrient"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#GlutenNutrient"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#SoyNutrient"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -469,6 +534,19 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
                 <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#FishNutrient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#EggNutrient"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#FishNutrient"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -525,6 +603,12 @@
                 <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MilkNutrient"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MilkNutrient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -547,6 +631,12 @@
                 <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#GlutenNutrient"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#GlutenNutrient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -559,6 +649,12 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
                 <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MilkNutrient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MilkNutrient"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -589,6 +685,16 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#ChickenBreastIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MeatIngredient"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+                    </owl:Restriction>
+                </owl:complementOf>
+            </owl:Class>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -601,6 +707,12 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
                 <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MilkNutrient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MilkNutrient"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -719,6 +831,16 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#ChipotleHotSauceIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#OtherIngredient"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+                    </owl:Restriction>
+                </owl:complementOf>
+            </owl:Class>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -731,6 +853,12 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
                 <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#EggNutrient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#EggNutrient"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -953,6 +1081,16 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#FritterBurgerIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#OtherIngredient"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+                    </owl:Restriction>
+                </owl:complementOf>
+            </owl:Class>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1121,6 +1259,16 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#LettuceIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VegetableIngredient"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+                    </owl:Restriction>
+                </owl:complementOf>
+            </owl:Class>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1145,6 +1293,16 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MustardIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#OtherIngredient"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+                    </owl:Restriction>
+                </owl:complementOf>
+            </owl:Class>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1316,6 +1474,16 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#PickleIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VegetableIngredient"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+                    </owl:Restriction>
+                </owl:complementOf>
+            </owl:Class>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1324,6 +1492,16 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#PickledRedJalapenosIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VegetableIngredient"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+                    </owl:Restriction>
+                </owl:complementOf>
+            </owl:Class>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1358,6 +1536,16 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#PlantBasedPattyIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#OtherIngredient"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+                    </owl:Restriction>
+                </owl:complementOf>
+            </owl:Class>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1505,6 +1693,19 @@
                 <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MilkNutrient"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#EggNutrient"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MilkNutrient"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1513,6 +1714,16 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#RedOnionIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VegetableIngredient"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+                    </owl:Restriction>
+                </owl:complementOf>
+            </owl:Class>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1521,6 +1732,16 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#RedOnionRelishIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#OtherIngredient"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+                    </owl:Restriction>
+                </owl:complementOf>
+            </owl:Class>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1529,6 +1750,16 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#RocketIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VegetableIngredient"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+                    </owl:Restriction>
+                </owl:complementOf>
+            </owl:Class>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1545,6 +1776,16 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#ShoestringFriesIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#CarbohydrateIngredient"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+                    </owl:Restriction>
+                </owl:complementOf>
+            </owl:Class>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1553,6 +1794,16 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#SmokedBaconIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#MeatIngredient"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+                    </owl:Restriction>
+                </owl:complementOf>
+            </owl:Class>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1569,6 +1820,16 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#TomatoIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VegetableIngredient"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+                    </owl:Restriction>
+                </owl:complementOf>
+            </owl:Class>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1699,6 +1960,12 @@
                 <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#SoyNutrient"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#SoyNutrient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1711,6 +1978,12 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
                 <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#SoyNutrient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#SoyNutrient"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -1841,6 +2114,16 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VeganCheeseIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#OtherIngredient"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+                    </owl:Restriction>
+                </owl:complementOf>
+            </owl:Class>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1849,6 +2132,16 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VeganChipotleSlawIngredient">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#OtherIngredient"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasNutrient"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>
+                    </owl:Restriction>
+                </owl:complementOf>
+            </owl:Class>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
