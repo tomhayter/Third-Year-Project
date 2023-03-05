@@ -5,7 +5,9 @@ import restaurantUI.gui.*;
 public class RestaurantUI {
 
     public static void main(String[] args) {
-        UI ui = new UI();
+    	OntologyManager manager = new OntologyManager();
+    	
+        UI ui = new UI(manager);
         ui.Start();
     }
 }

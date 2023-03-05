@@ -37,9 +37,9 @@ public class UI {
 	private SettingsPage SettingsPage;
 	
 
-	public UI() {
+	public UI(OntologyManager manager) {
 		
-		om = new OntologyManager();
+		om = manager;
 		
 		frame = new JFrame();
 		frame.setSize(width, height);

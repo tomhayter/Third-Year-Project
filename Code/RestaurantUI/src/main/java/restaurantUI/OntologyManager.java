@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-//import org.semanticweb.HermiT.Reasoner;
 import org.semanticweb.HermiT.ReasonerFactory;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
@@ -26,8 +25,7 @@ import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.reasoner.InferenceType;
 import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
-//import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
-//import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
+
 
 public class OntologyManager {
 	
@@ -120,8 +118,8 @@ public class OntologyManager {
 			ontology.add(ingHasNutrient);
 		}
 		OWLClassExpression combination = df.getOWLObjectUnionOf(allAllergens);
-		OWLSubClassOfAxiom compMustHaveIngs = df.getOWLSubClassOfAxiom(ing, df.getOWLObjectAllValuesFrom(hasNutrient, combination));
-		ontology.add(compMustHaveIngs);
+		OWLSubClassOfAxiom compMustHaveAllergens = df.getOWLSubClassOfAxiom(ing, df.getOWLObjectAllValuesFrom(hasNutrient, combination));
+		ontology.add(compMustHaveAllergens);
 		
 		
 		saveOntology();
@@ -329,22 +327,21 @@ public class OntologyManager {
 		runReasoner();
 		HashSet<String> allDishes = new HashSet<String>(getAllDishNames());
 		
-		List<HashSet<String>> dishGroups = new ArrayList<HashSet<String>>();
+		List<HashSet<String>> allowedDishGroups = new ArrayList<HashSet<String>>();
+		List<HashSet<String>> notAllowedDishGroups = new ArrayList<HashSet<String>>();
 		
 		if (vegetarian) {
 			ArrayList<Node<OWLClass>> vegeDishNodes = new ArrayList<Node<OWLClass>>();
 			reasoner.getSubClasses(df.getOWLClass(iri + "#VegetarianDish"), false).forEach(vegeDishNodes::add);
 			HashSet<String> vegeDishes = new HashSet<String>();
 			for(Node<OWLClass> dish: vegeDishNodes) {
-				System.out.println(dish);
 				String name = dish.entities().findFirst().get().getIRI().getShortForm().replace("Dish", "");
 				if (invalid_names.contains(name)) {
 					continue;
 				}
-				System.out.println(name);
 				vegeDishes.add(name);
 			}
-			dishGroups.add(vegeDishes);
+			allowedDishGroups.add(vegeDishes);
 		}
 		
 		if (vegan) {
@@ -352,15 +349,13 @@ public class OntologyManager {
 			reasoner.getSubClasses(df.getOWLClass(iri + "#VeganDish"), false).forEach(veganDishNodes::add);
 			HashSet<String> veganDishes = new HashSet<String>();
 			for(Node<OWLClass> dish: veganDishNodes) {
-				System.out.println(dish);
 				String name = dish.entities().findFirst().get().getIRI().getShortForm().replace("Dish", "");
 				if (invalid_names.contains(name)) {
 					continue;
 				}
-				System.out.println(name);
 				veganDishes.add(name);
 			}
-			dishGroups.add(veganDishes);
+			allowedDishGroups.add(veganDishes);
 		}
 		
 		
@@ -369,15 +364,13 @@ public class OntologyManager {
 			reasoner.getSubClasses(df.getOWLClass(iri + "#KosherDish"), false).forEach(kosherDishNodes::add);
 			HashSet<String> kosherDishes = new HashSet<String>();
 			for(Node<OWLClass> dish: kosherDishNodes) {
-				System.out.println(dish);
 				String name = dish.entities().findFirst().get().getIRI().getShortForm().replace("Dish", "");
 				if (invalid_names.contains(name)) {
 					continue;
 				}
-				System.out.println(name);
 				kosherDishes.add(name);
 			}
-			dishGroups.add(kosherDishes);
+			allowedDishGroups.add(kosherDishes);
 		}
 		
 		
@@ -386,29 +379,43 @@ public class OntologyManager {
 			reasoner.getSubClasses(df.getOWLClass(iri + "#HalalDish"), false).forEach(halalDishNodes::add);
 			HashSet<String> halalDishes = new HashSet<String>();
 			for(Node<OWLClass> dish: halalDishNodes) {
-				System.out.println(dish);
 				String name = dish.entities().findFirst().get().getIRI().getShortForm().replace("Dish", "");
 				if (invalid_names.contains(name)) {
 					continue;
 				}
-				System.out.println(name);
 				halalDishes.add(name);
 			}
-			dishGroups.add(halalDishes);
+			allowedDishGroups.add(halalDishes);
 		}
 		
-//		for(String allergen: allergens) {
-//			HashSet<String> allowed = new HashSet<String>();
-//			
-//			
-//			dishGroups.add(allowed);
-//		}
+		for(String allergen: allergens) {
+			OWLClass allergenClass = df.getOWLClass(iri + "#" + allergen + "Nutrient");
+			OWLClass dishClass = df.getOWLClass(iri + "#Dish");
+			OWLObjectProperty hasPart = df.getOWLObjectProperty(iri + "#hasPart");
+			ArrayList<Node<OWLClass>> allowedClasses = new ArrayList<Node<OWLClass>>();
+			HashSet<String> containingDishes = new HashSet<String>();
+			reasoner.getSubClasses(df.getOWLObjectIntersectionOf(dishClass, df.getOWLObjectSomeValuesFrom(hasPart, allergenClass))).forEach(allowedClasses::add);
+			for(Node<OWLClass> allowedClass: allowedClasses) {
+				String name = allowedClass.entities().findFirst().get().getIRI().getShortForm().replace("Dish", "");
+				if (invalid_names.contains(name)) {
+					continue;
+				}
+				containingDishes.add(name);
+			}
+			
+			
+			notAllowedDishGroups.add(containingDishes);
+		}
 		
 		
 		
-		for(HashSet<String> group: dishGroups) {
+		for(HashSet<String> group: allowedDishGroups) {
 			System.out.println(group);
 			allDishes.retainAll(group);
+		}
+		
+		for(HashSet<String> group: notAllowedDishGroups) {
+			allDishes.removeAll(group);
 		}
 		
 		
