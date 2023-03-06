@@ -1,5 +1,8 @@
 package restaurantUI.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -7,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 public class SettingsPage extends JPanel {
 	
@@ -16,9 +20,18 @@ public class SettingsPage extends JPanel {
 	public SettingsPage(UI ui) {
 		this.ui = ui;
 		
-		JLabel title = new JLabel("Settings");
-		add(title);
+		setLayout(new BorderLayout());
 		
+		JLabel title = new JLabel("Settings");
+		title.setFont(new Font("Calibri", Font.BOLD, 24));
+		JPanel titlePanel = new JPanel();
+		titlePanel.add(title);
+		add(titlePanel, BorderLayout.NORTH);
+		
+		JPanel contentsPanel = new JPanel(new GridLayout(7, 3, 0, 32));
+		contentsPanel.setBorder(new EmptyBorder(32, 0, 0, 0));
+		
+		contentsPanel.add(new JLabel(""));
 		JCheckBox calories = new JCheckBox("Show calorie information");
 		calories.setSelected(ui.showCalories);
 		calories.addActionListener(new ActionListener() {
@@ -27,9 +40,10 @@ public class SettingsPage extends JPanel {
 				ui.showCalories = calories.isSelected();
 			}
 		});
+		contentsPanel.add(calories);
+		contentsPanel.add(new JLabel(""));
 		
-		add(calories);
-		
+		contentsPanel.add(new JLabel(""));
 		JButton back = new JButton("Back");
 		back.addActionListener(new ActionListener() {
         	@Override
@@ -38,6 +52,29 @@ public class SettingsPage extends JPanel {
         		ui.SwitchToFrame(MainPage.CARD);
         	}
         });
-		add(back);	
+		contentsPanel.add(back);
+		contentsPanel.add(new JLabel(""));
+		
+		contentsPanel.add(new JLabel(""));
+		contentsPanel.add(new JLabel(""));
+		contentsPanel.add(new JLabel(""));
+		
+		contentsPanel.add(new JLabel(""));
+		contentsPanel.add(new JLabel(""));
+		contentsPanel.add(new JLabel(""));
+		
+		contentsPanel.add(new JLabel(""));
+		contentsPanel.add(new JLabel(""));
+		contentsPanel.add(new JLabel(""));
+		
+		contentsPanel.add(new JLabel(""));
+		contentsPanel.add(new JLabel(""));
+		contentsPanel.add(new JLabel(""));
+		
+		contentsPanel.add(new JLabel(""));
+		contentsPanel.add(new JLabel(""));
+		contentsPanel.add(new JLabel(""));
+		
+		add(contentsPanel, BorderLayout.CENTER);
 	}
 }

@@ -13,8 +13,8 @@ public class UI {
 	
 	public OntologyManager om;
 	
-	int height = 500;
-	int width = 500;
+	int height = 600;
+	int width = 550;
 	
 	JFrame frame;
 	

@@ -322,8 +322,8 @@ public class OntologyManager {
 		return names;
 	}
 	
+	
 	public List<String> dishSearch(List<String> allergens, boolean vegetarian, boolean vegan, boolean kosher, boolean halal) {
-		List<String> results = new ArrayList<String>();
 		runReasoner();
 		HashSet<String> allDishes = new HashSet<String>(getAllDishNames());
 		
@@ -373,7 +373,6 @@ public class OntologyManager {
 			allowedDishGroups.add(kosherDishes);
 		}
 		
-		
 		if (halal) {
 			ArrayList<Node<OWLClass>> halalDishNodes = new ArrayList<Node<OWLClass>>();
 			reasoner.getSubClasses(df.getOWLClass(iri + "#HalalDish"), false).forEach(halalDishNodes::add);
@@ -402,22 +401,15 @@ public class OntologyManager {
 				}
 				containingDishes.add(name);
 			}
-			
-			
 			notAllowedDishGroups.add(containingDishes);
 		}
 		
-		
-		
 		for(HashSet<String> group: allowedDishGroups) {
-			System.out.println(group);
 			allDishes.retainAll(group);
 		}
-		
 		for(HashSet<String> group: notAllowedDishGroups) {
 			allDishes.removeAll(group);
 		}
-		
 		
 		return new ArrayList<String>(allDishes);
 	}

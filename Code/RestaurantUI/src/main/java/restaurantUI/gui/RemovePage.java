@@ -1,12 +1,15 @@
 package restaurantUI.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 public class RemovePage extends JPanel {
 	
@@ -17,12 +20,27 @@ public class RemovePage extends JPanel {
 		this.ui = ui;
 		
 		setName("Remove from ontology");
+		setLayout(new BorderLayout());
 
         JLabel title = new JLabel("What would you like to remove from the ontology?");
-        add(title, BorderLayout.NORTH);
+        title.setFont(new Font("Calibri", Font.BOLD, 24));
+        JPanel titlePanel = new JPanel();
+        titlePanel.add(title, BorderLayout.CENTER);
+        add(titlePanel, BorderLayout.NORTH);
         
-//        JPanel buttonsPanel = new JPanel(new GridLayout(4, 3, 20, 20));
+        JPanel buttonsPanel = new JPanel(new GridLayout(7, 3, 0, 32));
+        buttonsPanel.add(new JLabel(""));
         
+        JButton removeAllergen = new JButton("Allergen (TODO)");
+        removeAllergen.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	
+            }
+        });
+        buttonsPanel.add(removeAllergen);
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
         
         JButton removeIng = new JButton("Ingredient");
         removeIng.addActionListener(new ActionListener() {
@@ -31,7 +49,9 @@ public class RemovePage extends JPanel {
                 ui.SwitchToFrame(RemoveIngredientPage.CARD);
             }
         });
-        add(removeIng, BorderLayout.CENTER);
+        buttonsPanel.add(removeIng);
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
         
         JButton removeComp = new JButton("Component");
         removeComp.addActionListener(new ActionListener() {
@@ -40,7 +60,9 @@ public class RemovePage extends JPanel {
                 ui.SwitchToFrame(RemoveComponentPage.CARD);
             }
         });
-        add(removeComp);
+        buttonsPanel.add(removeComp);
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
         
         JButton removeDish = new JButton("Dish");
         removeDish.addActionListener(new ActionListener() {
@@ -49,7 +71,9 @@ public class RemovePage extends JPanel {
                 ui.SwitchToFrame(RemoveDishPage.CARD);
             }
         });
-        add(removeDish);
+        buttonsPanel.add(removeDish);
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
         
 
         JButton backToMain = new JButton("Back to Main Menu");
@@ -59,6 +83,17 @@ public class RemovePage extends JPanel {
                 ui.SwitchToFrame(MainPage.CARD);
             }
         });
-        add(backToMain, BorderLayout.SOUTH);
+        buttonsPanel.add(backToMain);
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
+        
+        buttonsPanel.setBorder(new EmptyBorder(32, 0, 0, 0));
+        
+        add(buttonsPanel, BorderLayout.CENTER);
 	}
 }

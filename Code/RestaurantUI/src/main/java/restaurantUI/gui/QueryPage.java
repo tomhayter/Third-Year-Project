@@ -1,7 +1,9 @@
 package restaurantUI.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -14,6 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 
 public class QueryPage extends JPanel {
 	
@@ -33,10 +38,8 @@ public class QueryPage extends JPanel {
 		
 		setLayout(new GridLayout(1, 2, 10, 10));
 		
-		JPanel results = new JPanel(new GridLayout(0, 1, 10, 10));
-		
-		JLabel title = new JLabel("Results:");
-		results.add(title, BorderLayout.NORTH);
+		JPanel results = new JPanel(new GridLayout(2, 1, 50, 50));
+		results.setBorder(new CompoundBorder(new TitledBorder("Results"), new EmptyBorder(16, 16, 16, 16)));
 		
 		List<String> allDishes = ui.om.getAllDishNames();
 		for(String s: allDishes) {
@@ -44,11 +47,13 @@ public class QueryPage extends JPanel {
 		}
 		
 		JList<String> resultsList = new JList<String>(list);
-		resultsList.setLayoutOrientation(JList.VERTICAL_WRAP);
+//		resultsList.setLayoutOrientation(JList.VERTICAL_WRAP);
 		
 		results.add(resultsList);
 		
 		JButton back = new JButton("Back to Main Menu");
+//		back.set
+//		back.setPreferredSize(new Dimension(20, 20));
 		back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,7 +67,7 @@ public class QueryPage extends JPanel {
 		options = new JPanel(new GridLayout(0, 1, 10, 10));
 		
 		JPanel dietPanel = new JPanel();
-		dietPanel.add(new JLabel("Diets:"));
+		dietPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Diets")));
 		JCheckBox vege = new JCheckBox("Vegetarian");
 		dietPanel.add(vege);
 		JCheckBox vegan = new JCheckBox("Vegan");
@@ -76,7 +81,7 @@ public class QueryPage extends JPanel {
 		
 		if (ui.showCalories) {
 			calPanel = new JPanel();
-			calPanel.add(new JLabel("Calories"));
+			calPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Calories")));
 			JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 1000, 0);
 			slider.setMinorTickSpacing(50);
 			slider.setMajorTickSpacing(200);
@@ -89,7 +94,7 @@ public class QueryPage extends JPanel {
 		
 		
 		allergenPanel = new JPanel();
-		allergenPanel.add(new JLabel("Allergen:"));
+		allergenPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Allergens")));
 		List<String> allergens = ui.om.getAllAllergenNames();
 		for (String allergen: allergens) {
 			JCheckBox box = new JCheckBox(allergen);
@@ -99,6 +104,7 @@ public class QueryPage extends JPanel {
 		options.add(allergenPanel);
 		
 		search = new JButton("Search");
+		search.setMargin(new Insets(32, 32, 32, 32));
 		search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

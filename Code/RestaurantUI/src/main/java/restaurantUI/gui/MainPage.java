@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class MainPage extends JPanel {
 	
@@ -17,20 +18,17 @@ public class MainPage extends JPanel {
 	public MainPage(UI ui) {
 		this.ui = ui;
 		setName("RestaurantUI");
-		setLayout(new GridLayout(3, 1, 20, 20));
+		setLayout(new BorderLayout());
 
-        JLabel title = new JLabel("An ontology-based restaurant system.");
-        title.setFont(new Font("Calibri", Font.BOLD, 20));
-//        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel title = new JLabel("An ontology-based restaurant system");
+        title.setFont(new Font("Calibri", Font.BOLD, 24));
         JPanel titlePanel = new JPanel();
         titlePanel.add(title, BorderLayout.CENTER);
         add(titlePanel, BorderLayout.NORTH);
-        
-        
 
-        JPanel buttonsPanel = new JPanel(new GridLayout(5, 3, 10, 10));
-        buttonsPanel.add(new JLabel(""));
+        JPanel buttonsPanel = new JPanel(new GridLayout(7, 3, 0, 32));
         
+        buttonsPanel.add(new JLabel(""));
         
         JButton goToAddButton = new JButton("Add to ontology");
         goToAddButton.addActionListener(new ActionListener() {
@@ -91,7 +89,18 @@ public class MainPage extends JPanel {
         });
         buttonsPanel.add(quit);
         
-        add(buttonsPanel);
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
+        
+        
+        buttonsPanel.setBorder(new EmptyBorder(32, 0, 0, 0));
+        
+        add(buttonsPanel, BorderLayout.CENTER);
 	}
 
 }
