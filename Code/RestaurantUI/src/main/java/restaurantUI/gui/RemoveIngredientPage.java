@@ -1,6 +1,10 @@
 package restaurantUI.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -10,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 public class RemoveIngredientPage extends JPanel {
 	
@@ -21,9 +26,23 @@ public class RemoveIngredientPage extends JPanel {
 		this.ui = ui;
 		
 		setName("Remove Ingredient");
-		JLabel title = new JLabel("Select an ingredient to remove");
-		add(title, BorderLayout.NORTH);
+		setLayout(new BorderLayout());
 		
+		JLabel title = new JLabel("Remove Dish");
+	    title.setFont(new Font("Calibri", Font.BOLD, 24));
+	    JPanel titlePanel = new JPanel();
+	    titlePanel.add(title, BorderLayout.CENTER);
+	    add(titlePanel, BorderLayout.NORTH);
+	    
+	    JPanel contentsPanel = new JPanel(new GridBagLayout());
+	    contentsPanel.setBorder(new EmptyBorder(32, 0, 0, 0));
+	    GridBagConstraints gbc = new GridBagConstraints();
+	    Insets i = new Insets(16, 0, 16, 0);
+	    gbc.insets = i;
+	    gbc.fill = GridBagConstraints.HORIZONTAL;
+	    
+	    gbc.gridx = 1;
+	    gbc.gridy = 0;
 		List<String> ingTypesList = ui.om.getIngredientTypeNames();
 		ingTypesList.add("All");
 		
@@ -31,15 +50,15 @@ public class RemoveIngredientPage extends JPanel {
         ingTypesArray = ingTypesList.toArray(ingTypesArray);
         JComboBox<String> ingTypes = new JComboBox<String>(ingTypesArray);
         ingTypes.setSelectedItem("All");
-        add(ingTypes);
+        contentsPanel.add(ingTypes, gbc);
         
+        gbc.gridx = 1;
+        gbc.gridy = 1;
         ingName = new JComboBox<String>();
-        
         List<String> allIngs = ui.om.getAllIngredientNames();
         for (String ing: allIngs) {
         	ingName.addItem(ing);
         }
-        
         ingTypes.addActionListener(new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent e) {
@@ -57,8 +76,10 @@ public class RemoveIngredientPage extends JPanel {
         		}
         	}
         });
-        add(ingName, BorderLayout.CENTER);
+        contentsPanel.add(ingName, gbc);
         
+        gbc.gridx = 1;
+        gbc.gridy = 2;
         JButton removeButton = new JButton("Remove Ingredient");
         removeButton.addActionListener(new ActionListener() {
             @Override
@@ -69,7 +90,20 @@ public class RemoveIngredientPage extends JPanel {
                 ui.SwitchToFrame(MainPage.CARD);
             }
         });
-        add(removeButton, BorderLayout.SOUTH);
+        contentsPanel.add(removeButton, gbc);
+        
+        gbc.gridx = 1;
+	    gbc.gridy = 3;
+	    JButton backButton = new JButton("Back");
+	    backButton.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            ui.SwitchToFrame(RemovePage.CARD);
+	        }
+	    });
+	    contentsPanel.add(backButton, gbc);
+	    
+	    add(contentsPanel, BorderLayout.CENTER);
 	}
 
 	
