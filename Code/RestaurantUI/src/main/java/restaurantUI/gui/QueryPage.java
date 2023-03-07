@@ -2,6 +2,9 @@ package restaurantUI.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -15,6 +18,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -35,38 +39,56 @@ public class QueryPage extends JPanel {
 	
 	public QueryPage(UI ui) {
 		this.ui = ui;
+		setLayout(new BorderLayout());
 		
-		setLayout(new GridLayout(1, 2, 10, 10));
+		JLabel title = new JLabel("Search");
+	    title.setFont(new Font("Calibri", Font.BOLD, 24));
+	    JPanel titlePanel = new JPanel();
+	    titlePanel.add(title, BorderLayout.CENTER);
+	    add(titlePanel, BorderLayout.NORTH);
 		
-		JPanel results = new JPanel(new GridLayout(2, 1, 50, 50));
+		JPanel contentsPanel = new JPanel(new GridBagLayout());
+		contentsPanel.setBorder(new EmptyBorder(32, 0, 0, 0));
+	    GridBagConstraints gbc = new GridBagConstraints();
+	    Insets i = new Insets(0, 0, 16, 16);
+	    gbc.insets = i;
+		JPanel results = new JPanel(new BorderLayout());
 		results.setBorder(new CompoundBorder(new TitledBorder("Results"), new EmptyBorder(16, 16, 16, 16)));
 		
+		gbc.gridx = 0;
+	    gbc.gridy = 0;
+	    gbc.weighty = 2;
+	    gbc.fill = GridBagConstraints.BOTH;
 		List<String> allDishes = ui.om.getAllDishNames();
 		for(String s: allDishes) {
 			list.addElement(s);
 		}
-		
 		JList<String> resultsList = new JList<String>(list);
-//		resultsList.setLayoutOrientation(JList.VERTICAL_WRAP);
+		JScrollPane scroll = new JScrollPane();
+		scroll.setViewportView(resultsList);
+		results.add(scroll, BorderLayout.CENTER);
+		contentsPanel.add(results, gbc);
 		
-		results.add(resultsList);
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weighty = 1;
 		
+		gbc.fill = GridBagConstraints.NONE;
 		JButton back = new JButton("Back to Main Menu");
-//		back.set
-//		back.setPreferredSize(new Dimension(20, 20));
 		back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ui.SwitchToFrame(MainPage.CARD);
             }
         });
-		results.add(back);
+		contentsPanel.add(back, gbc);
 		
-		add(results);
 		
-		options = new JPanel(new GridLayout(0, 1, 10, 10));
-		
-		JPanel dietPanel = new JPanel();
+		options = new JPanel(new GridBagLayout());
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		JPanel dietPanel = new JPanel(new GridLayout(0, 2, 3, 3));
 		dietPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Diets")));
 		JCheckBox vege = new JCheckBox("Vegetarian");
 		dietPanel.add(vege);
@@ -76,12 +98,13 @@ public class QueryPage extends JPanel {
 		dietPanel.add(halal);
 		JCheckBox kosher = new JCheckBox("Kosher");
 		dietPanel.add(kosher);
-		
-		options.add(dietPanel);
+		options.add(dietPanel, gbc);
 		
 		if (ui.showCalories) {
+			gbc.gridx = 0;
+			gbc.gridy = 1;
 			calPanel = new JPanel();
-			calPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Calories")));
+			calPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Max Calories")));
 			JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 1000, 0);
 			slider.setMinorTickSpacing(50);
 			slider.setMajorTickSpacing(200);
@@ -89,11 +112,12 @@ public class QueryPage extends JPanel {
 			slider.setPaintLabels(true);
 			calPanel.add(slider);
 			
-			options.add(calPanel);
+			options.add(calPanel, gbc);
 		}
 		
-		
-		allergenPanel = new JPanel();
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		allergenPanel = new JPanel(new GridLayout(0, 2, 3, 3));
 		allergenPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Allergens")));
 		List<String> allergens = ui.om.getAllAllergenNames();
 		for (String allergen: allergens) {
@@ -101,10 +125,13 @@ public class QueryPage extends JPanel {
 			allergenBoxes.add(box);
 			allergenPanel.add(box);
 		}
-		options.add(allergenPanel);
+		options.add(allergenPanel, gbc);
+		
+		gbc.gridx = 1;
+	    gbc.gridy = 0;
+		contentsPanel.add(options);
 		
 		search = new JButton("Search");
-		search.setMargin(new Insets(32, 32, 32, 32));
 		search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -122,8 +149,12 @@ public class QueryPage extends JPanel {
                 }
             }
         });
-		options.add(search);
-		add(options);
+		gbc.gridx = 1;
+	    gbc.gridy = 1;
+	    gbc.fill = GridBagConstraints.NONE;
+	    contentsPanel.add(search, gbc);
+	    
+		add(contentsPanel);
 		
 	}
 	
