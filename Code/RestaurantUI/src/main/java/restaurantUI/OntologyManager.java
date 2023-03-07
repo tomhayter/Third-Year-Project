@@ -3,6 +3,7 @@ package restaurantUI;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,7 +55,7 @@ public class OntologyManager {
 	}
 	
 	
-	private boolean saveOntology() {
+	public boolean saveOntology() {
 		try {
 			man.saveOntology(ontology);
 			return true;
@@ -110,11 +111,9 @@ public class OntologyManager {
 		
 		List<OWLClass> allAllergens = new ArrayList<OWLClass>();
 		for (String allergen : allergens) {
-			System.out.println(allergen);
 			OWLClass nutrient = df.getOWLClass(iri + "#" + allergen + "Nutrient");
 			allAllergens.add(nutrient);
 			OWLSubClassOfAxiom ingHasNutrient = df.getOWLSubClassOfAxiom(ing, df.getOWLObjectSomeValuesFrom(hasNutrient, nutrient));
-			System.out.println(ingHasNutrient);
 			ontology.add(ingHasNutrient);
 		}
 		OWLClassExpression combination = df.getOWLObjectUnionOf(allAllergens);
@@ -133,6 +132,7 @@ public class OntologyManager {
 		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(allergen, nutrient);
 		ontology.add(axiom);
 		saveOntology();
+		runReasoner();
 	}
 	
 	
@@ -157,6 +157,7 @@ public class OntologyManager {
 		OWLSubClassOfAxiom compMustHaveIngs = df.getOWLSubClassOfAxiom(comp, df.getOWLObjectAllValuesFrom(hasIng, combination));
 		ontology.add(compMustHaveIngs);
 		saveOntology();
+		runReasoner();
 	}
 	
 		
@@ -200,6 +201,7 @@ public class OntologyManager {
 		ontology.add(dishMustHaveComps);
 		
 		saveOntology();
+		runReasoner();
 	}
 	
 
@@ -216,6 +218,7 @@ public class OntologyManager {
 			dishNames.add(dish.entities().findFirst().get().getIRI().getShortForm().replace("Dish", ""));
 
 		}
+		Collections.sort(dishNames);
 		return dishNames;
 	}
 			
@@ -247,6 +250,7 @@ public class OntologyManager {
 			}
 			names.add(name);
 		}
+		Collections.sort(names);
 		return names;
 	}
 	
@@ -262,6 +266,7 @@ public class OntologyManager {
 			}
 			names.add(name);
 		}
+		Collections.sort(names);
 		return names;
 	}
 	
@@ -275,7 +280,7 @@ public class OntologyManager {
 			}
 			names.add(name);
 		}
-		
+		Collections.sort(names);
 		return names;
 	}
 	
@@ -301,6 +306,7 @@ public class OntologyManager {
 				names.add(name);
 			}
 		}
+		Collections.sort(names);
 		return names;
 	}
 	
@@ -319,6 +325,7 @@ public class OntologyManager {
 			}
 			names.add(name);
 		}
+		Collections.sort(names);
 		return names;
 	}
 	
@@ -410,8 +417,9 @@ public class OntologyManager {
 		for(HashSet<String> group: notAllowedDishGroups) {
 			allDishes.removeAll(group);
 		}
-		
-		return new ArrayList<String>(allDishes);
+		List<String> result = new ArrayList<String>(allDishes);
+		Collections.sort(result);
+		return result;
 	}
 	
 	
