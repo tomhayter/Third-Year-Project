@@ -36,7 +36,7 @@ public class RemoveIngredientPage extends JPanel {
 	    add(titlePanel, BorderLayout.NORTH);
 	    
 	    JPanel contentsPanel = new JPanel(new GridBagLayout());
-	    contentsPanel.setBorder(new EmptyBorder(32, 0, 0, 0));
+	    contentsPanel.setBorder(new EmptyBorder(0, 0, 8, 0));
 	    GridBagConstraints gbc = new GridBagConstraints();
 	    Insets i = new Insets(16, 0, 16, 0);
 	    gbc.insets = i;
@@ -45,7 +45,7 @@ public class RemoveIngredientPage extends JPanel {
 	    gbc.gridx = 1;
 	    gbc.gridy = 0;
 		List<String> ingTypesList = ui.om.getIngredientTypeNames();
-		ingTypesList.add("All");
+		ingTypesList.add(0, "All");
 		
         String[] ingTypesArray = new String[ingTypesList.size()];
         ingTypesArray = ingTypesList.toArray(ingTypesArray);

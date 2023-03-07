@@ -101,7 +101,8 @@ public class OntologyManager {
 	public void addIngredient(
 			String ingredient,
 			String ingType,
-			String[] allergens
+			String[] allergens,
+			int calories
 			) {
 		OWLClass ing = df.getOWLClass(iri + "#" + ingredient + "Ingredient");
 		OWLClass type = df.getOWLClass(iri + "#" + ingType + "Ingredient");
@@ -425,6 +426,7 @@ public class OntologyManager {
 	
 	boolean runReasoner() {
 		reasoner.precomputeInferences(InferenceType.CLASS_HIERARCHY);
+		reasoner.flush();
 		return reasoner.isConsistent();
 	}
 }

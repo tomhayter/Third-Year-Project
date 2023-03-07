@@ -48,7 +48,7 @@ public class QueryPage extends JPanel {
 	    add(titlePanel, BorderLayout.NORTH);
 		
 		JPanel contentsPanel = new JPanel(new GridBagLayout());
-		contentsPanel.setBorder(new EmptyBorder(32, 0, 0, 0));
+		contentsPanel.setBorder(new EmptyBorder(0, 0, 8, 0));
 	    GridBagConstraints gbc = new GridBagConstraints();
 	    Insets i = new Insets(0, 0, 16, 16);
 	    gbc.insets = i;

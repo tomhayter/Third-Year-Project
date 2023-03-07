@@ -61,8 +61,8 @@ public class AddAllergenPage extends JPanel {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 	            ui.om.addAllergen(allergenName.getText());
-	            ui.updateAllergens();
 	            JOptionPane.showMessageDialog(null, "Added " + allergenName.getText() + " to the ontology.");
+	            ui.updateAllergens();
 	            ui.SwitchToFrame(MainPage.CARD);
 	            allergenName.setText("Enter Allergen Name");
 	        }

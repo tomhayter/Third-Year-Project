@@ -20,7 +20,10 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 
 public class AddIngredientPage extends JPanel {
@@ -43,14 +46,14 @@ public class AddIngredientPage extends JPanel {
 
         JPanel contentsPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        Insets i = new Insets(16, 0, 16, 0);
+        Insets i = new Insets(8, 0, 8, 0);
         gbc.insets = i;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
         gbc.gridx = 1;
         gbc.gridy = 0;
         
-        contentsPanel.setBorder(new EmptyBorder(32, 0, 0, 0));
+        contentsPanel.setBorder(new EmptyBorder(0, 0, 8, 0));
         
         JTextField ingName = new JTextField("Enter Ingredient Name");
 	    ingName.addFocusListener(new FocusListener() {
@@ -95,9 +98,19 @@ public class AddIngredientPage extends JPanel {
 	    scroll.setViewportView(allergens);
 	    allergenPanel.add(scroll, BorderLayout.CENTER);
 	    contentsPanel.add(allergenPanel, gbc);
+	    
+	    gbc.gridx = 1;
+	    gbc.gridy = 3;
+	    JPanel caloriePanel = new JPanel(new BorderLayout());
+	    JLabel calorieText = new JLabel("Calories:");
+	    caloriePanel.add(calorieText, BorderLayout.NORTH);
+	    SpinnerModel model = new SpinnerNumberModel(0, 0, 1000, 1);
+	    JSpinner calories = new JSpinner(model);
+	    caloriePanel.add(calories);
+	    contentsPanel.add(caloriePanel, gbc);
 
 	    gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
 	    JButton addButton = new JButton("Add Ingredient");
 	    addButton.addActionListener(new ActionListener() {
 	        @Override
@@ -105,7 +118,7 @@ public class AddIngredientPage extends JPanel {
 	        	String[] selected = new String[allergens.getSelectedValuesList().size()];
 	        	selected = allergens.getSelectedValuesList().toArray(selected);
 	        	
-	            ui.om.addIngredient(ingName.getText(),ingTypes.getSelectedItem().toString(), selected);
+	            ui.om.addIngredient(ingName.getText(),ingTypes.getSelectedItem().toString(), selected, (int) calories.getValue());
 	            ui.updateIngredients();
 	            JOptionPane.showMessageDialog(null, "Added " + ingName.getText() + " to the ontology.");
 	            ui.SwitchToFrame(MainPage.CARD);
@@ -115,7 +128,7 @@ public class AddIngredientPage extends JPanel {
 	    contentsPanel.add(addButton, gbc);
 
 	    gbc.gridx = 1;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
 	    JButton backButton = new JButton("Back");
 	    backButton.addActionListener(new ActionListener() {
 	        @Override
