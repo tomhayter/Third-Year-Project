@@ -1,5 +1,65 @@
 \chapter{Design \& Methodology}
 
+\section{Requirements}
+
+\subsection{Functional Requirements}
+
+Functional requirements for the system:
+
+\begin{itemize}
+\item The system needs to be able to store all dishes from the menu of a restaurant, along with the ingredients that make up that dish.
+\item The system should be able to produce a list of these dishes to the customer.
+\item The owner of a restaurant should be able to add ingredients and dishes to the system.
+\item A customer needs to be able to query the system for dishes they desire.
+\item Therefore, the system should filter the dishes by various dietry requirements, such as diets, allergies and filter by calories.
+\item The system should have the option to hide calorie information to those who do not want to see it.
+\end{itemize}
+
+Possible additions to the system:
+
+\begin{itemize}
+\item The system could filter dishes by how a meal has been prepared and cooked.
+\item The system could calculate new information for a dish based on whether a customer would like to add or remove an ingredient.
+\item The system could allow for a restaurant owner to register new allergens and diets to filter by.
+\end{itemize}
+
+\subsection{Non-Functional Requirements}
+
+The non-functional requirements of the project are that it must:
+
+\begin{itemize}
+\item The system must be intuitive, easy to use, and provide appropriate feedback when changes are made to the system.
+\item The interface must conform to Ben Shneiderman's 8 golden rules~\cite{shneiderman}.
+\item A restaurant owner should require minimal training to use the system.
+\item A customer should need no training to use the system.
+\item The system should allow customers to search for dishes as fast as possible. This is important as the restaurant and the customer will want the customer to make a decision quickly on what dish they would like to order.
+\end{itemize}
+
+\newpage
+
+Dietary Requirements to filter by:
+
+\begin{itemize}
+\item Vegetarian
+\item Vegan
+\item Pescetarian
+\item Religious diets e.g. Halal / Kosher preparation, Hindu and Sikh.
+\end{itemize}
+
+The most common allergies~\cite{burks2001food}:
+
+\begin{itemize}
+\item Peanut
+\item Ceoliac (gluten)
+\item Wheat
+\item Cow's milk
+\item Eggs
+\item Fish
+\item Shellfish
+\item Tree nuts
+\item Soybeans
+\end{itemize}
+
 % Local Variables:
 % mode: latex
 % TeX-master: "report"
