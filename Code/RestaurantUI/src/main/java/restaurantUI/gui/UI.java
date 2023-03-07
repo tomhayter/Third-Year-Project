@@ -100,6 +100,7 @@ public class UI {
 	}
 	
 	public void Quit() {
+		om.saveOntology();
 		frame.dispose();
 	}
 	

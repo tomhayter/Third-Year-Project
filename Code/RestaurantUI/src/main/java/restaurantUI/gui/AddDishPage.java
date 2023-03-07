@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -107,6 +108,7 @@ public class AddDishPage extends JPanel {
 	            			  halal.isSelected(),
 	            			  kosher.isSelected());
 	            ui.updateDishes();
+	            JOptionPane.showMessageDialog(null, "Added " + dishName.getText() + " to the ontology.");
 	            ui.SwitchToFrame(MainPage.CARD);
 	            dishName.setText("Enter Dish Name");
 	        }

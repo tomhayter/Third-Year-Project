@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -58,6 +59,7 @@ public class RemoveDishPage extends JPanel {
             	System.out.println("Deleting " + dishName.getSelectedItem().toString());
         		ui.om.removeDish(dishName.getSelectedItem().toString());
                 ui.updateDishes();
+                JOptionPane.showMessageDialog(null, "Deleted " + dishName.getSelectedItem().toString() + " from the ontology.");
                 ui.SwitchToFrame(MainPage.CARD);
             }
         });

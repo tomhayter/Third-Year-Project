@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -106,6 +107,7 @@ public class AddIngredientPage extends JPanel {
 	        	
 	            ui.om.addIngredient(ingName.getText(),ingTypes.getSelectedItem().toString(), selected);
 	            ui.updateIngredients();
+	            JOptionPane.showMessageDialog(null, "Added " + ingName.getText() + " to the ontology.");
 	            ui.SwitchToFrame(MainPage.CARD);
 	            ingName.setText("Enter Ingredient Name");
 	        }

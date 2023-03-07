@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -86,6 +87,7 @@ public class RemoveIngredientPage extends JPanel {
             public void actionPerformed(ActionEvent e) {
             	System.out.println("Deleting " + ingName.getSelectedItem().toString());
         		ui.om.removeIngredient(ingName.getSelectedItem().toString());
+        		JOptionPane.showMessageDialog(null, "Deleted " + ingName.getSelectedItem().toString() + " from the ontology.");
                 ui.updateIngredients();
                 ui.SwitchToFrame(MainPage.CARD);
             }

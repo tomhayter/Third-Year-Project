@@ -10,6 +10,7 @@ import java.awt.event.FocusListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -61,6 +62,7 @@ public class AddAllergenPage extends JPanel {
 	        public void actionPerformed(ActionEvent e) {
 	            ui.om.addAllergen(allergenName.getText());
 	            ui.updateAllergens();
+	            JOptionPane.showMessageDialog(null, "Added " + allergenName.getText() + " to the ontology.");
 	            ui.SwitchToFrame(MainPage.CARD);
 	            allergenName.setText("Enter Allergen Name");
 	        }

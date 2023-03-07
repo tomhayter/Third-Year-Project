@@ -15,6 +15,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -91,6 +92,7 @@ public class AddComponentPage extends JPanel {
         	selected = ingredients.getSelectedValuesList().toArray(selected);
         	
             ui.om.addComponent(compName.getText(),selected);
+            JOptionPane.showMessageDialog(null, "Added " + compName.getText() + " to the ontology.");
             ui.updateComponents();
             ui.SwitchToFrame(MainPage.CARD);
             compName.setText("Enter Component Name");
@@ -105,7 +107,7 @@ public class AddComponentPage extends JPanel {
     backButton.addActionListener(new ActionListener() {
     	@Override
         public void actionPerformed(ActionEvent e) {
-        	ui.SwitchToFrame(MainPage.CARD);
+        	ui.SwitchToFrame(AddPage.CARD);
         	compName.setText("Enter Component Name");
         }
     });
