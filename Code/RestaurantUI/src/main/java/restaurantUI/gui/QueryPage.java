@@ -100,14 +100,16 @@ public class QueryPage extends JPanel {
 		dietPanel.add(kosher);
 		options.add(dietPanel, gbc);
 		
+		JSlider slider = new JSlider(JSlider.HORIZONTAL, 500, 2000, 500);
+		
 		if (ui.showCalories) {
 			gbc.gridx = 0;
 			gbc.gridy = 1;
 			calPanel = new JPanel();
 			calPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Max Calories")));
-			JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 1000, 0);
-			slider.setMinorTickSpacing(50);
-			slider.setMajorTickSpacing(200);
+			
+			slider.setMinorTickSpacing(100);
+			slider.setMajorTickSpacing(500);
 			slider.setPaintTicks(true);
 			slider.setPaintLabels(true);
 			calPanel.add(slider);
@@ -142,8 +144,16 @@ public class QueryPage extends JPanel {
             			selectedAllergens.add(box.getText());
             		}
             	}
+            	
+            	
             	System.out.println(selectedAllergens);
-                List<String> dishes = ui.om.dishSearch(selectedAllergens, vege.isSelected(), vegan.isSelected(), kosher.isSelected(), halal.isSelected());
+                List<String> dishes = ui.om.dishSearch(
+                		selectedAllergens,
+                		vege.isSelected(),
+                		vegan.isSelected(),
+                		kosher.isSelected(),
+                		halal.isSelected(),
+                		slider.getValue());
                 for(String s: dishes) {
                 	list.addElement(s);
                 }

@@ -7,15 +7,20 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.semanticweb.HermiT.ReasonerFactory;
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassAxiom;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
+import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -118,9 +123,13 @@ public class OntologyManager {
 			ontology.add(ingHasNutrient);
 		}
 		OWLClassExpression combination = df.getOWLObjectUnionOf(allAllergens);
-		OWLSubClassOfAxiom compMustHaveAllergens = df.getOWLSubClassOfAxiom(ing, df.getOWLObjectAllValuesFrom(hasNutrient, combination));
-		ontology.add(compMustHaveAllergens);
+		OWLSubClassOfAxiom ingMustHaveAllergens = df.getOWLSubClassOfAxiom(ing, df.getOWLObjectAllValuesFrom(hasNutrient, combination));
+		ontology.add(ingMustHaveAllergens);
 		
+		OWLDataProperty hasCalories = df.getOWLDataProperty(iri + "#hasCalories");
+		OWLLiteral literal = df.getOWLLiteral(calories);
+		OWLSubClassOfAxiom ingHasCalories = df.getOWLSubClassOfAxiom(ing, df.getOWLDataHasValue(hasCalories, literal));
+		ontology.add(ingHasCalories);
 		
 		saveOntology();
 		runReasoner();
@@ -331,7 +340,24 @@ public class OntologyManager {
 	}
 	
 	
-	public List<String> dishSearch(List<String> allergens, boolean vegetarian, boolean vegan, boolean kosher, boolean halal) {
+	public List<String> getIngredientsInDish(String dish) {
+		List<String> allIngredients = getAllIngredientNames();
+		List<String> ingsInDish = new ArrayList<String>();
+		OWLClass dishClass = df.getOWLClass(iri + "#" + dish + "Dish");
+		OWLObjectProperty hasPart = df.getOWLObjectProperty(iri + "#hasPart");
+		for (String ing: allIngredients) {
+			OWLClass ingredient = df.getOWLClass(iri + "#" + ing +  "Ingredient");
+			ArrayList<OWLClass> equivalents = new ArrayList<OWLClass>();
+			reasoner.getEquivalentClasses(df.getOWLObjectIntersectionOf(dishClass, df.getOWLObjectSomeValuesFrom(hasPart, ingredient))).forEach(equivalents::add);;
+			if (equivalents.contains(dishClass)) {
+				ingsInDish.add(ing);
+			}
+		}
+		return ingsInDish;
+	}
+	
+	
+	public List<String> dishSearch(List<String> allergens, boolean vegetarian, boolean vegan, boolean kosher, boolean halal, int maxCalories) {
 		runReasoner();
 		HashSet<String> allDishes = new HashSet<String>(getAllDishNames());
 		
@@ -411,6 +437,34 @@ public class OntologyManager {
 			}
 			notAllowedDishGroups.add(containingDishes);
 		}
+		HashSet<String> lowCalDishes = new HashSet<String>();
+		OWLDataProperty hasCalories = df.getOWLDataProperty(iri + "#hasCalories");
+		for(String dish: allDishes) {
+			int totalCals = 0;
+			
+			List<String> ingsInDish = getIngredientsInDish(dish);
+			for (String ing: ingsInDish) {
+				Set<OWLSubClassOfAxiom> allAxiomsForClass = ontology.getSubClassAxiomsForSubClass(df.getOWLClass(iri + "#" + ing + "Ingredient"));
+				for(OWLSubClassOfAxiom ax: allAxiomsForClass) {
+					OWLClassExpression exp = ax.getSuperClass();
+					if (!exp.getDataPropertiesInSignature().contains(hasCalories)) {
+						continue;
+					}
+					Pattern pattern = Pattern.compile("\\\"[0-9]+\\\"", Pattern.CASE_INSENSITIVE);
+					Matcher matcher = pattern.matcher(exp.toString());
+					int cals = 0;
+					if(matcher.find()) {
+						cals = Integer.valueOf(matcher.group(0).replace("\"", ""));
+					}
+					totalCals += cals;
+				}
+			}
+			System.out.println(dish + " - " + totalCals);
+			if (totalCals <= maxCalories) {
+				lowCalDishes.add(dish);
+			}
+		}
+		allowedDishGroups.add(lowCalDishes);
 		
 		for(HashSet<String> group: allowedDishGroups) {
 			allDishes.retainAll(group);
