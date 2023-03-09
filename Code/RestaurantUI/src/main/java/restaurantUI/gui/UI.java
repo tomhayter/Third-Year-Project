@@ -99,6 +99,12 @@ public class UI {
 		cardLayout.show(cards, page);
 	}
 	
+	public void SwitchToFrame(JPanel panel, String page) {
+		System.out.println("Switching to " + page);
+		cards.add(panel, page);
+		cardLayout.show(cards, page);
+	}
+	
 	public void Quit() {
 		om.saveOntology();
 		frame.dispose();

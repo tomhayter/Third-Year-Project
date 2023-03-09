@@ -1,7 +1,6 @@
 package restaurantUI.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,6 +8,8 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -64,6 +66,15 @@ public class QueryPage extends JPanel {
 			list.addElement(s);
 		}
 		JList<String> resultsList = new JList<String>(list);
+		resultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		resultsList.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        if (evt.getClickCount() > 1) {
+		            DishPage dish = new DishPage(ui, resultsList.getSelectedValue());
+		            ui.SwitchToFrame(dish, resultsList.getSelectedValue());
+		        }
+		    }
+		});
 		JScrollPane scroll = new JScrollPane();
 		scroll.setViewportView(resultsList);
 		results.add(scroll, BorderLayout.CENTER);
@@ -100,7 +111,7 @@ public class QueryPage extends JPanel {
 		dietPanel.add(kosher);
 		options.add(dietPanel, gbc);
 		
-		JSlider slider = new JSlider(JSlider.HORIZONTAL, 500, 2000, 500);
+		JSlider slider = new JSlider(JSlider.HORIZONTAL, 500, 2000, 2000);
 		
 		if (ui.showCalories) {
 			gbc.gridx = 0;

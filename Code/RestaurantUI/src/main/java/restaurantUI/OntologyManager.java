@@ -340,6 +340,70 @@ public class OntologyManager {
 	}
 	
 	
+	public List<String> getSuitableDietsForDish(String dish) {
+		runReasoner();
+		List<String> suitableDiets = new ArrayList<String>();
+		OWLClass dishClass = df.getOWLClass(iri + "#" + dish + "Dish");
+		
+		if (reasoner.isEntailed(df.getOWLSubClassOfAxiom(dishClass, df.getOWLClass(iri + "#VegetarianDish")))) {
+			suitableDiets.add("Vegetarian");
+		}
+		
+		if (reasoner.isEntailed(df.getOWLSubClassOfAxiom(dishClass, df.getOWLClass(iri + "#VeganDish")))) {
+			suitableDiets.add("Vegan");
+		}
+		
+		if (reasoner.isEntailed(df.getOWLSubClassOfAxiom(dishClass, df.getOWLClass(iri + "#PescetarianDish")))) {
+			suitableDiets.add("Pescetarian");
+		}
+		
+		if (reasoner.isEntailed(df.getOWLSubClassOfAxiom(dishClass, df.getOWLClass(iri + "#KosherDish")))) {
+			suitableDiets.add("Kosher");
+		}
+		
+		if (reasoner.isEntailed(df.getOWLSubClassOfAxiom(dishClass, df.getOWLClass(iri + "#HalalDish")))) {
+			suitableDiets.add("Halal");
+		}
+		return suitableDiets;
+	}
+	
+	
+	public List<String> getAllergensInDish(String dish) {
+		runReasoner();
+		List<String> allAllergens = getAllAllergenNames();
+		List<String> allergensInDish = new ArrayList<String>();
+		OWLClass dishClass = df.getOWLClass(iri + "#" + dish + "Dish");
+		OWLObjectProperty hasPart = df.getOWLObjectProperty(iri + "#hasPart");
+		for (String a: allAllergens) {
+			OWLClass allergen = df.getOWLClass(iri + "#" + a +  "Nutrient");
+			ArrayList<OWLClass> equivalents = new ArrayList<OWLClass>();
+			reasoner.getEquivalentClasses(df.getOWLObjectIntersectionOf(dishClass, df.getOWLObjectSomeValuesFrom(hasPart, allergen))).forEach(equivalents::add);
+			if (equivalents.contains(dishClass)) {
+				allergensInDish.add(a);
+			}
+		}
+		return allergensInDish;
+	}
+	
+	
+	public List<String> getComponentsInDish(String dish) {
+		runReasoner();
+		List<String> allComponents = getAllComponentNames();
+		List<String> compsInDish = new ArrayList<String>();
+		OWLClass dishClass = df.getOWLClass(iri + "#" + dish + "Dish");
+		OWLObjectProperty hasPart = df.getOWLObjectProperty(iri + "#hasPart");
+		for (String comp: allComponents) {
+			OWLClass component = df.getOWLClass(iri + "#" + comp +  "Component");
+			ArrayList<OWLClass> equivalents = new ArrayList<OWLClass>();
+			reasoner.getEquivalentClasses(df.getOWLObjectIntersectionOf(dishClass, df.getOWLObjectSomeValuesFrom(hasPart, component))).forEach(equivalents::add);
+			if (equivalents.contains(dishClass)) {
+				compsInDish.add(comp);
+			}
+		}
+		return compsInDish;
+	}
+	
+	
 	public List<String> getIngredientsInDish(String dish) {
 		List<String> allIngredients = getAllIngredientNames();
 		List<String> ingsInDish = new ArrayList<String>();
@@ -348,12 +412,37 @@ public class OntologyManager {
 		for (String ing: allIngredients) {
 			OWLClass ingredient = df.getOWLClass(iri + "#" + ing +  "Ingredient");
 			ArrayList<OWLClass> equivalents = new ArrayList<OWLClass>();
-			reasoner.getEquivalentClasses(df.getOWLObjectIntersectionOf(dishClass, df.getOWLObjectSomeValuesFrom(hasPart, ingredient))).forEach(equivalents::add);;
+			reasoner.getEquivalentClasses(df.getOWLObjectIntersectionOf(dishClass, df.getOWLObjectSomeValuesFrom(hasPart, ingredient))).forEach(equivalents::add);
 			if (equivalents.contains(dishClass)) {
 				ingsInDish.add(ing);
 			}
 		}
 		return ingsInDish;
+	}
+	
+	
+	public int getCaloriesInDish(String dish) {
+		int totalCalories = 0;
+		OWLDataProperty hasCalories = df.getOWLDataProperty(iri + "#hasCalories");
+		List<String> ingsInDish = getIngredientsInDish(dish);
+		for (String ing: ingsInDish) {
+			Set<OWLSubClassOfAxiom> allAxiomsForClass = ontology.getSubClassAxiomsForSubClass(df.getOWLClass(iri + "#" + ing + "Ingredient"));
+			for(OWLSubClassOfAxiom ax: allAxiomsForClass) {
+				OWLClassExpression exp = ax.getSuperClass();
+				if (!exp.getDataPropertiesInSignature().contains(hasCalories)) {
+					continue;
+				}
+				Pattern pattern = Pattern.compile("\\\"[0-9]+\\\"", Pattern.CASE_INSENSITIVE);
+				Matcher matcher = pattern.matcher(exp.toString());
+				int cals = 0;
+				if(matcher.find()) {
+					cals = Integer.valueOf(matcher.group(0).replace("\"", ""));
+				}
+				totalCalories += cals;
+			}
+		}
+		
+		return totalCalories;
 	}
 	
 	
@@ -438,29 +527,11 @@ public class OntologyManager {
 			notAllowedDishGroups.add(containingDishes);
 		}
 		HashSet<String> lowCalDishes = new HashSet<String>();
-		OWLDataProperty hasCalories = df.getOWLDataProperty(iri + "#hasCalories");
+		
 		for(String dish: allDishes) {
-			int totalCals = 0;
-			
-			List<String> ingsInDish = getIngredientsInDish(dish);
-			for (String ing: ingsInDish) {
-				Set<OWLSubClassOfAxiom> allAxiomsForClass = ontology.getSubClassAxiomsForSubClass(df.getOWLClass(iri + "#" + ing + "Ingredient"));
-				for(OWLSubClassOfAxiom ax: allAxiomsForClass) {
-					OWLClassExpression exp = ax.getSuperClass();
-					if (!exp.getDataPropertiesInSignature().contains(hasCalories)) {
-						continue;
-					}
-					Pattern pattern = Pattern.compile("\\\"[0-9]+\\\"", Pattern.CASE_INSENSITIVE);
-					Matcher matcher = pattern.matcher(exp.toString());
-					int cals = 0;
-					if(matcher.find()) {
-						cals = Integer.valueOf(matcher.group(0).replace("\"", ""));
-					}
-					totalCals += cals;
-				}
-			}
-			System.out.println(dish + " - " + totalCals);
-			if (totalCals <= maxCalories) {
+			int calories = getCaloriesInDish(dish);
+			System.out.println(dish + " - " + calories);
+			if (calories <= maxCalories) {
 				lowCalDishes.add(dish);
 			}
 		}
