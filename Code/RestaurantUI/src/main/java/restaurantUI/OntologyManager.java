@@ -422,10 +422,14 @@ public class OntologyManager {
 	
 	
 	public int getCaloriesInDish(String dish) {
+		List<String> ingsInDish = getIngredientsInDish(dish);
+		return getCaloriesInIngredients(ingsInDish);
+	}
+	
+	public int getCaloriesInIngredients(List<String> ingredients) {
 		int totalCalories = 0;
 		OWLDataProperty hasCalories = df.getOWLDataProperty(iri + "#hasCalories");
-		List<String> ingsInDish = getIngredientsInDish(dish);
-		for (String ing: ingsInDish) {
+		for (String ing: ingredients) {
 			Set<OWLSubClassOfAxiom> allAxiomsForClass = ontology.getSubClassAxiomsForSubClass(df.getOWLClass(iri + "#" + ing + "Ingredient"));
 			for(OWLSubClassOfAxiom ax: allAxiomsForClass) {
 				OWLClassExpression exp = ax.getSuperClass();

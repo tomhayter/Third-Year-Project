@@ -22,15 +22,17 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-public class DishPage extends JPanel {
+public class ExtraPage extends JPanel {
 
 	UI ui;
 	
-	public DishPage(UI ui, String dish) {
+	JLabel calories;
+	
+	public ExtraPage(UI ui, String dish) {
 		this.ui = ui;
 		setLayout(new BorderLayout());
 
-        JLabel title = new JLabel(dish);
+        JLabel title = new JLabel(dish + " - Extras");
         title.setFont(new Font("Calibri", Font.BOLD, 24));
         JPanel titlePanel = new JPanel();
         titlePanel.add(title, BorderLayout.CENTER);
@@ -42,54 +44,7 @@ public class DishPage extends JPanel {
 	    Insets i = new Insets(0, 0, 16, 16);
 	    gbc.insets = i;
 	    
-		JPanel ings = new JPanel(new BorderLayout());
-		ings.setBorder(new CompoundBorder(new TitledBorder("Ingredients"), new EmptyBorder(16, 16, 16, 16)));
-		
-		gbc.gridx = 0;
-	    gbc.gridy = 0;
-	    gbc.fill = GridBagConstraints.BOTH;
-		List<String> ingredientsInDish = ui.om.getIngredientsInDish(dish);
-		DefaultListModel<String> ingsList = new DefaultListModel<String>();
-		for(String s: ingredientsInDish) {
-			ingsList.addElement(s);
-		}
-		JList<String> ingredientsList = new JList<String>(ingsList);
-		JScrollPane scroll = new JScrollPane();
-		scroll.setViewportView(ingredientsList);
-		ings.add(scroll, BorderLayout.CENTER);
-		contentsPanel.add(ings, gbc);
-		
-		JPanel comps = new JPanel(new BorderLayout());
-		comps.setBorder(new CompoundBorder(new TitledBorder("Components"), new EmptyBorder(16, 16, 16, 16)));
-		
-		gbc.gridx = 0;
-	    gbc.gridy = 1;
-		List<String> componentsInDish = ui.om.getComponentsInDish(dish);
-		DefaultListModel<String> compList = new DefaultListModel<String>();
-		for(String s: componentsInDish) {
-			compList.addElement(s);
-		}
-		JList<String> componentsList = new JList<String>(compList);
-		JScrollPane compScroll = new JScrollPane();
-		compScroll.setViewportView(componentsList);
-		comps.add(compScroll, BorderLayout.CENTER);
-		contentsPanel.add(comps, gbc);
-		
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		
-		gbc.fill = GridBagConstraints.NONE;
-		JButton back = new JButton("Back to Search");
-		back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ui.SwitchToFrame(QueryPage.CARD);
-            }
-        });
-		contentsPanel.add(back, gbc);
-		
-		
-		JPanel properties = new JPanel(new GridBagLayout());
+	    JPanel properties = new JPanel(new GridBagLayout());
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -125,7 +80,7 @@ public class DishPage extends JPanel {
 			gbc.gridy = 1;
 			JPanel calPanel = new JPanel();
 			calPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Calories")));
-			JLabel calories = new JLabel(Integer.toString(ui.om.getCaloriesInDish(dish)));
+			calories = new JLabel(Integer.toString(ui.om.getCaloriesInDish(dish)));
 
 			calPanel.add(calories);		
 			properties.add(calPanel, gbc);
@@ -133,14 +88,14 @@ public class DishPage extends JPanel {
 		
 		
 		
-		gbc.gridx = 1;
+		gbc.gridx = 0;
 	    gbc.gridy = 0;
 		contentsPanel.add(properties);
 		
-		gbc.gridx = 1;
+		gbc.gridx = 0;
 		gbc.gridy = 1;
 		JPanel allergenPanel = new JPanel(new GridLayout(0, 2, 3, 3));
-		allergenPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Contains the following allergens")));
+		allergenPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Contains allergens")));
 		List<JCheckBox> allergenBoxes = new ArrayList<JCheckBox>();
 		List<String> allAllergens = ui.om.getAllAllergenNames();
 		List<String> allergens = ui.om.getAllergensInDish(dish);
@@ -162,20 +117,77 @@ public class DishPage extends JPanel {
 			allergenPanel.add(box);
 		}
 		contentsPanel.add(allergenPanel, gbc);
+	    
 		
-		JButton extra = new JButton("Add/Remove Ingredients");
-		extra.addActionListener(new ActionListener() {
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		
+		gbc.fill = GridBagConstraints.NONE;
+		JButton back = new JButton("Back to Dish");
+		back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	ExtraPage extraPage = new ExtraPage(ui, dish);
-            	ui.SwitchToFrame(extraPage, "Extra" + dish);
+                ui.SwitchToFrame(dish);
             }
         });
+		contentsPanel.add(back, gbc);
+		
+		
+		JPanel ings = new JPanel(new BorderLayout());
+		ings.setBorder(new CompoundBorder(new TitledBorder("Remove"), new EmptyBorder(16, 16, 16, 16)));
+		
+		gbc.gridx = 1;
+	    gbc.gridy = 0;
+	    gbc.fill = GridBagConstraints.BOTH;
+		List<String> ingredientsInDish = ui.om.getIngredientsInDish(dish);
+		DefaultListModel<String> ingsList = new DefaultListModel<String>();
+		for(String s: ingredientsInDish) {
+			ingsList.addElement(s);
+		}
+		JList<String> ingredientsList = new JList<String>(ingsList);
+		JScrollPane scroll = new JScrollPane();
+		scroll.setViewportView(ingredientsList);
+		ings.add(scroll, BorderLayout.CENTER);
+		contentsPanel.add(ings, gbc);
+		
+		JPanel addPanel = new JPanel(new BorderLayout());
+		addPanel.setBorder(new CompoundBorder(new TitledBorder("Add"), new EmptyBorder(16, 16, 16, 16)));
+		
+		gbc.gridx = 1;
+	    gbc.gridy = 1;
+		List<String> allIngs = ui.om.getAllIngredientNames();
+		DefaultListModel<String> allIngList = new DefaultListModel<String>();
+		for(String s: allIngs) {
+			allIngList.addElement(s);
+		}
+		JList<String> allIngredientsList = new JList<String>(allIngList);
+		JScrollPane addScroll = new JScrollPane();
+		addScroll.setViewportView(allIngredientsList);
+		addPanel.add(addScroll, BorderLayout.CENTER);
+		contentsPanel.add(addPanel, gbc);
+		
+		
+		
 		gbc.gridx = 1;
 	    gbc.gridy = 2;
+	    JButton calculate = new JButton("Calculate");
+		calculate.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					List<String> modIngs = new ArrayList<String>();
+					modIngs.addAll(ingredientsInDish);
+					modIngs.removeAll(ingredientsList.getSelectedValuesList());
+					modIngs.addAll(allIngredientsList.getSelectedValuesList());
+					System.out.println(modIngs);
+					
+					calories.setText(Integer.toString(ui.om.getCaloriesInIngredients(modIngs)));
+				}
+		});
 	    gbc.fill = GridBagConstraints.NONE;
-	    contentsPanel.add(extra, gbc);
+	    contentsPanel.add(calculate, gbc);
 	    
 		add(contentsPanel);
 	}
+	
+	
 }
