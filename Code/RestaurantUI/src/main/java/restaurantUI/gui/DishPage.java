@@ -140,7 +140,7 @@ public class DishPage extends JPanel {
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		JPanel allergenPanel = new JPanel(new GridLayout(0, 2, 3, 3));
-		allergenPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Contains the following allergens")));
+		allergenPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Contains the following")));
 		List<JCheckBox> allergenBoxes = new ArrayList<JCheckBox>();
 		List<String> allAllergens = ui.om.getAllAllergenNames();
 		List<String> allergens = ui.om.getAllergensInDish(dish);

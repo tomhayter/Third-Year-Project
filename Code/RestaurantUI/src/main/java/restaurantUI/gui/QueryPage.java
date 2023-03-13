@@ -111,7 +111,7 @@ public class QueryPage extends JPanel {
 		dietPanel.add(kosher);
 		options.add(dietPanel, gbc);
 		
-		JSlider slider = new JSlider(JSlider.HORIZONTAL, 500, 2000, 2000);
+		JSlider slider = new JSlider(JSlider.HORIZONTAL, 500, 1500, 1500);
 		
 		if (ui.showCalories) {
 			gbc.gridx = 0;
@@ -156,8 +156,6 @@ public class QueryPage extends JPanel {
             		}
             	}
             	
-            	
-            	System.out.println(selectedAllergens);
                 List<String> dishes = ui.om.dishSearch(
                 		selectedAllergens,
                 		vege.isSelected(),

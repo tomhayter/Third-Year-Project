@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 
 import org.semanticweb.HermiT.ReasonerFactory;
 import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassAxiom;
@@ -77,7 +76,8 @@ public class OntologyManager {
 	
 	
 	void removeClass(OWLClass owlClass) {
-		Set<OWLClassAxiom> allAxiomsForClass = ontology.getAxioms(owlClass, Imports.INCLUDED);
+		Set<OWLClassAxiom> allAxiomsForClass = new HashSet<OWLClassAxiom>();
+		ontology.axioms(owlClass, Imports.INCLUDED).forEach(allAxiomsForClass::add);;
 		for (OWLClassAxiom axiom: allAxiomsForClass) {
 			System.out.println(axiom);
 			ontology.remove(axiom);
@@ -396,11 +396,13 @@ public class OntologyManager {
 		OWLClass dishClass = df.getOWLClass(iri + "#" + dish + "Dish");
 		OWLObjectProperty hasComponent = df.getOWLObjectProperty(iri + "#hasComponent");
 		
-		Set<OWLSubClassOfAxiom> allAxiomsForClass = ontology.getSubClassAxiomsForSubClass(dishClass);
+		Set<OWLSubClassOfAxiom> allAxiomsForClass = new HashSet<OWLSubClassOfAxiom>();
+		ontology.subClassAxiomsForSubClass(dishClass).forEach(allAxiomsForClass::add);;
 		for(OWLSubClassOfAxiom ax: allAxiomsForClass) {
 			OWLClassExpression exp = ax.getSuperClass();
-			
-			if (!exp.getObjectPropertiesInSignature().contains(hasComponent)) {
+			Set<OWLObjectProperty> objectProperties = new HashSet<OWLObjectProperty>();
+			exp.objectPropertiesInSignature().forEach(objectProperties::add);
+			if (!objectProperties.contains(hasComponent)) {
 				continue;
 			}
 			if (!exp.toString().contains("ObjectAllValuesFrom")) {
@@ -413,6 +415,7 @@ public class OntologyManager {
 		for(OWLClass ing: compsInDish) {
 			compNamesInDish.add(getNameFromClass(ing, "Component"));
 		}
+		Collections.sort(compNamesInDish);
 		return compNamesInDish;
 	}
 	
@@ -424,10 +427,13 @@ public class OntologyManager {
 		List<String> compsInDish = getComponentsInDish(dish);
 		for (String comp: compsInDish) {
 			OWLClass compClass = df.getOWLClass(iri + "#" + comp + "Component");
-			Set<OWLSubClassOfAxiom> allAxiomsForComp = ontology.getSubClassAxiomsForSubClass(compClass);
+			Set<OWLSubClassOfAxiom> allAxiomsForComp = new HashSet<OWLSubClassOfAxiom>();
+			ontology.subClassAxiomsForSubClass(compClass).forEach(allAxiomsForComp::add);
 			for(OWLSubClassOfAxiom compAx: allAxiomsForComp) {
 				OWLClassExpression compExp = compAx.getSuperClass();
-				if (!compExp.getObjectPropertiesInSignature().contains(hasIngredient)) {
+				Set<OWLObjectProperty> objectProperties = new HashSet<OWLObjectProperty>();
+				compExp.objectPropertiesInSignature().forEach(objectProperties::add);
+				if (!objectProperties.contains(hasIngredient)) {
 					continue;
 				}
 				if (!compExp.toString().contains("ObjectAllValuesFrom")) {
@@ -440,6 +446,7 @@ public class OntologyManager {
 		for(OWLClass ing: ingsInDish) {
 			ingNamesInDish.add(getNameFromClass(ing, "Ingredient"));
 		}
+		Collections.sort(ingNamesInDish);
 		
 		return ingNamesInDish;
 	}
@@ -454,10 +461,14 @@ public class OntologyManager {
 		int totalCalories = 0;
 		OWLDataProperty hasCalories = df.getOWLDataProperty(iri + "#hasCalories");
 		for (String ing: ingredients) {
-			Set<OWLSubClassOfAxiom> allAxiomsForClass = ontology.getSubClassAxiomsForSubClass(df.getOWLClass(iri + "#" + ing + "Ingredient"));
+			Set<OWLSubClassOfAxiom> allAxiomsForClass = new HashSet<OWLSubClassOfAxiom>();
+			
+			ontology.subClassAxiomsForSubClass(df.getOWLClass(iri + "#" + ing + "Ingredient")).forEach(allAxiomsForClass::add);;
 			for(OWLSubClassOfAxiom ax: allAxiomsForClass) {
 				OWLClassExpression exp = ax.getSuperClass();
-				if (!exp.getDataPropertiesInSignature().contains(hasCalories)) {
+				Set<OWLDataProperty> dataProperties = new HashSet<OWLDataProperty>();
+				exp.dataPropertiesInSignature().forEach(dataProperties::add);
+				if (!dataProperties.contains(hasCalories)) {
 					continue;
 				}
 				Pattern pattern = Pattern.compile("\\\"[0-9]+\\\"", Pattern.CASE_INSENSITIVE);
