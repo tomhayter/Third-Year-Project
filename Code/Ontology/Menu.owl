@@ -2293,7 +2293,7 @@
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#hasComponent"/>
-                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#PlantBurgerFillingsComponent"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#PlantBasedPattyComponent"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -2321,7 +2321,7 @@
                     <owl:Class>
                         <owl:unionOf rdf:parseType="Collection">
                             <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#BurgerBunComponent"/>
-                            <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#PlantBurgerFillingsComponent"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#PlantBasedPattyComponent"/>
                             <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VeganBaconPlantBurgerFillingsComponent"/>
                         </owl:unionOf>
                     </owl:Class>
