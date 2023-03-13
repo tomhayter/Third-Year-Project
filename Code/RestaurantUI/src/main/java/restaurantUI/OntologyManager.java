@@ -71,6 +71,11 @@ public class OntologyManager {
 	}
 	
 	
+	public String getNameFromClass(OWLClass clss, String appendix) {
+		return clss.getIRI().getShortForm().replace(appendix, "");
+	}
+	
+	
 	void removeClass(OWLClass owlClass) {
 		Set<OWLClassAxiom> allAxiomsForClass = ontology.getAxioms(owlClass, Imports.INCLUDED);
 		for (OWLClassAxiom axiom: allAxiomsForClass) {
@@ -387,37 +392,56 @@ public class OntologyManager {
 	
 	
 	public List<String> getComponentsInDish(String dish) {
-		runReasoner();
-		List<String> allComponents = getAllComponentNames();
-		List<String> compsInDish = new ArrayList<String>();
+		List<OWLClass> compsInDish = new ArrayList<OWLClass>();
 		OWLClass dishClass = df.getOWLClass(iri + "#" + dish + "Dish");
-		OWLObjectProperty hasPart = df.getOWLObjectProperty(iri + "#hasPart");
-		for (String comp: allComponents) {
-			OWLClass component = df.getOWLClass(iri + "#" + comp +  "Component");
-			ArrayList<OWLClass> equivalents = new ArrayList<OWLClass>();
-			reasoner.getEquivalentClasses(df.getOWLObjectIntersectionOf(dishClass, df.getOWLObjectSomeValuesFrom(hasPart, component))).forEach(equivalents::add);
-			if (equivalents.contains(dishClass)) {
-				compsInDish.add(comp);
+		OWLObjectProperty hasComponent = df.getOWLObjectProperty(iri + "#hasComponent");
+		
+		Set<OWLSubClassOfAxiom> allAxiomsForClass = ontology.getSubClassAxiomsForSubClass(dishClass);
+		for(OWLSubClassOfAxiom ax: allAxiomsForClass) {
+			OWLClassExpression exp = ax.getSuperClass();
+			
+			if (!exp.getObjectPropertiesInSignature().contains(hasComponent)) {
+				continue;
 			}
+			if (!exp.toString().contains("ObjectAllValuesFrom")) {
+				continue;
+			}
+
+			exp.classesInSignature().forEach(compsInDish::add);		
 		}
-		return compsInDish;
+		List<String> compNamesInDish = new ArrayList<String>();
+		for(OWLClass ing: compsInDish) {
+			compNamesInDish.add(getNameFromClass(ing, "Component"));
+		}
+		return compNamesInDish;
 	}
 	
 	
 	public List<String> getIngredientsInDish(String dish) {
-		List<String> allIngredients = getAllIngredientNames();
-		List<String> ingsInDish = new ArrayList<String>();
-		OWLClass dishClass = df.getOWLClass(iri + "#" + dish + "Dish");
-		OWLObjectProperty hasPart = df.getOWLObjectProperty(iri + "#hasPart");
-		for (String ing: allIngredients) {
-			OWLClass ingredient = df.getOWLClass(iri + "#" + ing +  "Ingredient");
-			ArrayList<OWLClass> equivalents = new ArrayList<OWLClass>();
-			reasoner.getEquivalentClasses(df.getOWLObjectIntersectionOf(dishClass, df.getOWLObjectSomeValuesFrom(hasPart, ingredient))).forEach(equivalents::add);
-			if (equivalents.contains(dishClass)) {
-				ingsInDish.add(ing);
+		List<OWLClass> ingsInDish = new ArrayList<OWLClass>();
+		OWLObjectProperty hasIngredient = df.getOWLObjectProperty(iri + "#hasIngredient");
+
+		List<String> compsInDish = getComponentsInDish(dish);
+		for (String comp: compsInDish) {
+			OWLClass compClass = df.getOWLClass(iri + "#" + comp + "Component");
+			Set<OWLSubClassOfAxiom> allAxiomsForComp = ontology.getSubClassAxiomsForSubClass(compClass);
+			for(OWLSubClassOfAxiom compAx: allAxiomsForComp) {
+				OWLClassExpression compExp = compAx.getSuperClass();
+				if (!compExp.getObjectPropertiesInSignature().contains(hasIngredient)) {
+					continue;
+				}
+				if (!compExp.toString().contains("ObjectAllValuesFrom")) {
+					continue;
+				}
+				compExp.classesInSignature().forEach(ingsInDish::add);
 			}
 		}
-		return ingsInDish;
+		List<String> ingNamesInDish = new ArrayList<String>();
+		for(OWLClass ing: ingsInDish) {
+			ingNamesInDish.add(getNameFromClass(ing, "Ingredient"));
+		}
+		
+		return ingNamesInDish;
 	}
 	
 	
