@@ -38,7 +38,7 @@ public class OntologyManager {
 	private OWLOntology ontology;
 	private OWLDataFactory df;
 	private IRI iri;
-	private String ontologyLocation = "..\\Ontology\\Menu.owl";
+	private String ontologyLocation = "Menu.owl";
 	private OWLReasoner reasoner;
 	private List<String> invalid_names = Arrays.asList("Nothing", "Vegan", "Pescetarian", "Vegetarian");
 	

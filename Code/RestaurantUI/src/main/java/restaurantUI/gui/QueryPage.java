@@ -118,7 +118,6 @@ public class QueryPage extends JPanel {
 			gbc.gridy = 1;
 			calPanel = new JPanel();
 			calPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Max Calories")));
-			
 			slider.setMinorTickSpacing(100);
 			slider.setMajorTickSpacing(500);
 			slider.setPaintTicks(true);
