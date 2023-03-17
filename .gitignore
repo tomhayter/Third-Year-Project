@@ -11,7 +11,8 @@
 *.classpath
 *.project
 
-Code/RestaurantUI/target/
+Code/CustomerUI/customerUI/.settings/*
+
 Code/RestaurantUI/.settings/*
 Code/RestaurantUI/.metadata/*
 /.metadata/
