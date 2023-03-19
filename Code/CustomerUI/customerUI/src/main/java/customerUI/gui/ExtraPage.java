@@ -180,6 +180,11 @@ public class ExtraPage extends JPanel {
 					modIngs.addAll(allIngredientsList.getSelectedValuesList());
 					
 					calories.setText(Integer.toString(ui.om.getCaloriesInIngredients(modIngs)));
+					
+					List<String> newAllergens = ui.om.getAllergensForEditedDish(modIngs);
+					for (JCheckBox allergen: allergenBoxes) {
+						allergen.setSelected(newAllergens.contains(allergen.getText()));
+					}
 				}
 		});
 	    gbc.fill = GridBagConstraints.NONE;

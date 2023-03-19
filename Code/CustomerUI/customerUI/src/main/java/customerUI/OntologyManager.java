@@ -345,6 +345,35 @@ public class OntologyManager {
 	}
 	
 	
+	public List<String> getAllergensForEditedDish(List<String> ingredients) {
+		List<OWLClass> allergens = new ArrayList<OWLClass>();
+		OWLObjectProperty hasAllergen = df.getOWLObjectProperty(iri + "#hasNutrient");
+		Set<String> allergenNamesInDish = new HashSet<String>();
+		
+		for (String ingredient: ingredients) {
+			OWLClass ingClass = df.getOWLClass(iri + "#" + ingredient + "Ingredient");
+			
+			Set<OWLSubClassOfAxiom> allAxiomsForClass = new HashSet<OWLSubClassOfAxiom>();
+			ontology.subClassAxiomsForSubClass(ingClass).forEach(allAxiomsForClass::add);;
+			for(OWLSubClassOfAxiom ax: allAxiomsForClass) {
+				OWLClassExpression exp = ax.getSuperClass();
+				Set<OWLObjectProperty> objectProperties = new HashSet<OWLObjectProperty>();
+				exp.objectPropertiesInSignature().forEach(objectProperties::add);
+				if (!objectProperties.contains(hasAllergen)) {
+					continue;
+				}
+				if (!exp.toString().contains("ObjectAllValuesFrom")) {
+					continue;
+				}
+				exp.classesInSignature().forEach(allergens::add);		
+			}
+			for(OWLClass ing: allergens) {
+				allergenNamesInDish.add(getNameFromClass(ing, "Nutrient"));
+			}
+		}
+		return new ArrayList<String>(allergenNamesInDish);
+	}
+	
 	public List<String> getSuitableDietsForDish(String dish) {
 		runReasoner();
 		List<String> suitableDiets = new ArrayList<String>();
