@@ -29,7 +29,7 @@ public class RemoveIngredientPage extends JPanel {
 		setName("Remove Ingredient");
 		setLayout(new BorderLayout());
 		
-		JLabel title = new JLabel("Remove Dish");
+		JLabel title = new JLabel("Remove Ingredient");
 	    title.setFont(new Font("Calibri", Font.BOLD, 24));
 	    JPanel titlePanel = new JPanel();
 	    titlePanel.add(title, BorderLayout.CENTER);

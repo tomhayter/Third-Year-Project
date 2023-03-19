@@ -58,8 +58,8 @@ public class RemoveComponentPage extends JPanel {
             public void actionPerformed(ActionEvent e) {
             	System.out.println("Deleting " + compName.getSelectedItem().toString());
         		ui.om.removeComponent(compName.getSelectedItem().toString());
-        		ui.updateComponents();
         		JOptionPane.showMessageDialog(null, "Deleted " + compName.getSelectedItem().toString() + " from the ontology.");
+        		ui.updateComponents();
                 ui.SwitchToFrame(MainPage.CARD);
             }
         });

@@ -58,8 +58,8 @@ public class RemoveDishPage extends JPanel {
             public void actionPerformed(ActionEvent e) {
             	System.out.println("Deleting " + dishName.getSelectedItem().toString());
         		ui.om.removeDish(dishName.getSelectedItem().toString());
+        		JOptionPane.showMessageDialog(null, "Deleted " + dishName.getSelectedItem().toString() + " from the ontology.");
                 ui.updateDishes();
-                JOptionPane.showMessageDialog(null, "Deleted " + dishName.getSelectedItem().toString() + " from the ontology.");
                 ui.SwitchToFrame(MainPage.CARD);
             }
         });
