@@ -12,6 +12,7 @@ import java.awt.event.FocusListener;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -94,6 +95,17 @@ public class AddIngredientPage extends JPanel {
 	    }
 	    JScrollPane scroll = new JScrollPane();
 	    JList<String> allergens = new JList<String>(list);
+	    allergens.setSelectionModel(new DefaultListSelectionModel() {
+	        @Override
+	        public void setSelectionInterval(int index0, int index1) {
+	            if(super.isSelectedIndex(index0)) {
+	                super.removeSelectionInterval(index0, index1);
+	            }
+	            else {
+	                super.addSelectionInterval(index0, index1);
+	            }
+	        }
+	    });
 	    scroll.setViewportView(allergens);
 	    allergenPanel.add(scroll, BorderLayout.CENTER);
 	    contentsPanel.add(allergenPanel, gbc);
@@ -122,6 +134,9 @@ public class AddIngredientPage extends JPanel {
 	            JOptionPane.showMessageDialog(null, "Added " + ingName.getText() + " to the ontology.");
 	            ui.SwitchToFrame(MainPage.CARD);
 	            ingName.setText("Enter Ingredient Name");
+	            calories.setValue(0);
+	            allergens.setSelectedIndices(new int[0]);
+	            ingTypes.setSelectedIndex(0);
 	        }
 	    });
 	    contentsPanel.add(addButton, gbc);

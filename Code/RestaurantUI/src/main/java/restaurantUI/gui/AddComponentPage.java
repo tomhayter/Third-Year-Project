@@ -12,6 +12,7 @@ import java.awt.event.FocusListener;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -78,6 +79,17 @@ public class AddComponentPage extends JPanel {
     JScrollPane scroll = new JScrollPane();
     
     JList<String> ingredients = new JList<String>(list);
+    ingredients.setSelectionModel(new DefaultListSelectionModel() {
+        @Override
+        public void setSelectionInterval(int index0, int index1) {
+            if(super.isSelectedIndex(index0)) {
+                super.removeSelectionInterval(index0, index1);
+            }
+            else {
+                super.addSelectionInterval(index0, index1);
+            }
+        }
+    });
     scroll.setViewportView(ingredients);
     ingredientsPanel.add(scroll, BorderLayout.CENTER);
     contentsPanel.add(ingredientsPanel, gbc);

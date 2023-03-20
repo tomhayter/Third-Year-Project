@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -145,6 +146,17 @@ public class ExtraPage extends JPanel {
 			ingsList.addElement(s);
 		}
 		JList<String> ingredientsList = new JList<String>(ingsList);
+		ingredientsList.setSelectionModel(new DefaultListSelectionModel() {
+	        @Override
+	        public void setSelectionInterval(int index0, int index1) {
+	            if(super.isSelectedIndex(index0)) {
+	                super.removeSelectionInterval(index0, index1);
+	            }
+	            else {
+	                super.addSelectionInterval(index0, index1);
+	            }
+	        }
+	    });
 		JScrollPane scroll = new JScrollPane();
 		scroll.setViewportView(ingredientsList);
 		ings.add(scroll, BorderLayout.CENTER);
@@ -161,6 +173,17 @@ public class ExtraPage extends JPanel {
 			allIngList.addElement(s);
 		}
 		JList<String> allIngredientsList = new JList<String>(allIngList);
+		allIngredientsList.setSelectionModel(new DefaultListSelectionModel() {
+	        @Override
+	        public void setSelectionInterval(int index0, int index1) {
+	            if(super.isSelectedIndex(index0)) {
+	                super.removeSelectionInterval(index0, index1);
+	            }
+	            else {
+	                super.addSelectionInterval(index0, index1);
+	            }
+	        }
+	    });
 		JScrollPane addScroll = new JScrollPane();
 		addScroll.setViewportView(allIngredientsList);
 		addPanel.add(addScroll, BorderLayout.CENTER);
