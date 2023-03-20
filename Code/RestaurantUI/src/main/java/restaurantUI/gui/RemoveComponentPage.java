@@ -43,12 +43,16 @@ public class RemoveComponentPage extends JPanel {
 	    
 	    gbc.gridx = 1;
 	    gbc.gridy = 0;
+	    JPanel comboPanel = new JPanel(new BorderLayout());
+	    JLabel comboText = new JLabel("Select a Component to remove:");
+	    comboPanel.add(comboText, BorderLayout.NORTH);
 		List<String> compNames = ui.om.getAllComponentNames();
 		compName = new JComboBox<String>();
 		for(String name: compNames) {
 			compName.addItem(name);
 		}
-		contentsPanel.add(compName, gbc);
+		comboPanel.add(compName, BorderLayout.CENTER);
+		contentsPanel.add(comboPanel, gbc);
 		
 		gbc.gridx = 1;
 		gbc.gridy = 1;

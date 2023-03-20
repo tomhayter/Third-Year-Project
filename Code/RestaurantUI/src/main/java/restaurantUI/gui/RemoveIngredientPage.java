@@ -44,6 +44,9 @@ public class RemoveIngredientPage extends JPanel {
 	    
 	    gbc.gridx = 1;
 	    gbc.gridy = 0;
+	    JPanel typePanel = new JPanel(new BorderLayout());
+	    JLabel typeText = new JLabel("Filter by ingredient type:");
+	    typePanel.add(typeText, BorderLayout.NORTH);
 		List<String> ingTypesList = ui.om.getIngredientTypeNames();
 		ingTypesList.add(0, "All");
 		
@@ -51,10 +54,14 @@ public class RemoveIngredientPage extends JPanel {
         ingTypesArray = ingTypesList.toArray(ingTypesArray);
         JComboBox<String> ingTypes = new JComboBox<String>(ingTypesArray);
         ingTypes.setSelectedItem("All");
-        contentsPanel.add(ingTypes, gbc);
+        typePanel.add(ingTypes, BorderLayout.CENTER);
+        contentsPanel.add(typePanel, gbc);
         
         gbc.gridx = 1;
         gbc.gridy = 1;
+        JPanel namePanel = new JPanel(new BorderLayout());
+        JLabel nameText = new JLabel("Select Ingredient to remove:");
+        namePanel.add(nameText, BorderLayout.NORTH);
         ingName = new JComboBox<String>();
         List<String> allIngs = ui.om.getAllIngredientNames();
         for (String ing: allIngs) {
@@ -77,7 +84,8 @@ public class RemoveIngredientPage extends JPanel {
         		}
         	}
         });
-        contentsPanel.add(ingName, gbc);
+        namePanel.add(ingName, BorderLayout.CENTER);
+        contentsPanel.add(namePanel, gbc);
         
         gbc.gridx = 1;
         gbc.gridy = 2;

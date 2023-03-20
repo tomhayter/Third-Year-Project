@@ -43,12 +43,17 @@ public class RemoveDishPage extends JPanel {
 	    
 	    gbc.gridx = 1;
 	    gbc.gridy = 0;
+	    JPanel comboPanel = new JPanel(new BorderLayout());
+	    JLabel comboText = new JLabel("Select a Dish to remove:");
+	    comboPanel.add(comboText, BorderLayout.NORTH);
+	   
 		List<String> dishNames = ui.om.getAllDishNames();
 		dishName = new JComboBox<String>();
 		for(String name: dishNames) {
 			dishName.addItem(name);
 		}
-		contentsPanel.add(dishName, gbc);
+		comboPanel.add(dishName, BorderLayout.CENTER);
+		contentsPanel.add(comboPanel, gbc);
 		
 		gbc.gridx = 1;
 		gbc.gridy = 1;
