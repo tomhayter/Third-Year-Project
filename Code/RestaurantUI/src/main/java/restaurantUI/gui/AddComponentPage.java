@@ -108,6 +108,7 @@ public class AddComponentPage extends JPanel {
             ui.updateComponents();
             ui.SwitchToFrame(MainPage.CARD);
             compName.setText("Enter Component Name");
+            ingredients.setSelectedIndices(new int[0]);
         }
     });
     contentsPanel.add(addButton, gbc);

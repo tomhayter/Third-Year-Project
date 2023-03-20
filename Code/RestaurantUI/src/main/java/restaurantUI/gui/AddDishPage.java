@@ -123,6 +123,9 @@ public class AddDishPage extends JPanel {
 	            JOptionPane.showMessageDialog(null, "Added " + dishName.getText() + " to the ontology.");
 	            ui.SwitchToFrame(MainPage.CARD);
 	            dishName.setText("Enter Dish Name");
+	            components.setSelectedIndices(new int[0]);
+	            halal.setSelected(false);
+	            kosher.setSelected(false);
 	        }
 	    });
 	    contentsPanel.add(addButton, gbc);
