@@ -126,6 +126,7 @@ public class UI {
 	
 	public void updateDishes() {
 		RemoveDishPage.reload();
+		QueryPage.refresh();
 	}
 	
 	public void updateSettings() {

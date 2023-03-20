@@ -32,12 +32,15 @@ public class QueryPage extends JPanel {
 	final static String CARD = "QueryPage";
 	DefaultListModel<String> list = new DefaultListModel<String>();
 	List<JCheckBox> allergenBoxes = new ArrayList<JCheckBox>();
+	List<JCheckBox> dietBoxes = new ArrayList<JCheckBox>();
+	
+	JSlider slider;
 	
 	JPanel options;
 	JPanel calPanel;
 	JPanel allergenPanel;
 	JButton search;
-	
+	GridBagConstraints gbc;
 	
 	public QueryPage(UI ui) {
 		this.ui = ui;
@@ -51,7 +54,7 @@ public class QueryPage extends JPanel {
 		
 		JPanel contentsPanel = new JPanel(new GridBagLayout());
 		contentsPanel.setBorder(new EmptyBorder(0, 0, 8, 0));
-	    GridBagConstraints gbc = new GridBagConstraints();
+	    gbc = new GridBagConstraints();
 	    Insets i = new Insets(0, 0, 16, 16);
 	    gbc.insets = i;
 		JPanel results = new JPanel(new BorderLayout());
@@ -102,16 +105,20 @@ public class QueryPage extends JPanel {
 		JPanel dietPanel = new JPanel(new GridLayout(0, 2, 3, 3));
 		dietPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Diets")));
 		JCheckBox vege = new JCheckBox("Vegetarian");
+		dietBoxes.add(vege);
 		dietPanel.add(vege);
 		JCheckBox vegan = new JCheckBox("Vegan");
+		dietBoxes.add(vegan);
 		dietPanel.add(vegan);
 		JCheckBox halal = new JCheckBox("Halal");
+		dietBoxes.add(halal);
 		dietPanel.add(halal);
 		JCheckBox kosher = new JCheckBox("Kosher");
+		dietBoxes.add(kosher);
 		dietPanel.add(kosher);
 		options.add(dietPanel, gbc);
 		
-		JSlider slider = new JSlider(JSlider.HORIZONTAL, 500, 1500, 1500);
+		slider = new JSlider(JSlider.HORIZONTAL, 500, 1500, 1500);
 		
 		if (ui.showCalories) {
 			gbc.gridx = 0;
@@ -172,24 +179,47 @@ public class QueryPage extends JPanel {
 	    gbc.fill = GridBagConstraints.NONE;
 	    contentsPanel.add(search, gbc);
 	    
+	    
+	    gbc.gridx = 1;
+	    gbc.gridy = 2;
+	    JButton reset = new JButton("Reset Filters");
+	    reset.addActionListener(new ActionListener() {
+	    	@Override
+	    	public void actionPerformed(ActionEvent e) {
+	    		refresh();
+	    	}
+	    });
+	    contentsPanel.add(reset, gbc);
+	    
 		add(contentsPanel);
-		
 	}
 	
 	public void refresh() {
 		if (ui.showCalories) {
+			
 			options.remove(calPanel);
-			options.remove(allergenPanel);
-			options.remove(search);
-			options.add(calPanel);
-			options.add(allergenPanel);
-			options.add(search);
+			gbc.gridx = 0;
+		    gbc.gridy = 1;
+			options.add(calPanel, gbc);
 		} else {
 			options.remove(calPanel);
 		}
 		
+		list.removeAllElements();
+        List<String> dishes = ui.om.getAllDishNames();
+        for(String s: dishes) {
+        	list.addElement(s);
+        }
+        
+        slider.setValue(slider.getMaximum());
+        for (JCheckBox allergenBox: allergenBoxes) {
+        	allergenBox.setSelected(false);
+        }
+        for (JCheckBox dietBox: dietBoxes) {
+        	dietBox.setSelected(false);
+        }
+		
 		revalidate();
 		repaint();
-		
 	}
 }
