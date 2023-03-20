@@ -62,18 +62,6 @@ public class DishPage extends JPanel {
 		JPanel comps = new JPanel(new BorderLayout());
 		comps.setBorder(new CompoundBorder(new TitledBorder("Components"), new EmptyBorder(16, 16, 16, 16)));
 		
-		gbc.gridx = 0;
-	    gbc.gridy = 1;
-		List<String> componentsInDish = ui.om.getComponentsInDish(dish);
-		DefaultListModel<String> compList = new DefaultListModel<String>();
-		for(String s: componentsInDish) {
-			compList.addElement(s);
-		}
-		JList<String> componentsList = new JList<String>(compList);
-		JScrollPane compScroll = new JScrollPane();
-		compScroll.setViewportView(componentsList);
-		comps.add(compScroll, BorderLayout.CENTER);
-		contentsPanel.add(comps, gbc);
 		
 		gbc.gridx = 0;
 		gbc.gridy = 2;
