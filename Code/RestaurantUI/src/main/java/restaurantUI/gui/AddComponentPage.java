@@ -11,6 +11,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -117,10 +118,12 @@ public class AddComponentPage extends JPanel {
     addButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-        	String[] selected = new String[ingredients.getSelectedValuesList().size()];
-        	selected = ingredients.getSelectedValuesList().toArray(selected);
+        	List<String> selected = new ArrayList<String>();
+			for (Object i: list.toArray()) {
+				selected.add((String) i);
+			}
         	
-            ui.om.addComponent(compName.getText(),selected);
+            ui.om.addComponent(compName.getText(), selected);
             JOptionPane.showMessageDialog(null, "Added " + compName.getText() + " to the ontology.");
             ui.updateComponents();
             ui.SwitchToFrame(MainPage.CARD);

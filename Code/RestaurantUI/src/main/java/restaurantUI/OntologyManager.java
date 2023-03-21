@@ -151,7 +151,7 @@ public class OntologyManager {
 	}
 	
 	
-	public void addComponent(String component, String[] ingredients) {
+	public void addComponent(String component, List<String> ingredients) {
 		OWLClass genComp = df.getOWLClass(iri + "#Component");
 		OWLClass comp = df.getOWLClass(iri + "#" + component + "Component");
 		OWLObjectProperty hasIng = df.getOWLObjectProperty(iri + "#hasIngredient");
@@ -176,7 +176,12 @@ public class OntologyManager {
 	}
 	
 		
-	public void addDish(String dishName, String[] components, String[] ingredients, boolean halal, boolean kosher) {
+	public void addDish(
+			String dishName,
+			List<String> components,
+			boolean halal,
+			boolean kosher,
+			boolean glutenFree) {
 		OWLClass genDish = df.getOWLClass(iri + "#NamedDish");
 		OWLClass dish = df.getOWLClass(iri + "#" + dishName + "Dish");
 		OWLObjectProperty hasComp = df.getOWLObjectProperty(iri + "#hasComponent");
@@ -189,12 +194,6 @@ public class OntologyManager {
 			allComps.add(comp);
 			OWLSubClassOfAxiom dishHasComp = df.getOWLSubClassOfAxiom(dish, df.getOWLObjectSomeValuesFrom(hasComp, comp));
 			ontology.add(dishHasComp);
-		}
-		for (String ingredient : ingredients) {
-			OWLClass ing = df.getOWLClass(iri + "#" + ingredient + "Ingredient");
-			OWLObjectProperty hasIng = df.getOWLObjectProperty(iri + "#hasIngredient");
-			OWLSubClassOfAxiom dishHasIng = df.getOWLSubClassOfAxiom(dish, df.getOWLObjectSomeValuesFrom(hasIng, ing));
-			ontology.add(dishHasIng);
 		}
 		
 		if (halal) {
@@ -210,6 +209,12 @@ public class OntologyManager {
 			OWLSubClassOfAxiom dishIsKosher = df.getOWLSubClassOfAxiom(dish, df.getOWLObjectSomeValuesFrom(hasMethod, kosherMethod));
 			ontology.add(dishIsKosher);
 		}
+		
+		OWLDataProperty hasGFOption = df.getOWLDataProperty(iri + "#hasGlutenFreeOption");
+		OWLLiteral literal = df.getOWLLiteral(glutenFree);
+		OWLSubClassOfAxiom dishHasGFOption = df.getOWLSubClassOfAxiom(dish, df.getOWLDataHasValue(hasGFOption, literal));
+		ontology.add(dishHasGFOption);
+		
 		
 		OWLClassExpression combination = df.getOWLObjectUnionOf(allComps);;
 		OWLSubClassOfAxiom dishMustHaveComps = df.getOWLSubClassOfAxiom(dish, df.getOWLObjectAllValuesFrom(hasComp, combination));
@@ -517,12 +522,43 @@ public class OntologyManager {
 	}
 	
 	
-	public List<String> dishSearch(List<String> allergens, boolean vegetarian, boolean vegan, boolean kosher, boolean halal, int maxCalories) {
+	public boolean dishHasGlutenFreeOption(String dish) {
+		Set<OWLSubClassOfAxiom> allAxiomsForClass = new HashSet<OWLSubClassOfAxiom>();
+		OWLDataProperty hasGFOption = df.getOWLDataProperty(iri + "#hasGlutenFreeOption");
+		
+		ontology.subClassAxiomsForSubClass(df.getOWLClass(iri + "#" + dish + "Dish")).forEach(allAxiomsForClass::add);;
+		for(OWLSubClassOfAxiom ax: allAxiomsForClass) {
+			OWLClassExpression exp = ax.getSuperClass();
+			Set<OWLDataProperty> dataProperties = new HashSet<OWLDataProperty>();
+			exp.dataPropertiesInSignature().forEach(dataProperties::add);
+			if (!dataProperties.contains(hasGFOption)) {
+				continue;
+			}
+			Pattern pattern = Pattern.compile("true", Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(exp.toString());
+			if(matcher.find()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	public List<String> dishSearch(
+			List<String> allergens,
+			boolean vegetarian,
+			boolean vegan,
+			boolean kosher,
+			boolean halal,
+			boolean glutenFree,
+			int maxCalories) 
+	{
 		runReasoner();
 		HashSet<String> allDishes = new HashSet<String>(getAllDishNames());
 		
 		List<HashSet<String>> allowedDishGroups = new ArrayList<HashSet<String>>();
 		List<HashSet<String>> notAllowedDishGroups = new ArrayList<HashSet<String>>();
+		
 		
 		if (vegetarian) {
 			ArrayList<Node<OWLClass>> vegeDishNodes = new ArrayList<Node<OWLClass>>();
@@ -537,6 +573,7 @@ public class OntologyManager {
 			}
 			allowedDishGroups.add(vegeDishes);
 		}
+		
 		
 		if (vegan) {
 			ArrayList<Node<OWLClass>> veganDishNodes = new ArrayList<Node<OWLClass>>();
@@ -567,6 +604,7 @@ public class OntologyManager {
 			allowedDishGroups.add(kosherDishes);
 		}
 		
+		
 		if (halal) {
 			ArrayList<Node<OWLClass>> halalDishNodes = new ArrayList<Node<OWLClass>>();
 			reasoner.getSubClasses(df.getOWLClass(iri + "#HalalDish"), false).forEach(halalDishNodes::add);
@@ -580,6 +618,7 @@ public class OntologyManager {
 			}
 			allowedDishGroups.add(halalDishes);
 		}
+		
 		
 		for(String allergen: allergens) {
 			OWLClass allergenClass = df.getOWLClass(iri + "#" + allergen + "Nutrient");
@@ -597,8 +636,9 @@ public class OntologyManager {
 			}
 			notAllowedDishGroups.add(containingDishes);
 		}
-		HashSet<String> lowCalDishes = new HashSet<String>();
 		
+		
+		HashSet<String> lowCalDishes = new HashSet<String>();
 		for(String dish: allDishes) {
 			int calories = getCaloriesInDish(dish);
 			System.out.println(dish + " - " + calories);
@@ -607,6 +647,19 @@ public class OntologyManager {
 			}
 		}
 		allowedDishGroups.add(lowCalDishes);
+		
+		
+		if (glutenFree) {
+			HashSet<String> gfDishes = new HashSet<String>();
+			for(String dish: allDishes) {
+				if (dishHasGlutenFreeOption(dish)) {
+					gfDishes.add(dish);
+				}
+			}
+			allowedDishGroups.add(gfDishes);
+		}
+		
+		
 		
 		for(HashSet<String> group: allowedDishGroups) {
 			allDishes.retainAll(group);

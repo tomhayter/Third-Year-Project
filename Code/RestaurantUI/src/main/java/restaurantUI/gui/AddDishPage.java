@@ -11,6 +11,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -124,21 +125,28 @@ public class AddDishPage extends JPanel {
 	    JCheckBox kosher = new JCheckBox("Is this dish kosher?");
 	    contentsPanel.add(kosher, gbc);
 	    
-	    
 	    gbc.gridx = 1;
 	    gbc.gridy = 5;
+	    JCheckBox gf = new JCheckBox("Is there a gluten free option for this dish?");
+	    contentsPanel.add(gf, gbc);
+	    
+	    
+	    gbc.gridx = 1;
+	    gbc.gridy = 6;
 	    JButton addButton = new JButton("Add Dish");
 	    addButton.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	String[] selected = new String[components.getSelectedValuesList().size()];
-	        	selected = components.getSelectedValuesList().toArray(selected);
-	        	
+	        	List<String> selected = new ArrayList<String>();
+				for (Object i: list.toArray()) {
+					selected.add((String) i);
+				}
+				
 	            ui.om.addDish(dishName.getText(),
 	            			  selected,
-	            			  new String[0],
 	            			  halal.isSelected(),
-	            			  kosher.isSelected());
+	            			  kosher.isSelected(),
+	            			  gf.isSelected());
 	            ui.updateDishes();
 	            JOptionPane.showMessageDialog(null, "Added " + dishName.getText() + " to the ontology.");
 	            ui.SwitchToFrame(MainPage.CARD);
@@ -146,6 +154,7 @@ public class AddDishPage extends JPanel {
 	            allComponents.setSelectedIndices(new int[0]);
 	            halal.setSelected(false);
 	            kosher.setSelected(false);
+	            gf.setSelected(false);
 	            list.removeAllElements();
 	        }
 	    });
@@ -153,7 +162,7 @@ public class AddDishPage extends JPanel {
 	    
 	    
 	    gbc.gridx = 1;
-	    gbc.gridy = 6;
+	    gbc.gridy = 7;
 	    JButton backButton = new JButton("Back");
 	    backButton.addActionListener(new ActionListener() {
 	        @Override

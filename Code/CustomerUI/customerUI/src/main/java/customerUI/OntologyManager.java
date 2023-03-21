@@ -514,7 +514,37 @@ public class OntologyManager {
 	}
 	
 	
-	public List<String> dishSearch(List<String> allergens, boolean vegetarian, boolean vegan, boolean kosher, boolean halal, int maxCalories) {
+	public boolean dishHasGlutenFreeOption(String dish) {
+		Set<OWLSubClassOfAxiom> allAxiomsForClass = new HashSet<OWLSubClassOfAxiom>();
+		OWLDataProperty hasGFOption = df.getOWLDataProperty(iri + "#hasGlutenFreeOption");
+		
+		ontology.subClassAxiomsForSubClass(df.getOWLClass(iri + "#" + dish + "Dish")).forEach(allAxiomsForClass::add);;
+		for(OWLSubClassOfAxiom ax: allAxiomsForClass) {
+			OWLClassExpression exp = ax.getSuperClass();
+			Set<OWLDataProperty> dataProperties = new HashSet<OWLDataProperty>();
+			exp.dataPropertiesInSignature().forEach(dataProperties::add);
+			if (!dataProperties.contains(hasGFOption)) {
+				continue;
+			}
+			Pattern pattern = Pattern.compile("true", Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(exp.toString());
+			if(matcher.find()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	public List<String> dishSearch(
+			List<String> allergens,
+			boolean vegetarian,
+			boolean vegan,
+			boolean kosher,
+			boolean halal,
+			boolean glutenFree,
+			int maxCalories)
+	{
 		runReasoner();
 		HashSet<String> allDishes = new HashSet<String>(getAllDishNames());
 		
@@ -604,6 +634,17 @@ public class OntologyManager {
 			}
 		}
 		allowedDishGroups.add(lowCalDishes);
+		
+		if (glutenFree) {
+			HashSet<String> gfDishes = new HashSet<String>();
+			for(String dish: allDishes) {
+				if (dishHasGlutenFreeOption(dish)) {
+					gfDishes.add(dish);
+				}
+			}
+			allowedDishGroups.add(gfDishes);
+		}
+		
 		
 		for(HashSet<String> group: allowedDishGroups) {
 			allDishes.retainAll(group);

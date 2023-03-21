@@ -108,9 +108,24 @@ public class DishPage extends JPanel {
 		}
 		properties.add(dietPanel, gbc);
 		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		JCheckBox gf = new JCheckBox("Gluten Free Alternative Available");
+		boolean hasGFOption = ui.om.dishHasGlutenFreeOption(dish);
+		gf.setSelected(hasGFOption);
+		gf.setFocusable(false);
+		gf.setRolloverEnabled(false);
+		gf.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	gf.setSelected(hasGFOption);
+            }
+        });
+		properties.add(gf, gbc);
+		
 		if (ui.showCalories) {
 			gbc.gridx = 0;
-			gbc.gridy = 1;
+			gbc.gridy = 2;
 			JPanel calPanel = new JPanel();
 			calPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Calories")));
 			JLabel calories = new JLabel(Integer.toString(ui.om.getCaloriesInDish(dish)));
@@ -118,7 +133,6 @@ public class DishPage extends JPanel {
 			calPanel.add(calories);		
 			properties.add(calPanel, gbc);
 		}
-		
 		
 		
 		gbc.gridx = 1;

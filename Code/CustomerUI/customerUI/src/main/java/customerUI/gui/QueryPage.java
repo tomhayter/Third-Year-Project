@@ -41,6 +41,7 @@ public class QueryPage extends JPanel {
 	JPanel calPanel;
 	JPanel allergenPanel;
 	JButton search;
+	JCheckBox gf;
 	GridBagConstraints gbc;
 	
 	
@@ -135,11 +136,16 @@ public class QueryPage extends JPanel {
 		dietPanel.add(kosher);
 		options.add(dietPanel, gbc);
 		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gf = new JCheckBox("Gluten Free Alternative Available");		
+		options.add(gf, gbc);
+		
 		slider = new JSlider(JSlider.HORIZONTAL, 500, 1500, 1500);
 		
 		if (ui.showCalories) {
 			gbc.gridx = 0;
-			gbc.gridy = 1;
+			gbc.gridy = 2;
 			calPanel = new JPanel();
 			calPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Max Calories")));
 			slider.setMinorTickSpacing(100);
@@ -152,7 +158,7 @@ public class QueryPage extends JPanel {
 		}
 		
 		gbc.gridx = 0;
-		gbc.gridy = 2;
+		gbc.gridy = 3;
 		allergenPanel = new JPanel(new GridLayout(0, 2, 3, 3));
 		allergenPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Allergens")));
 		List<String> allergens = ui.om.getAllAllergenNames();
@@ -185,6 +191,7 @@ public class QueryPage extends JPanel {
                 		vegan.isSelected(),
                 		kosher.isSelected(),
                 		halal.isSelected(),
+                		gf.isSelected(),
                 		slider.getValue());
                 for(String s: dishes) {
                 	list.addElement(s);
@@ -214,7 +221,7 @@ public class QueryPage extends JPanel {
 		if (ui.showCalories) {
 			options.remove(calPanel);
 			gbc.gridx = 0;
-		    gbc.gridy = 1;
+		    gbc.gridy = 2;
 			options.add(calPanel, gbc);
 		} else {
 			options.remove(calPanel);
@@ -233,6 +240,7 @@ public class QueryPage extends JPanel {
         for (JCheckBox dietBox: dietBoxes) {
         	dietBox.setSelected(false);
         }
+        gf.setSelected(false);
 		
 		revalidate();
 		repaint();
