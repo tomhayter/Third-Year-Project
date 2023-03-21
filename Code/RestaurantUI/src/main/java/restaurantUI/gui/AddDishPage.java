@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -21,13 +23,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
 public class AddDishPage extends JPanel {
 
 	UI ui;
 	final static String CARD = "AddDishPage";
-	DefaultListModel<String> list;
+	DefaultListModel<String> allList;
+	DefaultListModel<String> list = new DefaultListModel<String>();
 	
 	public AddDishPage(UI ui) {
 
@@ -46,7 +50,7 @@ public class AddDishPage extends JPanel {
 	    JPanel contentsPanel = new JPanel(new GridBagLayout());
 	    contentsPanel.setBorder(new EmptyBorder(0, 0, 8, 0));
 	    GridBagConstraints gbc = new GridBagConstraints();
-	    Insets i = new Insets(16, 0, 16, 0);
+	    Insets i = new Insets(0, 0, 16, 0);
 	    gbc.insets = i;
 	    gbc.fill = GridBagConstraints.HORIZONTAL;
 	    
@@ -70,43 +74,59 @@ public class AddDishPage extends JPanel {
 	    
 	    gbc.gridx = 1;
 	    gbc.gridy = 1;
-	    JPanel componentsPanel = new JPanel(new BorderLayout());
-	    JLabel componentsText = new JLabel("Select components in dish:");
-	    componentsPanel.add(componentsText, BorderLayout.NORTH);
+	    JPanel allComponentsPanel = new JPanel(new BorderLayout());
+	    JLabel allComponentsText = new JLabel("Select components in dish:");
+	    allComponentsPanel.add(allComponentsText, BorderLayout.NORTH);
 	    List<String> allComps = ui.om.getAllComponentNames();	    
-	    list = new DefaultListModel<String>();
+	    allList = new DefaultListModel<String>();
 	    for(String comp: allComps) {
-	    	list.addElement(comp);
+	    	allList.addElement(comp);
 	    }
+	    JList<String> allComponents = new JList<String>(allList);
+	    allComponents.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	    allComponents.addMouseListener(new MouseAdapter() {
+	    	public void mouseClicked(MouseEvent evt) {
+	    		list.addElement(allComponents.getSelectedValue());
+	    	}
+	    });
+	    JScrollPane allScroll = new JScrollPane();
+	    allScroll.setViewportView(allComponents);
+	    allComponentsPanel.add(allScroll, BorderLayout.CENTER);
+	    contentsPanel.add(allComponentsPanel, gbc);
+	    
+	    
+	    gbc.gridx = 1;
+	    gbc.gridy = 2;
+	    JPanel componentsPanel = new JPanel(new BorderLayout());
+	    JLabel componentsText = new JLabel("Components in your Dish:");
+	    componentsPanel.add(componentsText, BorderLayout.NORTH);
 	    JList<String> components = new JList<String>(list);
-	    components.setSelectionModel(new DefaultListSelectionModel() {
-	        @Override
-	        public void setSelectionInterval(int index0, int index1) {
-	            if(super.isSelectedIndex(index0)) {
-	                super.removeSelectionInterval(index0, index1);
-	            }
-	            else {
-	                super.addSelectionInterval(index0, index1);
-	            }
-	        }
+	    components.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	    components.addMouseListener(new MouseAdapter() {
+	    	public void mouseClicked(MouseEvent evt) {
+	    		list.removeElement(components.getSelectedValue());
+	    	}
 	    });
 	    JScrollPane scroll = new JScrollPane();
 	    scroll.setViewportView(components);
 	    componentsPanel.add(scroll, BorderLayout.CENTER);
 	    contentsPanel.add(componentsPanel, gbc);
 	    
-	    gbc.gridx = 1;
-	    gbc.gridy = 2;
-	    JCheckBox halal = new JCheckBox("Is this dish halal?");
-	    contentsPanel.add(halal, gbc);
 	    
 	    gbc.gridx = 1;
 	    gbc.gridy = 3;
-	    JCheckBox kosher = new JCheckBox("Is this dish kosher?");
-	    contentsPanel.add(kosher, gbc);
+	    JCheckBox halal = new JCheckBox("Is this dish halal?");
+	    contentsPanel.add(halal, gbc);
+	    
 	    
 	    gbc.gridx = 1;
 	    gbc.gridy = 4;
+	    JCheckBox kosher = new JCheckBox("Is this dish kosher?");
+	    contentsPanel.add(kosher, gbc);
+	    
+	    
+	    gbc.gridx = 1;
+	    gbc.gridy = 5;
 	    JButton addButton = new JButton("Add Dish");
 	    addButton.addActionListener(new ActionListener() {
 	        @Override
@@ -123,15 +143,17 @@ public class AddDishPage extends JPanel {
 	            JOptionPane.showMessageDialog(null, "Added " + dishName.getText() + " to the ontology.");
 	            ui.SwitchToFrame(MainPage.CARD);
 	            dishName.setText("Enter Dish Name");
-	            components.setSelectedIndices(new int[0]);
+	            allComponents.setSelectedIndices(new int[0]);
 	            halal.setSelected(false);
 	            kosher.setSelected(false);
+	            list.removeAllElements();
 	        }
 	    });
 	    contentsPanel.add(addButton, gbc);
 	    
+	    
 	    gbc.gridx = 1;
-	    gbc.gridy = 5;
+	    gbc.gridy = 6;
 	    JButton backButton = new JButton("Back");
 	    backButton.addActionListener(new ActionListener() {
 	        @Override

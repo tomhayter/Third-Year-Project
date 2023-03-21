@@ -46,7 +46,7 @@ public class AddIngredientPage extends JPanel {
 
         JPanel contentsPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        Insets i = new Insets(8, 0, 8, 0);
+        Insets i = new Insets(0, 0, 16, 0);
         gbc.insets = i;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         

@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -20,12 +22,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
 public class AddComponentPage extends JPanel {
 	
 	UI ui;
 	final static String CARD = "AddComponentPage";
+	DefaultListModel<String> allList = new DefaultListModel<String>();
+	
 	DefaultListModel<String> list = new DefaultListModel<String>();
 	
 	public AddComponentPage(UI ui) {
@@ -44,7 +49,7 @@ public class AddComponentPage extends JPanel {
     JPanel contentsPanel = new JPanel(new GridBagLayout());
     contentsPanel.setBorder(new EmptyBorder(0, 0, 8, 0));
     GridBagConstraints gbc = new GridBagConstraints();
-    Insets i = new Insets(16, 0, 16, 0);
+    Insets i = new Insets(0, 0, 16, 0);
     gbc.insets = i;
     gbc.fill = GridBagConstraints.HORIZONTAL;
     
@@ -69,33 +74,45 @@ public class AddComponentPage extends JPanel {
     
     gbc.gridx = 1;
     gbc.gridy = 1;
-    JPanel ingredientsPanel = new JPanel(new BorderLayout());
-    JLabel ingredientsText = new JLabel("Select ingredients in component:");
-    ingredientsPanel.add(ingredientsText, BorderLayout.NORTH);
+    JPanel allIngredientsPanel = new JPanel(new BorderLayout());
+    JLabel allIngredientsText = new JLabel("Select ingredients in component:");
+    allIngredientsPanel.add(allIngredientsText, BorderLayout.NORTH);
     List<String> allIngs = ui.om.getAllIngredientNames();
     for(String ing:allIngs) {
-    	list.addElement(ing);
+    	allList.addElement(ing);
     }
-    JScrollPane scroll = new JScrollPane();
+    JScrollPane allScroll = new JScrollPane();
+    JList<String> allIngredients = new JList<String>(allList);
+    allIngredients.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    allIngredients.addMouseListener(new MouseAdapter() {
+    	public void mouseClicked(MouseEvent evt) {
+    		list.addElement(allIngredients.getSelectedValue());
+    	}
+    });
+    allScroll.setViewportView(allIngredients);
+    allIngredientsPanel.add(allScroll, BorderLayout.CENTER);
+    contentsPanel.add(allIngredientsPanel, gbc);
     
+    
+    gbc.gridx = 1;
+    gbc.gridy = 2;
+    JPanel ingredientsPanel = new JPanel(new BorderLayout());
+    JLabel ingredientsText = new JLabel("Ingredients in your component:");
+    ingredientsPanel.add(ingredientsText, BorderLayout.NORTH);
+    JScrollPane scroll = new JScrollPane();
     JList<String> ingredients = new JList<String>(list);
-    ingredients.setSelectionModel(new DefaultListSelectionModel() {
-        @Override
-        public void setSelectionInterval(int index0, int index1) {
-            if(super.isSelectedIndex(index0)) {
-                super.removeSelectionInterval(index0, index1);
-            }
-            else {
-                super.addSelectionInterval(index0, index1);
-            }
-        }
+    ingredients.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    ingredients.addMouseListener(new MouseAdapter() {
+    	public void mouseClicked(MouseEvent evt) {
+    		list.removeElement(ingredients.getSelectedValue());
+    	}
     });
     scroll.setViewportView(ingredients);
     ingredientsPanel.add(scroll, BorderLayout.CENTER);
     contentsPanel.add(ingredientsPanel, gbc);
     
     gbc.gridx = 1;
-    gbc.gridy = 2;
+    gbc.gridy = 3;
     JButton addButton = new JButton("Add Component");
     addButton.addActionListener(new ActionListener() {
         @Override
@@ -109,13 +126,14 @@ public class AddComponentPage extends JPanel {
             ui.SwitchToFrame(MainPage.CARD);
             compName.setText("Enter Component Name");
             ingredients.setSelectedIndices(new int[0]);
+            list.removeAllElements();
         }
     });
     contentsPanel.add(addButton, gbc);
     
     
     gbc.gridx = 1;
-    gbc.gridy = 3;
+    gbc.gridy = 4;
     JButton backButton = new JButton("Back");
     backButton.addActionListener(new ActionListener() {
     	@Override
