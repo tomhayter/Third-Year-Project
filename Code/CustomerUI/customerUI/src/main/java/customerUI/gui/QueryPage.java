@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -73,11 +74,26 @@ public class QueryPage extends JPanel {
 		resultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		resultsList.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
-		        if (evt.getClickCount() > 1) {
-		            DishPage dish = new DishPage(ui, resultsList.getSelectedValue());
-		            ui.SwitchToFrame(dish, resultsList.getSelectedValue());
-		        }
+	            DishPage dish = new DishPage(ui, resultsList.getSelectedValue().replace("<html><u>", "").replace("</u></html>", ""));
+	            ui.SwitchToFrame(dish, resultsList.getSelectedValue().replace("<html><u>", "").replace("</u></html>", ""));
+	            resultsList.setSelectedIndices(new int[0]);
 		    }
+		    
+		    public void mouseExited(MouseEvent evt) {
+		    	for(int i=0; i<list.getSize(); i++) {
+					list.set(i, list.get(i).replace("<html><u>", "").replace("</u></html>", ""));
+				}
+		    }
+		});
+		
+		resultsList.addMouseMotionListener(new MouseAdapter() {
+			public void mouseMoved(MouseEvent me) {
+				Point p = new Point(me.getX(), me.getY());
+				for(int i=0; i<list.getSize(); i++) {
+					list.set(i, list.get(i).replace("<html><u>", "").replace("</u></html>", ""));
+				}
+				list.set(resultsList.locationToIndex(p), "<html><u>" + list.get(resultsList.locationToIndex(p)) + "</u></html>");
+			}
 		});
 		JScrollPane scroll = new JScrollPane();
 		scroll.setViewportView(resultsList);
@@ -195,8 +211,7 @@ public class QueryPage extends JPanel {
 	}
 	
 	public void refresh() {
-if (ui.showCalories) {
-			
+		if (ui.showCalories) {
 			options.remove(calPanel);
 			gbc.gridx = 0;
 		    gbc.gridy = 1;
