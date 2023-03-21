@@ -34,6 +34,9 @@ public class UI {
 	private RemoveComponentPage RemoveComponentPage;
 	private RemoveDishPage RemoveDishPage;
 	private QueryPage QueryPage;
+	private QueryIngredientPage QueryIngredientPage;
+	private QueryComponentPage QueryComponentPage;
+	private QueryDishPage QueryDishPage;
 	private SettingsPage SettingsPage;
 	
 
@@ -84,6 +87,15 @@ public class UI {
 		QueryPage = new QueryPage(this);
 		cards.add(QueryPage, restaurantUI.gui.QueryPage.CARD);
 		
+		QueryIngredientPage = new QueryIngredientPage(this);
+		cards.add(QueryIngredientPage, restaurantUI.gui.QueryIngredientPage.CARD);
+		
+		QueryComponentPage = new QueryComponentPage(this);
+		cards.add(QueryComponentPage, restaurantUI.gui.QueryComponentPage.CARD);
+		
+		QueryDishPage = new QueryDishPage(this);
+		cards.add(QueryDishPage, restaurantUI.gui.QueryDishPage.CARD);
+		
 		SettingsPage = new SettingsPage(this);
 		cards.add(SettingsPage, restaurantUI.gui.SettingsPage.CARD);
 	}
@@ -116,21 +128,23 @@ public class UI {
 	
 	public void updateIngredients() {
 		AddComponentPage.reload();
+		QueryIngredientPage.reload();
 		RemoveIngredientPage.reload();
 	}
 	
 	public void updateComponents() {
 		AddDishPage.reload();
+		QueryComponentPage.reload();
 		RemoveComponentPage.reload();
 	}
 	
 	public void updateDishes() {
 		RemoveDishPage.reload();
-		QueryPage.refresh();
+		QueryDishPage.refresh();
 	}
 	
 	public void updateSettings() {
-		QueryPage.refresh();
+		QueryDishPage.refresh();
 	}
 	
 }

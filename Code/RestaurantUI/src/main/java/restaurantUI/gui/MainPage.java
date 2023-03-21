@@ -54,7 +54,7 @@ public class MainPage extends JPanel {
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));
         
-        JButton goToQueryButton = new JButton("Query the ontology");
+        JButton goToQueryButton = new JButton("Search the ontology");
         goToQueryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

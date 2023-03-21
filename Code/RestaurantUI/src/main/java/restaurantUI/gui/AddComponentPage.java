@@ -150,10 +150,10 @@ public class AddComponentPage extends JPanel {
 	}
 	
 	void reload() {
-		list.removeAllElements();
+		allList.removeAllElements();
 		List<String> allIngs = ui.om.getAllIngredientNames();
 	    for(String ing: allIngs) {
-	    	list.addElement(ing);
+	    	allList.addElement(ing);
 	    }
 	}
 }

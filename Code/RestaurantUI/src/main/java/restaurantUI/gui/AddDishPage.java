@@ -177,10 +177,10 @@ public class AddDishPage extends JPanel {
 	}
 	
 	void reload() {
-		list.removeAllElements();
+		allList.removeAllElements();
 		List<String> allComps = ui.om.getAllComponentNames();
 	    for(String comp: allComps) {
-	    	list.addElement(comp);
+	    	allList.addElement(comp);
 	    }
 	}
 

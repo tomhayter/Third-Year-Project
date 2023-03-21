@@ -83,7 +83,7 @@ public class DishPage extends JPanel {
 		back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ui.SwitchToFrame(QueryPage.CARD);
+                ui.SwitchToFrame(QueryDishPage.CARD);
             }
         });
 		contentsPanel.add(back, gbc);
