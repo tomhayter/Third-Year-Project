@@ -87,6 +87,9 @@ public class AddComponentPage extends JPanel {
     allIngredients.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     allIngredients.addMouseListener(new MouseAdapter() {
     	public void mouseClicked(MouseEvent evt) {
+    		if (list.contains(allIngredients.getSelectedValue())) {
+    			return;
+    		}
     		list.addElement(allIngredients.getSelectedValue());
     	}
     });

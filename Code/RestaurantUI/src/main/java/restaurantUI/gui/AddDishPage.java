@@ -87,6 +87,9 @@ public class AddDishPage extends JPanel {
 	    allComponents.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	    allComponents.addMouseListener(new MouseAdapter() {
 	    	public void mouseClicked(MouseEvent evt) {
+	    		if (list.contains(allComponents.getSelectedValue())) {
+	    			return;
+	    		}
 	    		list.addElement(allComponents.getSelectedValue());
 	    	}
 	    });
