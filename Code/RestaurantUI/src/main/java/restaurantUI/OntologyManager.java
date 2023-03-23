@@ -129,6 +129,12 @@ public class OntologyManager {
 		OWLSubClassOfAxiom axiom = df.getOWLSubClassOfAxiom(ing,  type);
 		ontology.add(axiom);
 		
+		if (allergens.length == 0) {
+			OWLClass genNutreint = df.getOWLClass(iri + "#Nutrient");
+			OWLClassExpression none = df.getOWLObjectComplementOf(df.getOWLObjectSomeValuesFrom(hasNutrient, genNutreint));
+			OWLSubClassOfAxiom noAllergens = df.getOWLSubClassOfAxiom(ing, none);
+			ontology.add(noAllergens);
+		} else {
 		List<OWLClass> allAllergens = new ArrayList<OWLClass>();
 		for (String allergen : allergens) {
 			OWLClass nutrient = df.getOWLClass(iri + "#" + allergen + "Nutrient");
@@ -139,6 +145,7 @@ public class OntologyManager {
 		OWLClassExpression combination = df.getOWLObjectUnionOf(allAllergens);
 		OWLSubClassOfAxiom ingMustHaveAllergens = df.getOWLSubClassOfAxiom(ing, df.getOWLObjectAllValuesFrom(hasNutrient, combination));
 		ontology.add(ingMustHaveAllergens);
+		}
 		
 		OWLDataProperty hasCalories = df.getOWLDataProperty(iri + "#hasCalories");
 		OWLLiteral literal = df.getOWLLiteral(calories);
