@@ -29,7 +29,7 @@ public class MainPage extends JPanel {
         
         buttonsPanel.add(new JLabel(""));
         
-        JButton goToAddButton = new JButton("Add to ontology");
+        JButton goToAddButton = new JButton("Add to Menu");
         goToAddButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -42,7 +42,7 @@ public class MainPage extends JPanel {
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));
         
-        JButton goToRemoveButton = new JButton("Remove from ontology");
+        JButton goToRemoveButton = new JButton("Remove from Menu");
         goToRemoveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,7 +54,7 @@ public class MainPage extends JPanel {
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));
         
-        JButton goToQueryButton = new JButton("Search the ontology");
+        JButton goToQueryButton = new JButton("Search/Edit the Menu");
         goToQueryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
