@@ -1011,12 +1011,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Customer -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Customer"/>
-    
-
-
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#DairyIngredient -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#DairyIngredient">
@@ -2451,14 +2445,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VeganCustomer -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VeganCustomer">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Customer"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VeganDish -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VeganDish">
@@ -2511,14 +2497,6 @@
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VegetarianCustomer -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#VegetarianCustomer">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Customer"/>
     </owl:Class>
     
 
@@ -2580,7 +2558,6 @@
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
         <owl:members rdf:parseType="Collection">
             <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Component"/>
-            <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Customer"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Dish"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Ingredient"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/tomha/ontologies/2022/9/Menu#Nutrient"/>

@@ -31,17 +31,6 @@ public class QueryPage extends JPanel {
         JPanel buttonsPanel = new JPanel(new GridLayout(7, 3, 0, 32));
         buttonsPanel.add(new JLabel(""));
         
-        JButton searchAllergen = new JButton("Allergen (TODO)");
-        searchAllergen.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	
-            }
-        });
-        buttonsPanel.add(searchAllergen);
-        buttonsPanel.add(new JLabel(""));
-        buttonsPanel.add(new JLabel(""));
-        
         JButton searchIng = new JButton("Ingredient");
         searchIng.addActionListener(new ActionListener() {
             @Override
@@ -84,6 +73,10 @@ public class QueryPage extends JPanel {
             }
         });
         buttonsPanel.add(backToMain);
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));

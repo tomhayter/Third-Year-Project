@@ -83,7 +83,6 @@ public class OntologyManager {
 		Set<OWLClassAxiom> allAxiomsForClass = new HashSet<OWLClassAxiom>();
 		ontology.axioms(owlClass, Imports.INCLUDED).forEach(allAxiomsForClass::add);;
 		for (OWLClassAxiom axiom: allAxiomsForClass) {
-			System.out.println(axiom);
 			ontology.remove(axiom);
 			
 		}
@@ -91,6 +90,12 @@ public class OntologyManager {
 		ontology.remove(delcaration);
 		saveOntology();
 		runReasoner();
+	}
+	
+	
+	public void removeAllergen(String allergen) {
+		OWLClass allergenClass = df.getOWLClass(iri + "#" + allergen + "Nutrient");
+		removeClass(allergenClass);
 	}
 	
 	
@@ -723,7 +728,6 @@ public class OntologyManager {
 		HashSet<String> lowCalDishes = new HashSet<String>();
 		for(String dish: allDishes) {
 			int calories = getCaloriesInDish(dish);
-			System.out.println(dish + " - " + calories);
 			if (calories <= maxCalories) {
 				lowCalDishes.add(dish);
 			}
