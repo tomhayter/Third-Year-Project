@@ -145,6 +145,11 @@ public class AddDishPage extends JPanel {
 					selected.add((String) i);
 				}
 				
+				if (selected.size() == 0) {
+	        		JOptionPane.showMessageDialog(null, "Dishes must contain at least one component!", "Error Adding Dish", JOptionPane.WARNING_MESSAGE);
+	        		return;
+	        	}
+				
 	            ui.om.addDish(dishName.getText(),
 	            			  selected,
 	            			  halal.isSelected(),

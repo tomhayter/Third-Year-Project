@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
-import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -125,7 +124,11 @@ public class AddComponentPage extends JPanel {
 			for (Object i: list.toArray()) {
 				selected.add((String) i);
 			}
-        	
+        	if (selected.size() == 0) {
+        		JOptionPane.showMessageDialog(null, "Components must contain at least one ingredient!", "Error Adding Component", JOptionPane.WARNING_MESSAGE);
+        		return;
+        	}
+			
             ui.om.addComponent(compName.getText(), selected);
             JOptionPane.showMessageDialog(null, "Added " + compName.getText() + " to the ontology.");
             ui.updateComponents();
