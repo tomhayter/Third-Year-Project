@@ -55,7 +55,11 @@ public class AddIngredientPage extends JPanel {
         
         contentsPanel.setBorder(new EmptyBorder(0, 0, 8, 0));
         
+        JPanel namePanel = new JPanel(new BorderLayout());
+        JLabel nameText = new JLabel("Name:");
         JTextField ingName = new JTextField("Enter Ingredient Name");
+        namePanel.add(nameText, BorderLayout.NORTH);
+        
 	    ingName.addFocusListener(new FocusListener() {
 	        @Override
 	        public void focusGained(FocusEvent e) {
@@ -69,7 +73,8 @@ public class AddIngredientPage extends JPanel {
 	            }
 	        }
 	    });
-	    contentsPanel.add(ingName, gbc);
+	    namePanel.add(ingName, BorderLayout.CENTER);
+	    contentsPanel.add(namePanel, gbc);
 
 	    gbc.gridx = 1;
         gbc.gridy = 1;

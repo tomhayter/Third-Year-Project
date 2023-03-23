@@ -109,6 +109,34 @@ public class ExtraPage extends JPanel {
 		
 		// RHS
 		
+		gbc.gridx = 1;
+	    gbc.gridy = 0;
+		
+		
+		JPanel allergenPanel = new JPanel(new GridLayout(0, 2, 3, 3));
+		allergenPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Contains the following")));
+		allergenBoxes = new ArrayList<JCheckBox>();
+		List<String> allAllergens = ui.om.getAllAllergenNames();
+		List<String> allergens = ui.om.getAllergensInDish(dish);
+		for (String allergen: allAllergens) {
+			JCheckBox box = new JCheckBox(allergen);
+			allergenBoxes.add(box);
+		}
+		
+		for (JCheckBox box: allergenBoxes) {
+			box.setSelected(allergens.contains(box.getText()));
+			box.setFocusable(false);
+			box.setRolloverEnabled(false);
+			box.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	box.setSelected(allergens.contains(box.getText()));
+	            }
+	        });
+			allergenPanel.add(box);
+		}
+		contentsPanel.add(allergenPanel, gbc);
+		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.BOTH;
@@ -140,6 +168,44 @@ public class ExtraPage extends JPanel {
 //		}
 //		properties.add(dietPanel, gbc);
 		
+		
+		
+		if (ui.showCalories) {
+			gbc.gridx = 0;
+			gbc.gridy = 0;
+			gbc.fill = GridBagConstraints.BOTH;
+			JPanel calPanel = new JPanel();
+			calPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Calories")));
+			calories = new JLabel(Integer.toString(ui.om.getCaloriesInDish(dish)));
+
+			calPanel.add(calories);		
+			properties.add(calPanel, gbc);
+		}
+	    
+	    gbc.gridx = 0;
+		gbc.gridy = 1;
+		JButton reset = new JButton("Reset Dish");
+	    reset.addActionListener(new ActionListener() {
+	    	@Override
+	    	public void actionPerformed(ActionEvent e) {
+	    		modList.removeAllElements();
+	    		for(String s: originalIngredients) {
+	    			modList.addElement(s);
+	    		}
+	    		
+	    		calories.setText(Integer.toString(ui.om.getCaloriesInIngredients(originalIngredients)));
+				
+				List<String> newAllergens = ui.om.getAllergensForEditedDish(originalIngredients);
+				for (JCheckBox allergen: allergenBoxes) {
+					allergen.setSelected(newAllergens.contains(allergen.getText()));
+				}
+	    	}
+	    });
+	    properties.add(reset, gbc);
+	    
+	    
+	    gbc.gridx = 0;
+		gbc.gridy = 2;
 		JButton calculate = new JButton("Calculate");
 		calculate.addActionListener(new ActionListener() {
 				@Override
@@ -159,73 +225,10 @@ public class ExtraPage extends JPanel {
 		});
 	    gbc.fill = GridBagConstraints.NONE;
 	    properties.add(calculate, gbc);
-		
-		if (ui.showCalories) {
-			gbc.gridx = 0;
-			gbc.gridy = 1;
-			gbc.fill = GridBagConstraints.BOTH;
-			JPanel calPanel = new JPanel();
-			calPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Calories")));
-			calories = new JLabel(Integer.toString(ui.om.getCaloriesInDish(dish)));
-
-			calPanel.add(calories);		
-			properties.add(calPanel, gbc);
-		}
 	    
 	    gbc.gridx = 1;
-	    gbc.gridy = 0;
-	    contentsPanel.add(properties, gbc);
-	    
-		
-		gbc.gridx = 1;
 	    gbc.gridy = 1;
-		
-		
-		JPanel allergenPanel = new JPanel(new GridLayout(0, 2, 3, 3));
-		allergenPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Contains the following")));
-		allergenBoxes = new ArrayList<JCheckBox>();
-		List<String> allAllergens = ui.om.getAllAllergenNames();
-		List<String> allergens = ui.om.getAllergensInDish(dish);
-		for (String allergen: allAllergens) {
-			JCheckBox box = new JCheckBox(allergen);
-			allergenBoxes.add(box);
-		}
-		
-		for (JCheckBox box: allergenBoxes) {
-			box.setSelected(allergens.contains(box.getText()));
-			box.setFocusable(false);
-			box.setRolloverEnabled(false);
-			box.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	            	box.setSelected(allergens.contains(box.getText()));
-	            }
-	        });
-			allergenPanel.add(box);
-		}
-		contentsPanel.add(allergenPanel, gbc);
-		
-		gbc.gridx = 1;
-	    gbc.gridy = 2;
-	    gbc.fill = GridBagConstraints.NONE;
-	    JButton reset = new JButton("Reset Dish");
-	    reset.addActionListener(new ActionListener() {
-	    	@Override
-	    	public void actionPerformed(ActionEvent e) {
-	    		modList.removeAllElements();
-	    		for(String s: originalIngredients) {
-	    			modList.addElement(s);
-	    		}
-	    		
-	    		calories.setText(Integer.toString(ui.om.getCaloriesInIngredients(originalIngredients)));
-				
-				List<String> newAllergens = ui.om.getAllergensForEditedDish(originalIngredients);
-				for (JCheckBox allergen: allergenBoxes) {
-					allergen.setSelected(newAllergens.contains(allergen.getText()));
-				}
-	    	}
-	    });
-	    contentsPanel.add(reset, gbc);
+	    contentsPanel.add(properties, gbc);
 	    
 	    
 		add(contentsPanel);

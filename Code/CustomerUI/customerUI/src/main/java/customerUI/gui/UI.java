@@ -59,7 +59,6 @@ public class UI {
 	}
 	
 	public void SwitchToFrame(String page) {
-		System.out.println("Switching to " + page);
 		cardLayout.show(cards, page);
 	}
 	

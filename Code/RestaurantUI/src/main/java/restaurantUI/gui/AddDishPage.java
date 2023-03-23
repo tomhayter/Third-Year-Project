@@ -56,6 +56,9 @@ public class AddDishPage extends JPanel {
 	    
 	    gbc.gridx = 1;
 	    gbc.gridy = 0;
+	    JPanel namePanel = new JPanel(new BorderLayout());
+	    JLabel nameLabel = new JLabel("Name:");
+	    namePanel.add(nameLabel, BorderLayout.NORTH);
 	    JTextField dishName = new JTextField("Enter Dish Name");
 	    dishName.addFocusListener(new FocusListener() {
 	        @Override
@@ -70,7 +73,8 @@ public class AddDishPage extends JPanel {
 	            }
 	        }
 	    });
-	    contentsPanel.add(dishName, gbc);
+	    namePanel.add(dishName, BorderLayout.CENTER);
+	    contentsPanel.add(namePanel, gbc);
 	    
 	    gbc.gridx = 1;
 	    gbc.gridy = 1;

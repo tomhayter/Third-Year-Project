@@ -107,7 +107,6 @@ public class QueryComponentPage extends JPanel {
 		list.removeAllElements();
 		List<String> allComps = ui.om.getAllComponentNames();
 	    for(String comp: allComps) {
-	    	System.out.println(comp);
 	    	list.addElement(comp);
 	    }
 	    
