@@ -5,8 +5,11 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +27,7 @@ public class QueryIngredientPage extends JPanel {
 
 	UI ui;
 	final static String CARD = "QueryIngredientPage";
-	DefaultListModel<String> allList;
+	DefaultListModel<String> list;
 	
 	public QueryIngredientPage(UI ui) {
 
@@ -72,9 +75,9 @@ public class QueryIngredientPage extends JPanel {
         		else {
         			ings = ui.om.getIngredientNamesOfType(selection);
         		}
-        		allList.removeAllElements();
+        		list.removeAllElements();
         		for(String item: ings) {
-        			allList.addElement(item);
+        			list.addElement(item);
         		}
         	}
         });
@@ -86,12 +89,34 @@ public class QueryIngredientPage extends JPanel {
 	    JLabel allIngredientsText = new JLabel("Ingredients");
 	    allIngredientsPanel.add(allIngredientsText, BorderLayout.NORTH);
 	    List<String> allIngs = ui.om.getAllIngredientNames();	    
-	    allList = new DefaultListModel<String>();
+	    list = new DefaultListModel<String>();
 	    for(String ing: allIngs) {
-	    	allList.addElement(ing);
+	    	list.addElement(ing);
 	    }
-	    JList<String> allIngredients = new JList<String>(allList);
+	    JList<String> allIngredients = new JList<String>(list);
 	    allIngredients.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	    allIngredients.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		    	EditIngredientPage editIng = new EditIngredientPage(ui, allIngredients.getSelectedValue().replace("<html><u>", "").replace("</u></html>", ""));
+	            ui.SwitchToFrame(editIng, allIngredients.getSelectedValue().replace("<html><u>", "").replace("</u></html>", ""));
+		    }
+		    
+		    public void mouseExited(MouseEvent evt) {
+		    	for(int i=0; i<list.getSize(); i++) {
+					list.set(i, list.get(i).replace("<html><u>", "").replace("</u></html>", ""));
+				}
+		    }
+		});
+	    
+	    allIngredients.addMouseMotionListener(new MouseAdapter() {
+			public void mouseMoved(MouseEvent me) {
+				Point p = new Point(me.getX(), me.getY());
+				for(int i=0; i<list.getSize(); i++) {
+					list.set(i, list.get(i).replace("<html><u>", "").replace("</u></html>", ""));
+				}
+				list.set(allIngredients.locationToIndex(p), "<html><u>" + list.get(allIngredients.locationToIndex(p)) + "</u></html>");
+			}
+		});
 	    JScrollPane allScroll = new JScrollPane();
 	    allScroll.setViewportView(allIngredients);
 	    allIngredientsPanel.add(allScroll, BorderLayout.CENTER);
@@ -114,10 +139,10 @@ public class QueryIngredientPage extends JPanel {
 	}
 	
 	void reload() {
-		allList.removeAllElements();
+		list.removeAllElements();
 		List<String> allIngs = ui.om.getAllIngredientNames();
 	    for(String ing: allIngs) {
-	    	allList.addElement(ing);
+	    	list.addElement(ing);
 	    }
 	}
 

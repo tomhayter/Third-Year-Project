@@ -178,12 +178,12 @@ public class DishPage extends JPanel {
 		}
 		contentsPanel.add(allergenPanel, gbc);
 		
-		JButton extra = new JButton("Add/Remove Ingredients");
+		JButton extra = new JButton("Edit Dish");
 		extra.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	ExtraPage extraPage = new ExtraPage(ui, dish);
-            	ui.SwitchToFrame(extraPage, "Extra" + dish);
+            	EditDishPage editDish = new EditDishPage(ui, dish);
+            	ui.SwitchToFrame(editDish, EditDishPage.CARD + dish);
             }
         });
 		gbc.gridx = 1;

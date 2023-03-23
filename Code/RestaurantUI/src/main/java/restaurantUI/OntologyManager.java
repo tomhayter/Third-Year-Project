@@ -4,8 +4,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,6 +21,7 @@ import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
+import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -30,6 +33,7 @@ import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.reasoner.InferenceType;
 import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.semanticweb.owlapi.util.OWLEntityRenamer;
 
 
 public class OntologyManager {
@@ -259,6 +263,7 @@ public class OntologyManager {
 	
 	
 	public List<String> getAllAllergenNames() {
+		runReasoner();
 		ArrayList<String> names = new ArrayList<String>();
 		ArrayList<Node<OWLClass>> allergens = new ArrayList<Node<OWLClass>>();
 		reasoner.getSubClasses(df.getOWLClass(iri + "#Nutrient"), false).forEach(allergens::add);
@@ -276,6 +281,7 @@ public class OntologyManager {
 	
 	
 	public List<String> getIngredientNamesOfType(String type) {
+		runReasoner();
 		ArrayList<Node<OWLClass>> ingredients = new ArrayList<Node<OWLClass>>();	
 		ArrayList<String> names = new ArrayList<String>();
 		reasoner.getSubClasses(df.getOWLClass(iri + "#" + type + "Ingredient"), false).forEach(ingredients::add);
@@ -305,6 +311,7 @@ public class OntologyManager {
 	}
 	
 	List<Node<OWLClass>> getIngredientTypes() {
+		runReasoner();
 		ArrayList<Node<OWLClass>> ingredientTypes = new ArrayList<Node<OWLClass>>();	
 		reasoner.getSubClasses(df.getOWLClass(iri + "#Ingredient"), true).forEach(ingredientTypes::add);
 		return ingredientTypes;
@@ -312,6 +319,7 @@ public class OntologyManager {
 	
 	
 	public List<String> getAllIngredientNames() {
+		runReasoner();
 		List<Node<OWLClass>> types = getIngredientTypes();
 		ArrayList<String> names = new ArrayList<String>();
 		for(Node<OWLClass> ingType: types) {
@@ -332,6 +340,7 @@ public class OntologyManager {
 	
 	
 	public List<String> getAllComponentNames() {
+		runReasoner();
 		ArrayList<String> names = new ArrayList<String>();
 		ArrayList<Node<OWLClass>> components = new ArrayList<Node<OWLClass>>();
 		reasoner.getSubClasses(df.getOWLClass(iri + "#Component"), false).forEach(components::add);
@@ -424,7 +433,64 @@ public class OntologyManager {
 		}
 		return allergensInDish;
 	}
+	
+	
+	public List<String> getAllergensInIngredient(String ingredient) {
+		List<OWLClass> allergensInIng = new ArrayList<OWLClass>();
+		OWLClass ingClass = df.getOWLClass(iri + "#" + ingredient + "Ingredient");
+		OWLObjectProperty hasAllergen = df.getOWLObjectProperty(iri + "#hasNutrient");
+		
+		Set<OWLSubClassOfAxiom> allAxiomsForClass = new HashSet<OWLSubClassOfAxiom>();
+		ontology.subClassAxiomsForSubClass(ingClass).forEach(allAxiomsForClass::add);;
+		for(OWLSubClassOfAxiom ax: allAxiomsForClass) {
+			OWLClassExpression exp = ax.getSuperClass();
+			Set<OWLObjectProperty> objectProperties = new HashSet<OWLObjectProperty>();
+			exp.objectPropertiesInSignature().forEach(objectProperties::add);
+			if (!objectProperties.contains(hasAllergen)) {
+				continue;
+			}
+			if (!exp.toString().contains("ObjectAllValuesFrom")) {
+				continue;
+			}
 
+			exp.classesInSignature().forEach(allergensInIng::add);		
+		}
+		List<String> allergenNamesInDish = new ArrayList<String>();
+		for(OWLClass allergen: allergensInIng) {
+			allergenNamesInDish.add(getNameFromClass(allergen, "Nutrient"));
+		}
+		Collections.sort(allergenNamesInDish);
+		return allergenNamesInDish;
+	}
+
+	
+	public List<String> getIngredientsInComponent(String component) {
+		List<OWLClass> ingsInComp = new ArrayList<OWLClass>();
+		OWLClass compClass = df.getOWLClass(iri + "#" + component + "Component");
+		OWLObjectProperty hasIngredient = df.getOWLObjectProperty(iri + "#hasIngredient");
+		
+		Set<OWLSubClassOfAxiom> allAxiomsForClass = new HashSet<OWLSubClassOfAxiom>();
+		ontology.subClassAxiomsForSubClass(compClass).forEach(allAxiomsForClass::add);;
+		for(OWLSubClassOfAxiom ax: allAxiomsForClass) {
+			OWLClassExpression exp = ax.getSuperClass();
+			Set<OWLObjectProperty> objectProperties = new HashSet<OWLObjectProperty>();
+			exp.objectPropertiesInSignature().forEach(objectProperties::add);
+			if (!objectProperties.contains(hasIngredient)) {
+				continue;
+			}
+			if (!exp.toString().contains("ObjectAllValuesFrom")) {
+				continue;
+			}
+
+			exp.classesInSignature().forEach(ingsInComp::add);		
+		}
+		List<String> ingNamesInDish = new ArrayList<String>();
+		for(OWLClass ing: ingsInComp) {
+			ingNamesInDish.add(getNameFromClass(ing, "Ingredient"));
+		}
+		Collections.sort(ingNamesInDish);
+		return ingNamesInDish;
+	}
 	
 	
 	public List<String> getComponentsInDish(String dish) {
@@ -541,6 +607,22 @@ public class OntologyManager {
 			}
 		}
 		return false;
+	}
+	
+	
+	public boolean dishIsHalal(String dish) {
+		OWLClass dishClass = df.getOWLClass(iri + "#" + dish + "Dish");
+		OWLClass halalClass = df.getOWLClass(iri + "#HalalPreparationMethod");
+		OWLObjectProperty prepMethod = df.getOWLObjectProperty(iri + "#preparedUsingMethod");
+		return reasoner.isEntailed(df.getOWLSubClassOfAxiom(dishClass, df.getOWLObjectSomeValuesFrom(prepMethod, halalClass)));
+	}
+	
+	
+	public boolean dishIsKosher(String dish) {
+		OWLClass dishClass = df.getOWLClass(iri + "#" + dish + "Dish");
+		OWLClass kosherClass = df.getOWLClass(iri + "#KosherPreparationMethod");
+		OWLObjectProperty prepMethod = df.getOWLObjectProperty(iri + "#preparedUsingMethod");
+		return reasoner.isEntailed(df.getOWLSubClassOfAxiom(dishClass, df.getOWLObjectSomeValuesFrom(prepMethod, kosherClass)));
 	}
 	
 	
@@ -671,6 +753,134 @@ public class OntologyManager {
 		Collections.sort(result);
 		return result;
 	}
+	
+	
+	public void updateIngredient(
+			String oldName,
+			String newName,
+			String[] newAllergens,
+			int calories) {
+		
+		OWLClass oldIng = df.getOWLClass(iri + "#" + oldName + "Ingredient");
+		OWLObjectProperty hasAllergen = df.getOWLObjectProperty(iri + "#hasNutrient");
+		OWLDataProperty hasCalories = df.getOWLDataProperty(iri + "#hasCalories");
+		
+		// Remove old subclass definitions
+		Set<OWLSubClassOfAxiom> allAxiomsForClass = new HashSet<OWLSubClassOfAxiom>();
+		ontology.subClassAxiomsForSubClass(oldIng).forEach(allAxiomsForClass::add);;
+		for(OWLSubClassOfAxiom ax: allAxiomsForClass) {
+			OWLClassExpression exp = ax.getSuperClass();
+			Set<OWLObjectProperty> objectProperties = new HashSet<OWLObjectProperty>();
+			exp.objectPropertiesInSignature().forEach(objectProperties::add);
+			if (!objectProperties.contains(hasAllergen)) {
+				continue;
+			}
+			ontology.remove(ax);
+		}
+		
+		
+		// Add new subclass definitions
+		List<OWLClass> allAllergens = new ArrayList<OWLClass>();
+		for (String allergen : newAllergens) {
+			OWLClass allergenClass = df.getOWLClass(iri + "#" + allergen + "Nutrient");
+			allAllergens.add(allergenClass);
+			OWLSubClassOfAxiom compHasIng = df.getOWLSubClassOfAxiom(oldIng, df.getOWLObjectSomeValuesFrom(hasAllergen, allergenClass));
+			ontology.add(compHasIng);
+		}
+		
+		OWLClassExpression combination = df.getOWLObjectUnionOf(allAllergens);
+		OWLSubClassOfAxiom compMustHaveIngs = df.getOWLSubClassOfAxiom(oldIng, df.getOWLObjectAllValuesFrom(hasAllergen, combination));
+		ontology.add(compMustHaveIngs);
+		
+		// Delete Calories
+		for(OWLSubClassOfAxiom ax: allAxiomsForClass) {
+			OWLClassExpression exp = ax.getSuperClass();
+			Set<OWLDataProperty> dataProperties = new HashSet<OWLDataProperty>();
+			exp.dataPropertiesInSignature().forEach(dataProperties::add);
+			if (!dataProperties.contains(hasCalories)) {
+				continue;
+			}
+			ontology.remove(ax);	
+		}
+		
+		// Add new Calories
+		OWLLiteral literal = df.getOWLLiteral(calories);
+		OWLSubClassOfAxiom ingHasCalories = df.getOWLSubClassOfAxiom(oldIng, df.getOWLDataHasValue(hasCalories, literal));
+		ontology.add(ingHasCalories);
+		
+		// Rename
+		OWLEntityRenamer renamer = new OWLEntityRenamer(man, Collections.singleton(ontology));
+		Map<OWLEntity, IRI> entity2IRIMap = new HashMap<>();
+		entity2IRIMap.put(oldIng, IRI.create(iri + "#" + newName + "Ingredient"));
+		ontology.applyChanges(renamer.changeIRI(entity2IRIMap));
+		
+		
+		saveOntology();
+		runReasoner();
+		
+	}
+			
+	
+	
+	public void updateComponent(
+			String oldComponentName,
+			String newComponentName,
+			List<String> newIngredients) {
+		
+		OWLClass oldComp = df.getOWLClass(iri + "#" + oldComponentName + "Component");
+		OWLObjectProperty hasIng = df.getOWLObjectProperty(iri + "#hasIngredient");
+		
+		// Remove old subclass definitions
+		Set<OWLSubClassOfAxiom> allAxiomsForClass = new HashSet<OWLSubClassOfAxiom>();
+		ontology.subClassAxiomsForSubClass(oldComp).forEach(allAxiomsForClass::add);;
+		for(OWLSubClassOfAxiom ax: allAxiomsForClass) {
+			OWLClassExpression exp = ax.getSuperClass();
+			Set<OWLObjectProperty> objectProperties = new HashSet<OWLObjectProperty>();
+			exp.objectPropertiesInSignature().forEach(objectProperties::add);
+			if (!objectProperties.contains(hasIng)) {
+				continue;
+			}
+			ontology.remove(ax);	
+		}
+		
+		
+		// Add new subclass definitions
+		List<OWLClass> allIngs = new ArrayList<OWLClass>();
+		for (String ingredient : newIngredients) {
+			OWLClass ing = df.getOWLClass(iri + "#" + ingredient + "Ingredient");
+			allIngs.add(ing);
+			OWLSubClassOfAxiom compHasIng = df.getOWLSubClassOfAxiom(oldComp, df.getOWLObjectSomeValuesFrom(hasIng, ing));
+			ontology.add(compHasIng);
+		}
+		
+		OWLClassExpression combination = df.getOWLObjectUnionOf(allIngs);
+		OWLSubClassOfAxiom compMustHaveIngs = df.getOWLSubClassOfAxiom(oldComp, df.getOWLObjectAllValuesFrom(hasIng, combination));
+		ontology.add(compMustHaveIngs);
+		
+		// Rename
+		OWLEntityRenamer renamer = new OWLEntityRenamer(man, Collections.singleton(ontology));
+		Map<OWLEntity, IRI> entity2IRIMap = new HashMap<>();
+		entity2IRIMap.put(oldComp, IRI.create(iri + "#" + newComponentName + "Component"));
+		ontology.applyChanges(renamer.changeIRI(entity2IRIMap));
+		
+		
+		saveOntology();
+		runReasoner();
+	}
+	
+	
+	
+	public void updateDish(
+			String oldDishName,
+			String newDishName,
+			List<String> components,
+			boolean halal,
+			boolean kosher,
+			boolean glutenFree) {
+		removeDish(oldDishName);
+		addDish(newDishName, components, halal, kosher, glutenFree);
+	}
+	
 	
 	
 	boolean runReasoner() {

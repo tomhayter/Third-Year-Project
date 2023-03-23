@@ -5,8 +5,11 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -22,7 +25,7 @@ public class QueryComponentPage extends JPanel {
 	
 	UI ui;
 	final static String CARD = "QueryComponentPage";
-	DefaultListModel<String> allList;
+	DefaultListModel<String> list;
 	
 	public QueryComponentPage(UI ui) {
 
@@ -51,12 +54,34 @@ public class QueryComponentPage extends JPanel {
 	    JLabel allComponentsText = new JLabel("Components");
 	    allComponentsPanel.add(allComponentsText, BorderLayout.NORTH);
 	    List<String> allComps = ui.om.getAllComponentNames();	    
-	    allList = new DefaultListModel<String>();
+	    list = new DefaultListModel<String>();
 	    for(String comp: allComps) {
-	    	allList.addElement(comp);
+	    	list.addElement(comp);
 	    }
-	    JList<String> allComponents = new JList<String>(allList);
+	    JList<String> allComponents = new JList<String>(list);
 	    allComponents.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	    allComponents.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		    	EditComponentPage editComp = new EditComponentPage(ui, allComponents.getSelectedValue().replace("<html><u>", "").replace("</u></html>", ""));
+	            ui.SwitchToFrame(editComp, allComponents.getSelectedValue().replace("<html><u>", "").replace("</u></html>", ""));
+		    }
+		    
+		    public void mouseExited(MouseEvent evt) {
+		    	for(int i=0; i<list.getSize(); i++) {
+					list.set(i, list.get(i).replace("<html><u>", "").replace("</u></html>", ""));
+				}
+		    }
+		});
+		
+		allComponents.addMouseMotionListener(new MouseAdapter() {
+			public void mouseMoved(MouseEvent me) {
+				Point p = new Point(me.getX(), me.getY());
+				for(int i=0; i<list.getSize(); i++) {
+					list.set(i, list.get(i).replace("<html><u>", "").replace("</u></html>", ""));
+				}
+				list.set(allComponents.locationToIndex(p), "<html><u>" + list.get(allComponents.locationToIndex(p)) + "</u></html>");
+			}
+		});
 	    JScrollPane allScroll = new JScrollPane();
 	    allScroll.setViewportView(allComponents);
 	    allComponentsPanel.add(allScroll, BorderLayout.CENTER);
@@ -79,11 +104,15 @@ public class QueryComponentPage extends JPanel {
 	}
 	
 	void reload() {
-		allList.removeAllElements();
+		list.removeAllElements();
 		List<String> allComps = ui.om.getAllComponentNames();
 	    for(String comp: allComps) {
-	    	allList.addElement(comp);
+	    	System.out.println(comp);
+	    	list.addElement(comp);
 	    }
+	    
+	    revalidate();
+		repaint();
 	}
 
 	
