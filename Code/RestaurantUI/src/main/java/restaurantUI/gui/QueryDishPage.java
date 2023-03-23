@@ -183,9 +183,7 @@ public class QueryDishPage extends JPanel {
 	    });
 	    options.add(reset, gbc);
 		
-		gbc.gridx = 1;
-	    gbc.gridy = 0;
-		contentsPanel.add(options, gbc);
+		
 		
 		search = new JButton("Search");
 		search.addActionListener(new ActionListener() {
@@ -212,11 +210,13 @@ public class QueryDishPage extends JPanel {
                 }
             }
         });
-		gbc.gridx = 1;
-	    gbc.gridy = 1;
-	    contentsPanel.add(search, gbc);
+		gbc.gridx = 0;
+	    gbc.gridy = 5;
+	    options.add(search, gbc);
 	    
-	    
+	    gbc.gridx = 1;
+	    gbc.gridy = 0;
+		contentsPanel.add(options, gbc);
 	    
 	    
 		add(contentsPanel);

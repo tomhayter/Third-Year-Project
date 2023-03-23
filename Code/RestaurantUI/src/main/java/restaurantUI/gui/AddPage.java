@@ -31,7 +31,6 @@ public class AddPage extends JPanel {
         buttons.add(new JLabel(""));
         
         JButton addAllergen = new JButton("Allergen");
-        addAllergen.setFont(new Font("Calibri", Font.PLAIN, 16));
         addAllergen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,7 +42,6 @@ public class AddPage extends JPanel {
         buttons.add(new JLabel(""));
         
         JButton addIng = new JButton("Ingredient");
-        addIng.setFont(new Font("Calibri", Font.PLAIN, 16));
         addIng.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -55,7 +53,6 @@ public class AddPage extends JPanel {
         buttons.add(new JLabel(""));
         
         JButton addComp = new JButton("Component");
-        addComp.setFont(new Font("Calibri", Font.PLAIN, 16));
         addComp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,7 +64,6 @@ public class AddPage extends JPanel {
         buttons.add(new JLabel(""));
         
         JButton addDish = new JButton("Dish");
-        addDish.setFont(new Font("Calibri", Font.PLAIN, 16));
         addDish.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -79,7 +75,6 @@ public class AddPage extends JPanel {
         buttons.add(new JLabel(""));
 
         JButton backToMain = new JButton("Back to Main Menu");
-        backToMain.setFont(new Font("Calibri", Font.PLAIN, 16));
         backToMain.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

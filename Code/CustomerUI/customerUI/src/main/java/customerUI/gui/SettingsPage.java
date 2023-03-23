@@ -45,7 +45,6 @@ public class SettingsPage extends JPanel {
 		
 		contentsPanel.add(new JLabel(""));
 		JButton back = new JButton("Back");
-		back.setFont(new Font("Calibri", Font.PLAIN, 16));
 		back.addActionListener(new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent e) {

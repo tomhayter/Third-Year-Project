@@ -32,7 +32,6 @@ public class RemovePage extends JPanel {
         buttonsPanel.add(new JLabel(""));
         
         JButton removeAllergen = new JButton("Allergen");
-        removeAllergen.setFont(new Font("Calibri", Font.PLAIN, 16));
         removeAllergen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -44,7 +43,6 @@ public class RemovePage extends JPanel {
         buttonsPanel.add(new JLabel(""));
         
         JButton removeIng = new JButton("Ingredient");
-        removeIng.setFont(new Font("Calibri", Font.PLAIN, 16));
         removeIng.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,7 +54,6 @@ public class RemovePage extends JPanel {
         buttonsPanel.add(new JLabel(""));
         
         JButton removeComp = new JButton("Component");
-        removeComp.setFont(new Font("Calibri", Font.PLAIN, 16));
         removeComp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -68,7 +65,6 @@ public class RemovePage extends JPanel {
         buttonsPanel.add(new JLabel(""));
         
         JButton removeDish = new JButton("Dish");
-        removeDish.setFont(new Font("Calibri", Font.PLAIN, 16));
         removeDish.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -81,7 +77,6 @@ public class RemovePage extends JPanel {
         
 
         JButton backToMain = new JButton("Back to Main Menu");
-        backToMain.setFont(new Font("Calibri", Font.PLAIN, 16));
         backToMain.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

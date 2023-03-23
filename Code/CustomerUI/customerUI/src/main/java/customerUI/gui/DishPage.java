@@ -68,7 +68,6 @@ public class DishPage extends JPanel {
 		
 		gbc.fill = GridBagConstraints.NONE;
 		JButton back = new JButton("Back to Search");
-		back.setFont(new Font("Calibri", Font.PLAIN, 16));
 		back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -167,7 +166,6 @@ public class DishPage extends JPanel {
 		contentsPanel.add(properties, gbc);
 		
 		JButton extra = new JButton("Add/Remove Ingredients");
-		extra.setFont(new Font("Calibri", Font.PLAIN, 16));
 		extra.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

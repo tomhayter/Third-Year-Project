@@ -99,7 +99,6 @@ public class ExtraPage extends JPanel {
 		gbc.gridy = 2;
 		gbc.fill = GridBagConstraints.NONE;
 		JButton back = new JButton("Back to Dish");
-		back.setFont(new Font("Calibri", Font.PLAIN, 16));
 		back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -142,7 +141,6 @@ public class ExtraPage extends JPanel {
 //		properties.add(dietPanel, gbc);
 		
 		JButton calculate = new JButton("Calculate");
-		calculate.setFont(new Font("Calibri", Font.PLAIN, 16));
 		calculate.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -211,7 +209,6 @@ public class ExtraPage extends JPanel {
 	    gbc.gridy = 2;
 	    gbc.fill = GridBagConstraints.NONE;
 	    JButton reset = new JButton("Reset Dish");
-	    reset.setFont(new Font("Calibri", Font.PLAIN, 16));
 	    reset.addActionListener(new ActionListener() {
 	    	@Override
 	    	public void actionPerformed(ActionEvent e) {
