@@ -102,7 +102,7 @@ public class AddDishPage extends JPanel {
 	    gbc.gridx = 1;
 	    gbc.gridy = 2;
 	    JPanel componentsPanel = new JPanel(new BorderLayout());
-	    JLabel componentsText = new JLabel("Components in your Dish:");
+	    JLabel componentsText = new JLabel("Components in your dish (click to remove):");
 	    componentsPanel.add(componentsText, BorderLayout.NORTH);
 	    JList<String> components = new JList<String>(list);
 	    components.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -143,6 +143,11 @@ public class AddDishPage extends JPanel {
 	        	List<String> selected = new ArrayList<String>();
 				for (Object i: list.toArray()) {
 					selected.add((String) i);
+				}
+				
+				if (dishName.getText().replace("Enter Dish Name", "").length() == 0) {
+					JOptionPane.showMessageDialog(null, "You must name your dish!", "Error Adding Dish", JOptionPane.WARNING_MESSAGE);
+	        		return;
 				}
 				
 				if (selected.size() == 0) {

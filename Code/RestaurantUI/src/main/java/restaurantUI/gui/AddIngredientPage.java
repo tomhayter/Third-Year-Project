@@ -74,7 +74,7 @@ public class AddIngredientPage extends JPanel {
 	    gbc.gridx = 1;
         gbc.gridy = 1;
 	    JPanel typePanel = new JPanel(new BorderLayout());
-	    JLabel typeText = new JLabel("Select Ingredient Type");
+	    JLabel typeText = new JLabel("Select Ingredient Type:");
 	    typePanel.add(typeText, BorderLayout.NORTH);
 		List<String> ingTypesList = ui.om.getIngredientTypeNames();		
         String[] ingTypesArray = new String[ingTypesList.size()];
@@ -128,6 +128,11 @@ public class AddIngredientPage extends JPanel {
 	        public void actionPerformed(ActionEvent e) {
 	        	String[] selected = new String[allergens.getSelectedValuesList().size()];
 	        	selected = allergens.getSelectedValuesList().toArray(selected);
+	        	
+	        	if (ingName.getText().replace("Enter Ingredient Name", "").length() == 0) {
+					JOptionPane.showMessageDialog(null, "You must name your ingredient!", "Error Adding Ingredient", JOptionPane.WARNING_MESSAGE);
+	        		return;
+				}
 	        	
 	            ui.om.addIngredient(ingName.getText(),ingTypes.getSelectedItem().toString(), selected, (int) calories.getValue());
 	            ui.updateIngredients();

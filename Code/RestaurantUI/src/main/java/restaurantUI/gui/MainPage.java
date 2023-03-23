@@ -30,6 +30,7 @@ public class MainPage extends JPanel {
         buttonsPanel.add(new JLabel(""));
         
         JButton goToAddButton = new JButton("Add to Menu");
+        goToAddButton.setFont(new Font("Calibri", Font.PLAIN, 16));
         goToAddButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,6 +44,7 @@ public class MainPage extends JPanel {
         buttonsPanel.add(new JLabel(""));
         
         JButton goToRemoveButton = new JButton("Remove from Menu");
+        goToRemoveButton.setFont(new Font("Calibri", Font.PLAIN, 16));
         goToRemoveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,7 +56,8 @@ public class MainPage extends JPanel {
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));
         
-        JButton goToQueryButton = new JButton("Search/Edit the Menu");
+        JButton goToQueryButton = new JButton("Search & Edit the Menu");
+        goToQueryButton.setFont(new Font("Calibri", Font.PLAIN, 16));
         goToQueryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,19 +70,8 @@ public class MainPage extends JPanel {
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));        
         
-        JButton settings = new JButton("Settings");
-        settings.addActionListener(new ActionListener() {
-        	@Override
-        	public void actionPerformed(ActionEvent e) {
-        		ui.SwitchToFrame(SettingsPage.CARD);
-        	}
-        });
-        buttonsPanel.add(settings);
-        
-        buttonsPanel.add(new JLabel(""));
-        buttonsPanel.add(new JLabel(""));        
-        
         JButton quit = new JButton("Quit");
+        quit.setFont(new Font("Calibri", Font.PLAIN, 16));
         quit.addActionListener(new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent e) {
@@ -89,9 +81,15 @@ public class MainPage extends JPanel {
         buttonsPanel.add(quit);
         
         buttonsPanel.add(new JLabel(""));
+        
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));
+        
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
+        buttonsPanel.add(new JLabel(""));
+        
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));

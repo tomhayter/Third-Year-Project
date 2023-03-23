@@ -48,7 +48,7 @@ public class QueryDishPage extends JPanel {
 		this.ui = ui;
 		setLayout(new BorderLayout());
 		
-		JLabel title = new JLabel("Search");
+		JLabel title = new JLabel("Search Dishes");
 	    title.setFont(new Font("Calibri", Font.BOLD, 24));
 	    JPanel titlePanel = new JPanel();
 	    titlePanel.add(title, BorderLayout.CENTER);
@@ -60,7 +60,7 @@ public class QueryDishPage extends JPanel {
 	    Insets i = new Insets(0, 0, 16, 16);
 	    gbc.insets = i;
 		JPanel results = new JPanel(new BorderLayout());
-		results.setBorder(new CompoundBorder(new TitledBorder("Results"), new EmptyBorder(16, 16, 16, 16)));
+		results.setBorder(new CompoundBorder(new TitledBorder("Results:"), new EmptyBorder(16, 16, 16, 16)));
 		
 		gbc.gridx = 0;
 	    gbc.gridy = 0;
@@ -105,11 +105,11 @@ public class QueryDishPage extends JPanel {
 		gbc.weighty = 1;
 		
 		gbc.fill = GridBagConstraints.NONE;
-		JButton back = new JButton("Back to Main Menu");
+		JButton back = new JButton("Back");
 		back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ui.SwitchToFrame(MainPage.CARD);
+                ui.SwitchToFrame(QueryPage.CARD);
             }
         });
 		contentsPanel.add(back, gbc);

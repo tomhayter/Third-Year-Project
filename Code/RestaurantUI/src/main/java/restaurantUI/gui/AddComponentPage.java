@@ -100,7 +100,7 @@ public class AddComponentPage extends JPanel {
     gbc.gridx = 1;
     gbc.gridy = 2;
     JPanel ingredientsPanel = new JPanel(new BorderLayout());
-    JLabel ingredientsText = new JLabel("Ingredients in your component:");
+    JLabel ingredientsText = new JLabel("Ingredients in your component (click to remove):");
     ingredientsPanel.add(ingredientsText, BorderLayout.NORTH);
     JScrollPane scroll = new JScrollPane();
     JList<String> ingredients = new JList<String>(list);
@@ -123,6 +123,10 @@ public class AddComponentPage extends JPanel {
         	List<String> selected = new ArrayList<String>();
 			for (Object i: list.toArray()) {
 				selected.add((String) i);
+			}
+			if (compName.getText().replace("Enter Component Name", "").length() == 0) {
+				JOptionPane.showMessageDialog(null, "You must name your component!", "Error Adding Component", JOptionPane.WARNING_MESSAGE);
+        		return;
 			}
         	if (selected.size() == 0) {
         		JOptionPane.showMessageDialog(null, "Components must contain at least one ingredient!", "Error Adding Component", JOptionPane.WARNING_MESSAGE);

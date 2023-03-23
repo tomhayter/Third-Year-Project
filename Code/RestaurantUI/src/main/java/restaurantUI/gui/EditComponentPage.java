@@ -38,7 +38,7 @@ public class EditComponentPage extends JPanel {
 		setName("Edit Component");
 		setLayout(new BorderLayout());
 		
-		JLabel title = new JLabel("Edit " + component);
+		JLabel title = new JLabel("Edit " + component + " Component");
 	    title.setFont(new Font("Calibri", Font.BOLD, 24));
 	    JPanel titlePanel = new JPanel();
 	    titlePanel.add(title, BorderLayout.CENTER);
@@ -53,22 +53,12 @@ public class EditComponentPage extends JPanel {
 	    
 	    gbc.gridx = 1;
 	    gbc.gridy = 0;
-	
+	    JPanel editNamePanel = new JPanel(new BorderLayout());
+	    JLabel editNameText = new JLabel("Edit Name:");
 	    JTextField compName = new JTextField(component);
-//	    compName.addFocusListener(new FocusListener() {
-//	        @Override
-//	        public void focusGained(FocusEvent e) {
-//	            compName.setText(null);
-//	        }
-//	
-//	        @Override
-//	        public void focusLost(FocusEvent e) {
-//	            if (compName.getText().equals(null)) {
-//	                compName.setText("Enter Component Name");
-//	            }
-//	        }
-//	    });
-	    contentsPanel.add(compName, gbc);
+	    editNamePanel.add(editNameText, BorderLayout.NORTH);
+	    editNamePanel.add(compName, BorderLayout.CENTER);
+	    contentsPanel.add(editNamePanel, gbc);
 	    
 	    gbc.gridx = 1;
 	    gbc.gridy = 1;
@@ -98,7 +88,7 @@ public class EditComponentPage extends JPanel {
 	    gbc.gridx = 1;
 	    gbc.gridy = 2;
 	    JPanel ingredientsPanel = new JPanel(new BorderLayout());
-	    JLabel ingredientsText = new JLabel("Ingredients in your component:");
+	    JLabel ingredientsText = new JLabel("Ingredients in your component (click to remove):");
 	    ingredientsPanel.add(ingredientsText, BorderLayout.NORTH);
 	    JScrollPane scroll = new JScrollPane();
 	    List<String> ingsInComp = ui.om.getIngredientsInComponent(component);

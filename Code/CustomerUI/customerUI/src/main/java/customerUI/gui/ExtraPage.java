@@ -56,7 +56,7 @@ public class ExtraPage extends JPanel {
 	    gbc.gridy = 0;
 	    gbc.fill = GridBagConstraints.BOTH;
 		JPanel ings = new JPanel(new BorderLayout());
-		ings.setBorder(new CompoundBorder(new TitledBorder("Your Dish - Click to remove ingredient"), new EmptyBorder(16, 16, 16, 16)));
+		ings.setBorder(new CompoundBorder(new TitledBorder("Your Dish (click to remove ingredient)"), new EmptyBorder(16, 16, 16, 16)));
 		for(String s: originalIngredients) {
 			modList.addElement(s);
 		}

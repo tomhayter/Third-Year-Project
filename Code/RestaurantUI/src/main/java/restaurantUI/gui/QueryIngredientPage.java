@@ -86,7 +86,7 @@ public class QueryIngredientPage extends JPanel {
 	    gbc.gridx = 1;
 	    gbc.gridy = 1;
 	    JPanel allIngredientsPanel = new JPanel(new BorderLayout());
-	    JLabel allIngredientsText = new JLabel("Ingredients");
+	    JLabel allIngredientsText = new JLabel("Ingredients:");
 	    allIngredientsPanel.add(allIngredientsText, BorderLayout.NORTH);
 	    List<String> allIngs = ui.om.getAllIngredientNames();	    
 	    list = new DefaultListModel<String>();

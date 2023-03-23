@@ -13,8 +13,8 @@ public class UI {
 	
 	public OntologyManager om;
 	
-	int height = 600;
-	int width = 550;
+	int height = 725;
+	int width = 600;
 	
 	JFrame frame;
 	
@@ -38,7 +38,6 @@ public class UI {
 	private QueryIngredientPage QueryIngredientPage;
 	private QueryComponentPage QueryComponentPage;
 	private QueryDishPage QueryDishPage;
-	private SettingsPage SettingsPage;
 	
 
 	public UI(OntologyManager manager) {
@@ -99,9 +98,6 @@ public class UI {
 		
 		QueryDishPage = new QueryDishPage(this);
 		cards.add(QueryDishPage, restaurantUI.gui.QueryDishPage.CARD);
-		
-		SettingsPage = new SettingsPage(this);
-		cards.add(SettingsPage, restaurantUI.gui.SettingsPage.CARD);
 	}
 	
 	public void Start() { 

@@ -55,21 +55,12 @@ public class EditDishPage extends JPanel {
 	    
 	    gbc.gridx = 1;
 	    gbc.gridy = 0;
+	    JPanel editNamePanel = new JPanel(new BorderLayout());
+	    JLabel editNameLabel = new JLabel("Edit Name:");
 	    JTextField dishName = new JTextField(dish);
-//	    dishName.addFocusListener(new FocusListener() {
-//	        @Override
-//	        public void focusGained(FocusEvent e) {
-//	            dishName.setText(null);
-//	        }
-//
-//	        @Override
-//	        public void focusLost(FocusEvent e) {
-//	            if (dishName.getText().equals(null)) {
-//	                dishName.setText("Enter Dish Name");
-//	            }
-//	        }
-//	    });
-	    contentsPanel.add(dishName, gbc);
+	    editNamePanel.add(editNameLabel, BorderLayout.NORTH);
+	    editNamePanel.add(dishName, BorderLayout.CENTER);
+	    contentsPanel.add(editNamePanel, gbc);
 	    
 	    gbc.gridx = 1;
 	    gbc.gridy = 1;
@@ -100,7 +91,7 @@ public class EditDishPage extends JPanel {
 	    gbc.gridx = 1;
 	    gbc.gridy = 2;
 	    JPanel componentsPanel = new JPanel(new BorderLayout());
-	    JLabel componentsText = new JLabel("Components in your Dish:");
+	    JLabel componentsText = new JLabel("Components in your dish (click to remove):");
 	    componentsPanel.add(componentsText, BorderLayout.NORTH);
 	    JList<String> components = new JList<String>(list);
 	    List<String> compsInDish = ui.om.getComponentsInDish(dish);

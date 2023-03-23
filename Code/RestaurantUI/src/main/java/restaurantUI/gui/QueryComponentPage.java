@@ -51,7 +51,7 @@ public class QueryComponentPage extends JPanel {
 	    gbc.gridx = 1;
 	    gbc.gridy = 0;
 	    JPanel allComponentsPanel = new JPanel(new BorderLayout());
-	    JLabel allComponentsText = new JLabel("Components");
+	    JLabel allComponentsText = new JLabel("All Components:");
 	    allComponentsPanel.add(allComponentsText, BorderLayout.NORTH);
 	    List<String> allComps = ui.om.getAllComponentNames();	    
 	    list = new DefaultListModel<String>();

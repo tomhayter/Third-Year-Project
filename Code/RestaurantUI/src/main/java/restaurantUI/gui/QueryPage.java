@@ -32,6 +32,7 @@ public class QueryPage extends JPanel {
         buttonsPanel.add(new JLabel(""));
         
         JButton searchIng = new JButton("Ingredient");
+        searchIng.setFont(new Font("Calibri", Font.PLAIN, 16));
         searchIng.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,6 +44,7 @@ public class QueryPage extends JPanel {
         buttonsPanel.add(new JLabel(""));
         
         JButton searchComp = new JButton("Component");
+        searchComp.setFont(new Font("Calibri", Font.PLAIN, 16));
         searchComp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,6 +56,7 @@ public class QueryPage extends JPanel {
         buttonsPanel.add(new JLabel(""));
         
         JButton searchDish = new JButton("Dish");
+        searchDish.setFont(new Font("Calibri", Font.PLAIN, 16));
         searchDish.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -66,6 +69,7 @@ public class QueryPage extends JPanel {
         
 
         JButton backToMain = new JButton("Back to Main Menu");
+        backToMain.setFont(new Font("Calibri", Font.PLAIN, 16));
         backToMain.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,13 +78,15 @@ public class QueryPage extends JPanel {
         });
         buttonsPanel.add(backToMain);
         buttonsPanel.add(new JLabel(""));
+        
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));
+        
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));
-        buttonsPanel.add(new JLabel(""));
+        
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));
         buttonsPanel.add(new JLabel(""));

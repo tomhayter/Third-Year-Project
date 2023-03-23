@@ -60,6 +60,10 @@ public class AddAllergenPage extends JPanel {
 	    addButton.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
+	        	if (allergenName.getText().replace("Enter Allergen Name", "").length() == 0) {
+					JOptionPane.showMessageDialog(null, "You must name your allergen!", "Error Adding Allergen", JOptionPane.WARNING_MESSAGE);
+	        		return;
+				}
 	            ui.om.addAllergen(allergenName.getText());
 	            JOptionPane.showMessageDialog(null, "Added " + allergenName.getText() + " to the ontology.");
 	            ui.updateAllergens();

@@ -36,7 +36,7 @@ public class EditIngredientPage extends JPanel {
 		setName("Edit Ingredient");
 		setLayout(new BorderLayout());
 		
-		JLabel title = new JLabel("Edit " + ingredient);
+		JLabel title = new JLabel("Edit " + ingredient + " Ingredient");
         title.setFont(new Font("Calibri", Font.BOLD, 24));
         JPanel titlePanel = new JPanel();
         titlePanel.add(title, BorderLayout.CENTER);
@@ -52,34 +52,12 @@ public class EditIngredientPage extends JPanel {
         gbc.gridy = 0;
         
         contentsPanel.setBorder(new EmptyBorder(0, 0, 8, 0));
-        
+        JPanel editNamePanel = new JPanel(new BorderLayout());
+        JLabel editNameText = new JLabel("Edit Name:");
         JTextField ingName = new JTextField(ingredient);
-//	    ingName.addFocusListener(new FocusListener() {
-//	        @Override
-//	        public void focusGained(FocusEvent e) {
-//	            ingName.setText(null);
-//	        }
-//	
-//	        @Override
-//	        public void focusLost(FocusEvent e) {
-//	            if (ingName.getText().equals(null)) {
-//	                ingName.setText("Enter Ingredient Name");
-//	            }
-//	        }
-//	    });
-	    contentsPanel.add(ingName, gbc);
-
-//	    gbc.gridx = 1;
-//        gbc.gridy = 1;
-//	    JPanel typePanel = new JPanel(new BorderLayout());
-//	    JLabel typeText = new JLabel("Select Ingredient Type");
-//	    typePanel.add(typeText, BorderLayout.NORTH);
-//		List<String> ingTypesList = ui.om.getIngredientTypeNames();		
-//        String[] ingTypesArray = new String[ingTypesList.size()];
-//        ingTypesArray = ingTypesList.toArray(ingTypesArray);
-//        JComboBox<String> ingTypes = new JComboBox<String>(ingTypesArray);
-//        typePanel.add(ingTypes, BorderLayout.CENTER);
-//        contentsPanel.add(typePanel, gbc);
+        editNamePanel.add(editNameText, BorderLayout.NORTH);
+        editNamePanel.add(ingName, BorderLayout.CENTER);
+	    contentsPanel.add(editNamePanel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
