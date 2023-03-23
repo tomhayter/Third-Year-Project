@@ -31,11 +31,11 @@ public class RemovePage extends JPanel {
         JPanel buttonsPanel = new JPanel(new GridLayout(7, 3, 0, 32));
         buttonsPanel.add(new JLabel(""));
         
-        JButton removeAllergen = new JButton("Allergen (TODO)");
+        JButton removeAllergen = new JButton("Allergen");
         removeAllergen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	
+            	ui.SwitchToFrame(RemoveAllergenPage.CARD);
             }
         });
         buttonsPanel.add(removeAllergen);

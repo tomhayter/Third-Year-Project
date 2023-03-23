@@ -30,6 +30,7 @@ public class UI {
 	private AddComponentPage AddComponentPage;
 	private AddDishPage AddDishPage;
 	private RemovePage RemovePage;
+	private RemoveAllergenPage RemoveAllergenPage;
 	private RemoveIngredientPage RemoveIngredientPage;
 	private RemoveComponentPage RemoveComponentPage;
 	private RemoveDishPage RemoveDishPage;
@@ -74,6 +75,9 @@ public class UI {
 		
 		RemovePage = new RemovePage(this);
 		cards.add(RemovePage, restaurantUI.gui.RemovePage.CARD);
+		
+		RemoveAllergenPage = new RemoveAllergenPage(this);
+		cards.add(RemoveAllergenPage, restaurantUI.gui.RemoveAllergenPage.CARD);
 		
 		RemoveIngredientPage = new RemoveIngredientPage(this);
 		cards.add(RemoveIngredientPage, restaurantUI.gui.RemoveIngredientPage.CARD);
@@ -124,6 +128,7 @@ public class UI {
 	
 	public void updateAllergens() {
 		AddIngredientPage.reload();
+		RemoveAllergenPage.reload();
 	}
 	
 	public void updateIngredients() {
