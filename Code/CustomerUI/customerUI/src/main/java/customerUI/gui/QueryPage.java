@@ -58,14 +58,15 @@ public class QueryPage extends JPanel {
 		JPanel contentsPanel = new JPanel(new GridBagLayout());
 		contentsPanel.setBorder(new EmptyBorder(0, 0, 8, 0));
 	    gbc = new GridBagConstraints();
-	    Insets i = new Insets(0, 0, 16, 16);
+	    Insets i = new Insets(0, 32, 16, 8);
 	    gbc.insets = i;
 		JPanel results = new JPanel(new BorderLayout());
 		results.setBorder(new CompoundBorder(new TitledBorder("Results"), new EmptyBorder(16, 16, 16, 16)));
 		
 		gbc.gridx = 0;
 	    gbc.gridy = 0;
-	    gbc.weighty = 2;
+	    gbc.weightx = 1;
+	    gbc.weighty = 1;
 	    gbc.fill = GridBagConstraints.BOTH;
 		List<String> allDishes = ui.om.getAllDishNames();
 		for(String s: allDishes) {
@@ -103,10 +104,11 @@ public class QueryPage extends JPanel {
 		
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		gbc.weighty = 1;
+		
 		
 		gbc.fill = GridBagConstraints.NONE;
 		JButton back = new JButton("Back to Main Menu");
+		back.setFont(new Font("Calibri", Font.PLAIN, 16));
 		back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -117,7 +119,9 @@ public class QueryPage extends JPanel {
 		
 		
 		options = new JPanel(new GridBagLayout());
+		options.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Filter")));
 		gbc.fill = GridBagConstraints.BOTH;
+		i = new Insets(0, 0, 16, 16);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		JPanel dietPanel = new JPanel(new GridLayout(0, 2, 3, 3));
@@ -169,11 +173,23 @@ public class QueryPage extends JPanel {
 		}
 		options.add(allergenPanel, gbc);
 		
-		gbc.gridx = 1;
-	    gbc.gridy = 0;
-		contentsPanel.add(options);
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		gbc.fill = GridBagConstraints.NONE;
+		JButton reset = new JButton("Reset Filters");
+	    reset.setFont(new Font("Calibri", Font.PLAIN, 16));
+	    reset.addActionListener(new ActionListener() {
+	    	@Override
+	    	public void actionPerformed(ActionEvent e) {
+	    		refresh();
+	    	}
+	    });
+	    options.add(reset, gbc);
+		
+		
 		
 		search = new JButton("Search");
+		search.setFont(new Font("Calibri", Font.PLAIN, 16));
 		search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -198,22 +214,16 @@ public class QueryPage extends JPanel {
                 }
             }
         });
-		gbc.gridx = 1;
-	    gbc.gridy = 1;
+		gbc.gridx = 0;
+	    gbc.gridy = 5;
 	    gbc.fill = GridBagConstraints.NONE;
-	    contentsPanel.add(search, gbc);
+	    options.add(search, gbc);
 	    
+	    i = new Insets(0, 8, 16, 16);
 	    gbc.gridx = 1;
-	    gbc.gridy = 2;
-	    JButton reset = new JButton("Reset Filters");
-	    reset.addActionListener(new ActionListener() {
-	    	@Override
-	    	public void actionPerformed(ActionEvent e) {
-	    		refresh();
-	    	}
-	    });
-	    contentsPanel.add(reset, gbc);
-	    
+	    gbc.gridy = 0;
+		contentsPanel.add(options, gbc);
+		
 		add(contentsPanel);
 	}
 	

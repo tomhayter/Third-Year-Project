@@ -116,6 +116,7 @@ public class QueryDishPage extends JPanel {
 		
 		
 		options = new JPanel(new GridBagLayout());
+		options.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Filter")));
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -170,9 +171,21 @@ public class QueryDishPage extends JPanel {
 		}
 		options.add(allergenPanel, gbc);
 		
+		gbc.gridx = 0;
+	    gbc.gridy = 4;
+	    gbc.fill = GridBagConstraints.NONE;
+	    JButton reset = new JButton("Reset Filters");
+	    reset.addActionListener(new ActionListener() {
+	    	@Override
+	    	public void actionPerformed(ActionEvent e) {
+	    		refresh();
+	    	}
+	    });
+	    options.add(reset, gbc);
+		
 		gbc.gridx = 1;
 	    gbc.gridy = 0;
-		contentsPanel.add(options);
+		contentsPanel.add(options, gbc);
 		
 		search = new JButton("Search");
 		search.addActionListener(new ActionListener() {
@@ -201,20 +214,10 @@ public class QueryDishPage extends JPanel {
         });
 		gbc.gridx = 1;
 	    gbc.gridy = 1;
-	    gbc.fill = GridBagConstraints.NONE;
 	    contentsPanel.add(search, gbc);
 	    
 	    
-	    gbc.gridx = 1;
-	    gbc.gridy = 2;
-	    JButton reset = new JButton("Reset Filters");
-	    reset.addActionListener(new ActionListener() {
-	    	@Override
-	    	public void actionPerformed(ActionEvent e) {
-	    		refresh();
-	    	}
-	    });
-	    contentsPanel.add(reset, gbc);
+	    
 	    
 		add(contentsPanel);
 	}

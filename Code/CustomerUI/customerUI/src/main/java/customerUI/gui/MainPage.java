@@ -29,7 +29,8 @@ public class MainPage extends JPanel {
         
         buttonsPanel.add(new JLabel(""));
         
-        JButton goToQueryButton = new JButton("Search the menu");
+        JButton goToQueryButton = new JButton("Search the Menu");
+        goToQueryButton.setFont(new Font("Calibri", Font.PLAIN, 16));
         goToQueryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,6 +44,7 @@ public class MainPage extends JPanel {
         buttonsPanel.add(new JLabel(""));        
         
         JButton settings = new JButton("Settings");
+        settings.setFont(new Font("Calibri", Font.PLAIN, 16));
         settings.addActionListener(new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent e) {
@@ -55,6 +57,7 @@ public class MainPage extends JPanel {
         buttonsPanel.add(new JLabel(""));        
         
         JButton quit = new JButton("Quit");
+        quit.setFont(new Font("Calibri", Font.PLAIN, 16));
         quit.addActionListener(new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent e) {

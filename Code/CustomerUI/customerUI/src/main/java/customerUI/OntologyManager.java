@@ -483,7 +483,6 @@ public class OntologyManager {
 		
 		for(String dish: allDishes) {
 			int calories = getCaloriesInDish(dish);
-			System.out.println(dish + " - " + calories);
 			if (calories <= maxCalories) {
 				lowCalDishes.add(dish);
 			}

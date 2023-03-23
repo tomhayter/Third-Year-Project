@@ -64,10 +64,11 @@ public class DishPage extends JPanel {
 		
 		
 		gbc.gridx = 0;
-		gbc.gridy = 2;
+		gbc.gridy = 1;
 		
 		gbc.fill = GridBagConstraints.NONE;
 		JButton back = new JButton("Back to Search");
+		back.setFont(new Font("Calibri", Font.PLAIN, 16));
 		back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -135,12 +136,8 @@ public class DishPage extends JPanel {
 		}
 		
 		
-		gbc.gridx = 1;
-	    gbc.gridy = 0;
-		contentsPanel.add(properties);
-		
-		gbc.gridx = 1;
-		gbc.gridy = 1;
+		gbc.gridx = 0;
+		gbc.gridy = 3;
 		JPanel allergenPanel = new JPanel(new GridLayout(0, 2, 3, 3));
 		allergenPanel.setBorder(new CompoundBorder(new EmptyBorder(8, 8, 8, 8), new TitledBorder("Contains the following")));
 		List<JCheckBox> allergenBoxes = new ArrayList<JCheckBox>();
@@ -163,9 +160,14 @@ public class DishPage extends JPanel {
 	        });
 			allergenPanel.add(box);
 		}
-		contentsPanel.add(allergenPanel, gbc);
+		properties.add(allergenPanel, gbc);
+		
+		gbc.gridx = 1;
+	    gbc.gridy = 0;
+		contentsPanel.add(properties, gbc);
 		
 		JButton extra = new JButton("Add/Remove Ingredients");
+		extra.setFont(new Font("Calibri", Font.PLAIN, 16));
 		extra.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -174,7 +176,7 @@ public class DishPage extends JPanel {
             }
         });
 		gbc.gridx = 1;
-	    gbc.gridy = 2;
+	    gbc.gridy = 1;
 	    gbc.fill = GridBagConstraints.NONE;
 	    contentsPanel.add(extra, gbc);
 	    
