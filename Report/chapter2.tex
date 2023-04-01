@@ -1,5 +1,10 @@
 \chapter{Background}
 
+\section{Technologies}
+
+Ontologies are stored in a \textit{.owl} file, which is similar to an XML. I initially used Protege to get used to working with ontologies, as it is a good environment for working with them. The user interfaces are written in Java as it has the useful and comprehensive OWL API\cite{owl_api}. I useed Java Swing to create the user interfaces themselves. The project is built using Maven and produces a runnable .jar file that should be placed in the same folder as the .owl file.
+
+
 \section{Ontologies}
 
 An ontology is a knowledge-based way of storing information. It works in a object oriented kind-of way, where everything is a class, and is a subclass of \textit{``Thing''}. For example, the class \textit{``Ingredient''} is a subclass of \textit{``Thing''}, and has \textit{``CarbohydrateIngredient''}, \textit{``MeatIngredient''} and \textit{``VegetableIngredient''} are it's subclasses. Then, the specific \textit{``LettuceIngredient''} is a subclass of \textit{``VegetableIngredient''}. Everything that holds true for a superclass also holds true for all the subclasses. It is convention to name a subclass with a suffix to make it clear what it is a subclass of (other than when creating a subclass of \textit{``Thing''}), for example all dishes would have the suffix \textit{``Dish''} to differentiate them from an ingredient that could have the same name. 
