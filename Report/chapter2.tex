@@ -1,5 +1,31 @@
 \chapter{Background}
 
+\section{Ontologies}
+
+An ontology is a knowledge-based way of storing information. It works in a object oriented kind-of way, where everything is a class, and is a subclass of \textit{``Thing''}. For example, the class \textit{``Ingredient''} is a subclass of \textit{``Thing''}, and has \textit{``CarbohydrateIngredient''}, \textit{``MeatIngredient''} and \textit{``VegetableIngredient''} are it's subclasses. Then, the specific \textit{``LettuceIngredient''} is a subclass of \textit{``VegetableIngredient''}. Everything that holds true for a superclass also holds true for all the subclasses. It is convention to name a subclass with a suffix to make it clear what it is a subclass of (other than when creating a subclass of \textit{``Thing''}), for example all dishes would have the suffix \textit{``Dish''} to differentiate them from an ingredient that could have the same name. 
+
+Ontologies contains facts, properties and rules, and uses those rules and properties to infer more facts. The reasoner is the tool which infers these facts. While many are available, I have used Hermit\cite{hermit} as it is the most up to date.
+
+There are two kinds of properties, object properties and data properties. An object property relates two classes. For example, the object property \textit{``containsIngredient''} would link the \textit{``Dish''} class to the \textit{``Ingredient''} class. A data property links a class to a literal value. For example, the data property \textit{``hasCalories''} could be used to link an \textit{``Ingredient''} class to an integer value. All the standard types are available, including booleans, integers, strings etc. These properties are also stored in an object oriented fashion, so if the \textit{``containsTopping''} property was a subproperty of \textit{``containsIngredient''}, and it is stated that \textit{MargheritaPizzaDish containsTopping TomatoIngredient}, then the reasoner would be able to infer that \textit{MargheritaPizzaDish containsIngredient TomatoIngredient}. Properties can be Transitive, Functional.....
+
+Defined Classes are classes that contain rules. For example, a \textit{``VegetarianDish''} could be defined as a dish that contains no \textit{``MeatIngredient''}. In an ontology, you would say that a \textit{``VegetarianDish''} is a subclass of \textit{`Dish'} and a subclass of \textit{``not(containsIngredient some MeatIngredient)''}.
+
+Instances are just that, an instance of a class. You can have many instances of a class, each with different object properties and data properties. This way, you could create two instances of an ingredient but with different numbers of calories. This would be useful if you have different quantities of the same ingredient in two different dishes.
+
+Enumerations.
+
+
+
+\subsection{Open World Assumption}
+
+Ontologies have an open world assumption, so all constraints on classes must be declared. It is not sufficient to say that a dish contains some ingredients, but also that it contains only these ingredients. Otherwise, a dish with those ingredients plus more would be valid. This is important when calculating things like a vegetarian dish. Take the example of a Margherita pizza, which contains a pizza base, tomato sauce and cheese. If the ontology only states that it contains at least these ingredients, then while a Margherita pizza would be classed as a margherita pizza, so would a meat feast pizza that contains those three ingredients plus more. It is for this reason why the reasoner cannot deduce that a margherita pizza is a vegetarian dish, unless the ontology states that a margherita can only contain those three ingredients.
+
+\section{The OWL API}
+
+\section{Java Swing}
+
+I chose Java Swing because it has a lot of components already set up that can be used. JFrames are the windows that contain JPanels (a view). JPanels have a layout, and you can add many types of Components to display, such as a JTextField which allows the user to enter text, a JButton which makes actions for the user to take obvious, JLists to display data and JCheckboxes to select specific options. A JSlider can be used to choose a particular value from a set range, and a JOptionPane which displays a message in a pop-up window - which is useful for giving informative feedback. They also allow for clear consistency between objects of similar types.
+
 % Local Variables:
 % mode: latex
 % TeX-master: "report"

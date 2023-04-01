@@ -1,16 +1,16 @@
 \chapter{Introduction}
 
-\section{Evaluation Plan}
+\section{Overview}
 
-To test the ontology system, I plan to conduct user studies, where I will ask people that I know to carry out certain tasks using the system, such as adding or removing a dish from the system, and searching for dishes with certain parameters. These tasks will cover each aspect of the functional requirements of the system to completely evaluate how successfully the system meets the criteria.
+My project explores how ontologies can be used to store information about a restaurant's menu. 
+I will also explore what extent it is possible to store information, for example whether you can store calorific information about ingredients, calculate dishes suitable for certain diets and calculate new information about a dish with certain ingredients removed or extra ingredients added.
 
-It is important that the participants of the study are comfortable and give an honest review of the system. To do this, I aim to avoid putting them under any pressures. I will not place them under any time constraints to complete the tasks, and make sure that when I propose the study to them that the estimation is accurate, while also a slight overestimate. It is also important that the participant doesn't feel any pressure to falsely support the system, when it is in fact failing.
+The final product will consist of two user interfaces. The first will allow a customer to view and filter the menu. The second will allow the owner of a restaurant to create and edit the menu.
 
-% Everything below here is commented material which is used by the
-% emacs tex support system called auctex. If you're not an emacs user
-% you can safely ignore it. If you do use emacs you should take a look
-% at the local emacs or LaTeX WWW pages for more on emacs support for
-% LaTeX.
+\section{Technologies}
+
+Ontologies are stored in a \textit{.owl} file, which is similar to an XML. I initially used Protege to get used to working with ontologies, as it is a good environment for working with them. The user interfaces are written in Java as it has the useful and comprehensive OWL API\cite{owl_api}. I useed Java Swing to create the user interfaces themselves. The project is built using Maven and produces a runnable .jar file that should be placed in the same folder as the .owl file.
+
 
 % Local Variables:
 % mode: latex

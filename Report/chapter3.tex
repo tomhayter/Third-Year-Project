@@ -2,6 +2,8 @@
 
 \section{Requirements}
 
+To evaluate the system, I have come up with a list of functional and non-functional requirements that the system should comply to. These are broken down into those which are compulsory, and those which would be good to include if time permits.
+
 \subsection{Functional Requirements}
 
 Functional requirements for the system:
@@ -32,10 +34,10 @@ The non-functional requirements of the project are that it must:
 \item The interface must conform to Ben Shneiderman's 8 golden rules~\cite{shneiderman}.
 \item A restaurant owner should require minimal training to use the system.
 \item A customer should need no training to use the system.
-\item The system should allow customers to search for dishes as fast as possible. This is important as the restaurant and the customer will want the customer to make a decision quickly on what dish they would like to order.
+\item The system should allow customers to search for dishes within an appropriate response time. Performance is important as the restaurant and the customer will want the customer to make a decision quickly on what dish they would like to order.
 \end{itemize}
 
-\newpage
+\subsection{Filters}
 
 Dietary Requirements to filter by:
 
@@ -59,6 +61,34 @@ The most common allergies~\cite{burks2001food}:
 \item Tree nuts
 \item Soybeans
 \end{itemize}
+
+\section{My Ontology Design}
+
+My first ontology design was laid out as can be seen in Figure X and was heavily inspired by \cite{ontology_pitfalls}. It consisted of Dishes, Components, Ingredients and Allergens with an obejct property \textit{``contains''} to link them in that order. A Dish contains Components, which contains Ingredients which contains Allergens. Then there are Customers, who \textit{``canEat''} dishes - another obejct property. Calorie information was stored on an ingredient level, with a data property \textit{``hasCalories''}. On top of this, a \textit{``PreparationMethod''} class would be created to store whether a dish was suitable for halal or kosher diets based on how it was prepared. This could also be extended to encompass unhealthy cooking methods, such as deep frying.
+
+After reading the paper that inspired that diagram\cite{ontology_pitfalls}, I realised how easy it was to create redundant data. For example, the Customer class is not required at all - we have all we need from the defined dish classes.
+
+\section{Evaluation Plan}
+
+To test and evaluate the ontology system, I plan to conduct user studies, where I will ask people that I know to carry out certain tasks using the system, such as adding or removing a dish from the system, and searching for dishes with certain parameters. These tasks will cover each aspect of the functional requirements of the system to completely evaluate how successfully the system meets the criteria. I will then ask a few short questions to cover the non-functional requirements and assess the success of the system at meeting those.
+
+The user studies will be caried out in two rounds. The first pilot study will be carried out much earlier, so I can gauge what improvements need to be made. This is important as I will be able to identify whether I am on the right track with the project, and gain feedback on what does and doesn't work. Then, I will carry out a second user study after development on the system has finished to see how the system fits the requirements set out. Ideally, I would carry out a series of continuous feedback sessions - where users can repeatedly give feedback on the system for me to improve.
+
+Each user study will be split into two smaller evaluations, one of the user interface for the customer, and one of the user interface for the restaurant owner. The participants were split in half and instructed to act the role of either a customer or restaurant owner. Each study will be tailored towards what those two roles should be able to achieve from their separate interfaces. For example, for the customer study, the participant will not be given any instruction on how to use the system, as real customers will not and should not need to require training to use the system. However, the owner of the restaurant will be told how the system works initially, and then not during the second phase of the final study. This is because in the real world, they will only recieve training initially, and should not need to relearn every time they want to use the system. A restaurant doesn't change it's menu that often, so they will not be using the system frequently.
+
+It is important that the participants of the study are comfortable and give an honest review of the system. To do this, I aim to avoid putting them under any pressures. I will not place them under any time constraints to complete the tasks, and make sure that when I propose the study to them that the time estimation is accurate, while also a slight overestimate. It is also important that the participant doesn't feel any pressure to falsely support the system, when it is in fact failing. To do this, before the study I made it clear to the participants that they were not being judged based on whether they were able to complete the tasks, and that the results are purely reflective of how well the system is built and not their abilities. I also made sure they knew that I wanted to hear about problems as I want to improve the system where it is failing. Especially during the pilot I emphasized that there are improvements that need to be made and encouraged the participant to point out problems, as there was still plenty of time left to fix them.
+
+I chose to have 3 participants per role for my study, as I found in the pilot that this number was the most appropriate. The big issues that I expected were brought up by all participants, and everything else was small or personal preferences that were low priority issues to fix.
+
+\subsection{Ethics}
+
+I will carry the studies out in an ethical way. All participants will be over 18 and able to fully consent to taking part. No participant will be coerced into completing the study, and they are free to withdraw at any point. Also no personal information will be stored about them, or any information that can be used to identify them. The only information that will be collected will be whether they were able to complete all the tasks, and the feedback given, both qualitative and quantitative.
+
+On top of this, there will be no harm inflicted on the participants, and I will make it clear what I am using the information I collect is for. 
+
+\subsection{Interpreting the Results}
+
+With the results of the user study, I adopted a mildly agile workflow to move forward. I listed all of the problems that were identified during the study, and then a list of solutions. I scored each solution from 1-5 with an urgnecy score - based on how important it was that this change was made - and a time score - how long I estimated it would take to implement the solution. I then made sure to tackle the high urgency issues first, especially those with a small time estimate. This way, I could make sure to get as many of the more impactful problems solved within the time I had left. 
 
 % Local Variables:
 % mode: latex
