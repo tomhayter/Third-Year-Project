@@ -1,25 +1,15 @@
-\chapter{Evaluation}
+\chapter{Results}
 
-\section{Results Summary}
+\section{User Studies}
 
-\section{Did I Meet My Objectives?}
+\subsection{Study 1}
+\label{Study1Results}
 
-\section{Improvements}
+I carried out the pilot user study with 6 participants, 3 who acted as a customer and 3 who acted as a restaurant owner. 
 
-Despite this, there are many improvements that can still be made. First of all, the appearance of the program coulde definitely be improved. The visuals were not the focus of this project and I solely focused on the functionality, so there is great room for improvement. The visuals were mentioned in the final evaluation by one user of the RestaurantUI, who mentioned that it was difficult to differentiate between all the different menus without reading the title as they are all very similar. Making the visuals slightly different would help this, as long as the overall appearance remained consistent.
+The feedback given 
 
-Another addition that could be made is the inclusion of a text search at the top of lists. The list of ingredients and components can grow very long, even with the ingredient type filter, and it can be easy to miss things - whereas a text search would make it easy to find specific items.
-
-On top of this, a lot of the text handling could be improved. At the minute, no class can have a space in the name of it as the system can't handle it. Spaces are stored differently in the ontology file and not handled when reading from it. The solution I would implement now is the following: When recieving an input of text, remove any spaces and convert the text to pascal case before add/removing or querying the ontology. Then, whenever the name of something is displayed: enter a space before every capital letter except the first letter. This would work because the standard for storing things in an ontology is in pascal case.
-
-Another text handling issue is that you can't include the words Dish, Component, Ingredient etc. within the name of a class. This is because they are used as suffixes in the ontology, and all instances of the text is removed when reading names from the ontology. This would be a simple fix, by making sure only the final occurance of that text is removed from the name of a class.
-
-\section{Future Work}
-
-There are many possibilities when it comes to extending this project. The first is to add a transactional side to it, so that a restaurant owner would be able to add prices and the cost of adding ingredients. A customer would then be able to order dishes and pay for them, while the order would be send through to the kitchen. This extension could see the project become a viable option for restaurants to use in practice. 
-
-Another extension of this project would be to make it more customizable from the perspective of the restaurant owner in terms of diets. Diets are changing over time, and there are new dietary requirements that need to be catered for as time goes on. It would be useful if the owner of the restaurant could add more than just new allergens to the system. For example, Halal and Kosher are currently types of preparation method, but it would be useful if the owner could make more of these. One example would be deep fried foods, which are causing concern because of their high calorific content, high concentration of trans fats and the increase they cause in the risk of developing heart disease, diabetes and obesity\cite{deep_fried_mcdonnell_2023}. Therefore the restaurant owner might think that it would be useful if customers were able to filter out dishes that have been deep fried at some point. Currently, they would have to contact a software developer who would have to hard code this change into the system. It would be useful if this was not the case.
-
+\subsection{Study 2}
 % Local Variables:
 % mode: latex
 % TeX-master: "report"
