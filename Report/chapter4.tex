@@ -4,13 +4,43 @@
 
 \subsection{Ontology}
 
-\subsection{Restaurant UI}
+The final ontology (stored in \textit{`Menu.owl'}) contains the Honest Burgers menu. Each dish on the menu is a dish in the ontology. The dish contains all information regarding how it was prepared.
 
-\subsection{Customer UI}
+All the ingredients in a dish are also in the ontology. Each ingredient stores the number of calories that ingredient contains (on a class level), and the allergens it contains. There were times when I had to decide what level an ingredient was, for example the \textit{`PestoIngredient'} which contains multiple ingredients in itself, but is listed as an ingredient in the dish. I thought it wasn't useful to list every single thing that makes up pesto, but just to make sure the allergens are stored. 
+
+What ingredients to put in a component is also a subjective task, and for this menu there is no intuitive set of components to make. I decided in this case to store the patty, burger bun, and fillings for each dish as the components.
+
+The object properties in the ontology
+
+The data properties in the ontology are \textit{`hasCalories'}, which 
+
+
+
+\subsection{Restaurant User Interface}
+
+The user interface (UI) for the restaurant owner opens onto the Main Menu Page (see Figure X). The user is presented with 4 options, to add, remove, search/edit and quit. The quit button will save the ontology and close the application.
+
+The add section contains options to add either an allergen, ingredient, component or dish to the ontology. The add menus can be seen in the figures A, B, C and D. After attempting to add to the ontology, one of the message boxes in Figure A will be shown in response, depending on whether the attempted addition to the ontology is valid or not.
+
+The remove section is very similar to the add section, except they show lists for a user to select an element to remove. Similarly, a message feedback box is shown to inform the user of the changes to the ontology.
+
+search/edit
+
+\subsection{Customer User Interface}
+
+The user interface for the customer is almost a subset of the restaurant owners user interface. It opens onto another main menu page (see Fig X) where the user has 3 options. The user can search the menu, open the settings page or quit the application.
+
+The settings page (see fig X) currently contains one option, to hide the calorific information. This option will disable the ability to filter by calories, and also hide how many calories are in a dish and an edited dish.
+
+search
 
 \section{User Studies}
 
 \subsection{Pilot User Study}
+
+I carried out the pilot user study with 6 participants, 3 who acted as a customer and 3 who acted as a restaurant owner. 
+
+The feedback given 
 
 \subsection{Final User Study}
 
