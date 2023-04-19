@@ -1,8 +1,18 @@
 \chapter{Evaluation}
+\label{section:Evaluation}
 
 \section{Results Summary}
 
+Overall, the results of Study 2 reflect well upon the system.
+
+
 \section{Did I Meet My Objectives?}
+
+Overall, I believe I met all the necessary objectives for this project. Looking back to the System Requirements \ref{section:SystemRequirements}, I created a system that was able to store all the dishes on a restaurant's menu, along with the ingredients in the dish. The system could list the dishes to a customer, and they could filter the dishes by various dietary requirements. The system also had to option to hide calorie information. The owner of a restaurant could manage the menu by adding, removing and editing ingredients and dishes. I also managed to include the ability to generate new information after a customer modified the ingredients in the dish. I also managed to include filters based on how a dish had been prepared. I gave the restaurant owner the ability to add new allergens to the system, however one place that the system falls short is that they can't add new diets easily.
+
+In terms of the non-functional requirements, participants believed that the system was intuitive, easy to use, and that it provided appropriate feedbacks. They also stated that they felt in control of the system at all times, and could easily reverse any actions they made. The system was reported as being consistent, and did not require the user to remember lots of information. Therefore, I believe it adheres to \textit{The eight golden rules of interface design}. On top of this, participants were able to use the system with either no training if they acted as a customer, or minimal training if they acted as a restaurant owner. Finally, all participants found that the user interfaces ran fast.
+
+In terms of dietary requirements, the system caters for all required allergens, the vegetarian and vegan diets, and the halal and kosher diets. It also provides information regarding whether gluten free alternatives are available for dishes. However, it could be improved. Sikh's will not eat halal or kosher foods \cite{guidance_on_foods_for_religious_faiths_2009}, as it is forbidden for them to eat meat from animals slaughtered according to other religious guidelines. Currently in the system, you cannot choose to remove Halal or Kosher options, only to remove the dishes that are not Halal or Kosher.
 
 \section{Improvements}
 
@@ -15,6 +25,8 @@ On top of this, a lot of the text handling could be improved. At the minute, no 
 Another text handling issue is that you can't include the words Dish, Component, Ingredient etc. within the name of a class. This is because they are used as suffixes in the ontology, and all instances of the text is removed when reading names from the ontology. This would be a simple fix, by making sure only the final occurance of that text is removed from the name of a class.
 
 One improvement that was brought to light in the final user study that is specific to the Customer UI regards the settings page. Two of the three users stated that since you spend so much time on the search page, you forget about the main menu page. Therefore, it is easy to forget about the settings page, which can only be navigated to from the main menu page. They suggested being able to navigate to it from the search page instead, which would reduce the cognitive load of the user. This would also mean the Customer UI could be simplified further, and the home page could be removed entirely, making the UI even more lightweight and easier to navigate.
+
+One big consideration I had at the end was the purpose of the Component. With the particular menu I have chosen, components are not particularly necessary. A burger is a whole meal and it does not consist of definitive components, just ingredients. This caused some confusion at what components to make during the studies when the user was given free reign to make a dish. Other menus lend themselves more to the idea of a Component. If your dish is a chicken and mushroom pi,e with mash potato and roasted vegetables - you have three very clear components to the final dish made up of many ingredients themselves. The Component architecture lends itself to larger dishes that contain multiple parts, rather than menus where you order lots of small bits or somethiing that could be a Component itself. The reason I decided to keep Components in is because it gives the system flexibility to be used in different kinds of restaurants. If components are not needed, you could still make the system work by making every dish a Component, and then the Dish in the system would only contain one component.
 
 \section{Future Work}
 

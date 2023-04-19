@@ -2,14 +2,67 @@
 
 \section{User Studies}
 
-\subsection{Study 1}
+\section{Study 1}
 \label{Study1Results}
 
-I carried out the pilot user study with 6 participants, 3 who acted as a customer and 3 who acted as a restaurant owner. 
+I carried out Study 1 with 6 participants, 3 who acted as a customer and 3 who acted as a restaurant owner. I asked them to carry out tasks specific to those roles. Then I asked them questions based on their experience. The study can be found in Appendix \ref{Study_questions}
 
-The feedback given 
+\subsection{Customer UI Study}
 
-\subsection{Study 2}
+The results of the customer study discovered that everybody was able to complete each task except two. The task that required the participant to add or remove extra ingredients for a dish, and the task that required them to find the allergens in a modified dish. The former happened because the participants struggled to select multiple items in the current selection model. The latter happened because the functionality had not been developed into the system yet. One participant stated that needing to double click on a dish in the results list was not an intuitive way to open the dish page, and another that the system should include information concerning gluten free alternatives.
+
+The Customer UI was rated on average 4.6/5 for speed, 4/5 for intuitiveness and 5/5 for ease of use.
+
+\subsection{Restaurant UI Study}
+
+The study on the restaurant UI discovered that participants particularly struggled with tasks that revolved around them selecting multiple items in a list. Only 1 participant realised that the Control key had to be held while selecting multiple items, but only after failing to do so previously. The study also unveiled a bug concerning updating the pages when the ontology was updated. They each said they initially struggled with the relationship between dishes, components, and ingredients - but got used to it eventually. One participant mentioned that it would be useful to be able to edit Ingredients, Components and Dishes, without needing to delete everything and recreate it. They also mentioned that it would be useful to have all the existing ingredients and components listed someone. However, the participants liked the clear layout of the system. 
+
+The Restaurant UI was rated on average 4.6/5 for speed, 4/5 for intuitiveness and 4/5 for ease of use.
+
+\subsection{Interpreting the Results}
+
+With the results of the study, I adopted a mildly agile workflow to move forward. I listed all of the problems that were identified during the study, and then a list of solutions that would solve them. I scored each solution from 1-5 with an urgnecy score - based on how important it was that this change was made. I also gave each solution a time score - how long I estimated it would take to implement the solution. I then made sure to tackle the high urgency issues first, especially those with a small time estimate. This way, I could make sure to get as many of the more impactful problems solved within the time I had left. An extract of this method can be seen in Table \ref{tab:agile}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ |l|c|c| }
+\hline
+\textbf{Solution} & \textbf{Urgency} & \textbf{Time}\\
+\hline
+Remove need to hold Ctrl to select multiple items & 5 & 2 \\
+\hline
+Make edit pages & 4 & 5 \\
+\hline
+Underline focused links in list of dishes & 3 & 2 \\
+\hline
+... &  ... & ... \\
+\hline
+\end{tabular}
+\caption{Agile approach taken to implement solutions after Study 1}
+\label{tab:agile}
+\end{table}
+
+\section{Study 2}
+\label{Study2Results}
+
+I also carried out Study 2 with 6 participants. The 3 who acted as a restaurant owner in Study 1 played the same role in this study. I asked them to carry out the same tasks, along with a couple of new tasks conerning new functionality that had been introduced since Study 1. All the same questions from Study 1 were asked, along with one new one for the restaurant owners to evaluate how well they could use the system without any training one month later. On top of this, I also asked some questions to evaluate how well the system fit \textit{The eight golden rules of interface design} \cite{shneiderman}.
+
+\subsection{Customer UI Study}
+
+The results of the customer study discovered that every participant was able to complete every task without any training or guidance. They reported that the system was very quick and easy to use. The calorie slider received praise because removes the disappointment of finding a dish you like only to see it has more calories than you would like. The importance of being able to turn off calories was also reiterated by the participants. They stated that all the information was clearly displayed and easy to find. Two of the three participants said that because they spent so much time in the search page, they almost forgot about the main menu and settings page.
+
+This time, the Customer UI was rated on average 5/5 for speed, 4.6/5 for intuitiveness and 5/5 for ease of use. It also complied to all four of the applicable \textit{golden rules of user interface} according to each participant. 
+
+\subsection{Restaurant UI Study}
+
+The restaurant owner study also showed that every participant was able to complete every task set for them. They noted that the ability to search for ingredients, as well as edit them directly made them feel much more in control of the system, and made it easier to fix mistakes. They also noted that every part of the system was laid out in a clear and logical way, which made it obvious how to do what a restaurant owner would want to do. Conversely, they also noted that it is not clear what a Component should be in the context of this menu. One participant also noted that it would be useful to be able to delete a component from the edit page. They also appreciated the new method for selecting multiple items, which was much more intuitive. Overall, they all thought it had improved since the system in Study 1.
+
+The Restaurant UI was rated on average 4.6/5 for speed, 5/5 for intuitiveness and 5/5 for ease of use. 5/5 was also the average score for how easy it was to pick up after not using the system for a month. On top of this, each participant stated that it complied to all five of the applicable \textit{golden rules of user interface}.
+
+\subsection{Interpreting the Results}
+
+As this study was conducted after development had finished on my system, the results will form part of the evaluation of the system, which can be seen in Section \ref{section:Evaluation}.
+
 % Local Variables:
 % mode: latex
 % TeX-master: "report"
