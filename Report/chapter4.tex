@@ -1,22 +1,75 @@
 \chapter{Implementation}
 
+In this chapter I will begin by discussing the results of Study 1, which occurred during development. I will then explain each aspect of the final system that I developed, and how they each work.
+
+\section{Study 1}
+\label{section:Study1Results}
+
+I carried out Study 1 with 6 participants, 3 who acted as a customer and 3 who acted as a restaurant owner. The aim of this study was to find out whether the user interface I was developing was on track to meet the requirements I set out in Section \ref{section:SystemRequirements} and find out where it needed to be improved. I asked them to carry out tasks specific to those roles. Then I asked them questions based on their experience. The full list of tasks and questions can be found in Appendix \ref{app:study1}, while the results can be found in Appendix \ref{app:study1results}. This study was carried out during development of the system, so I did not expect the results to be perfect as there were still some bugs in the system, and not all of the features had been implemented.
+
+\subsection{Customer UI Study}
+
+The results of the customer study showed that everybody was able to complete each task except two: the task that required the participant to add and remove ingredients to and from a dish, and the task that required them to find the allergens in a modified dish. The former happened because the participants struggled to select multiple items in the current selection model. The latter happened because the functionality had not been developed into the system yet. One participant stated that needing to double click on a dish in the results list was not an intuitive way to open the dish page, and another that the system should include information concerning gluten free alternatives.
+
+The Customer UI was rated, on average, 4.6/5 for speed, 4/5 for intuitiveness and 5/5 for ease of use.
+
+\subsection{Restaurant UI Study}
+
+The study on the restaurant UI revealed that participants particularly struggled with tasks that revolved around them selecting multiple items in a list. Only 1 participant realised that the Control key had to be held while selecting multiple items, but only after failing to do so previously. The study also unveiled a bug concerning updating the pages when the ontology was updated. They each said they initially struggled with the relationship between dishes, components, and ingredients - but got used to it eventually. One participant mentioned that it would be useful to be able to edit Ingredients, Components and Dishes, without needing to delete everything and recreate it. They also mentioned that it would be useful to have all the existing ingredients and components listed somewhere in the application. However, the participants liked the clear layout of the system. 
+
+The Restaurant UI was rated, on average, 4.6/5 for speed, 4/5 for intuitiveness and 4/5 for ease of use.
+
+\subsection{Interpreting the Results}
+
+With the results of the study, I adopted a mildly agile workflow to move forward. I listed all of the problems that were identified during the study, and then a list of solutions that would solve them. I scored each solution from 1-5 with an urgency score - based on how important it was that this change was made. I also gave each solution a time score - how long I estimated it would take to implement the solution. I then made sure to tackle the high urgency issues first, especially those with a small time estimate. This way, I could make sure to get as many of the more impactful problems solved within the time I had left. An extract of this method can be seen in Table \ref{tab:agile}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ |l|c|c| }
+\hline
+\textbf{Solution} & \textbf{Urgency} & \textbf{Time}\\
+\hline
+Remove need to hold Ctrl to select multiple items & 5 & 2 \\
+\hline
+Make edit pages & 4 & 5 \\
+\hline
+Underline focused links in list of dishes & 3 & 2 \\
+\hline
+... &  ... & ... \\
+\hline
+\end{tabular}
+\caption{Agile approach taken to implement solutions after Study 1}
+\label{tab:agile}
+\end{table}
+
+
 \section{Deliverables}
 
 \subsection{Ontology}
 
-The final ontology (stored in \textit{`Menu.owl'}) contains the Honest Burgers \cite{honest_burgers_2023} menu. Each dish on the menu is a \textbf{Dish} in the ontology.
+The final ontology (stored in \textit{`Menu.owl'}) contains the Honest Burgers \cite{honest_burgers_2023} menu. The overall structure of the final ontology without any menu data can be seen in Appendix \ref{app:finalOntology}. Each dish on the menu is a subclass of \textbf{NamedDish} in the ontology. 
 
 All the ingredients in a dish are also in the ontology. Each ingredient stores the number of calories that ingredient contains (on a class level), and the allergens it contains. There were times when I had to decide what level an ingredient was, for example the \textbf{PestoIngredient} which contains multiple ingredients in itself, but is listed as an ingredient in the dish. I thought it was not useful to a customer to list every single thing that makes up pesto, but just to make sure the allergens are stored. Otherwise the list of ingredients would be much larger.
 
 What ingredients to put in a component is also a subjective task, and for this menu there is no intuitive set of components to make. I decided in this case to store the patty, burger bun, and fillings for each dish as the components.
 
-The object properties in the ontology are \textit{hasPart}, which has the subProperties \textit{hasNutrient}, \textit{hasIngredient}, and \textit{hasComponent}. These are used to link a \textbf{Nutrient} to an \textbf{Ingredient}, an \textbf{Ingredient} to a \textbf{Component} and a \textbf{Component} to a \textbf{Dish} respectively. These components are transitive, because if a \textbf{Ingredient} is part of a \textbf{Component}, then it is also a part of any \textbf{Dish} that \textbf{Component} is a part of. The object property \textit{hasPreparationMethod} links a \textbf{PreparationMethod} such as Halal or Kosher to a \textbf{Dish}, to store which dishes have been prepared in that way.
+The object properties in the ontology are \textit{hasPart}, which has the sub-properties \textit{hasNutrient}, \textit{hasIngredient}, and \textit{hasComponent}. These are used to link a \textbf{Nutrient} to an \textbf{Ingredient}, an \textbf{Ingredient} to a \textbf{Component} and a \textbf{Component} to a \textbf{Dish} respectively. These components are transitive, because if a \textbf{Ingredient} is part of a \textbf{Component}, then it is also a part of any \textbf{Dish} that \textbf{Component} is a part of. The object property \textit{preparedUsingMethod} links a \textbf{PreparationMethod} such as Halal or Kosher to a \textbf{Dish}, to store which dishes have been prepared in that way.
 
 The data properties in the ontology are \textit{hasCalories}, which links an \textbf{Ingredient} to an integer value of how many calories it contains. The data property \textit{hasGlutenFreeOption} links a \textbf{Dish} to a boolean value of whether there is a gluten free alternative of the dish available. This was an addition made after Study 1 (see Section \ref{section:Study1Results}).
 
+Looking at defined classes, \textbf{VegetarianComponent} is defined by the class expression \textit{``Component and not(hasIngredient some MeatIngredient)''}, while \textbf{VeganComponent} is defined by the class expression \textit{``Component and not((hasIngredient some MeatIngredient) or (hasIngredient some DairyIngredient))''}. \textbf{VegetarianDish} is then defined as \textit{``Dish and (hasComponent only VegetarianComponent)''}, and \textbf{VeganDish} is defined as \textit{``Dish and (hasComponent only VeganComponent)''}. \textbf{HalalDish} is defined by the class expression \textit{``Dish and (preparedUsingMethod some HalalPreparationMethod)''}, and similarly \textbf{KosherDish} is defined by \textit{``Dish and (preparedUsingMethod some KosherPreparationMethod)''}.
+
 \subsection{Restaurant User Interface}
 
-The user interface for the restaurant owner opens onto the Main Menu Page. The user is presented with 4 button to navigate the system, to add to the menu, remove from the menu, search/edit the menu and quit the application. The quit button will save the ontology and close the application.
+\begin{figure}[h]
+    \centering
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.50\textwidth ,angle=90]{images/FinalRestaurantUIArchitecture.jpg}
+    \caption{Restaurant UI - Final Architecture}
+    \label{fig:restaurantUI_final_architecture}
+\end{figure}
+
+The final architecture for the Restaurant UI can be seen in Figure \ref{fig:restaurantUI_final_architecture}. The user interface for the restaurant owner opens onto the Main Menu Page. The user is presented with 4 buttons to navigate the system: to add to the ontology, remove from the ontology, search/edit the ontology and quit the application. The quit button will save the ontology and close the application.
 
 \begin{figure}[h]
     \centering
@@ -26,11 +79,19 @@ The user interface for the restaurant owner opens onto the Main Menu Page. The u
     \label{fig:restaurantUI_add_ing_page}
 \end{figure}
 
-The Add section contains options to add either an allergen, ingredient, component or dish to the ontology. The page for adding an ingredient can be seen in Figure \ref{fig:restaurantUI_add_ing_page}. After attempting to add to the ontology, one of the message boxes in Figure A will be shown in response, depending on whether the attempted addition to the ontology is valid or not.
+The Add section contains options to add either an allergen, ingredient, component or dish to the ontology. The page for adding an ingredient can be seen in Figure \ref{fig:restaurantUI_add_ing_page}. Each of the add pages contains the necessary JComponents that allow the user to input the information required to create that entity. After attempting to add to the ontology, a message box will be shown in response, depending on whether the attempted addition to the ontology is valid or not. If the user tries to add an entity without a name, a component that contains no ingredients, or a dish that contains no components, they will be shown an error message (see Figure \ref{fig:restaurantUI_error}), and the entity will not be added to the ontology. If all is valid, a message to inform the user that the entity has been added to the ontology will be displayed on the screen.
+
+\begin{figure}[h]
+    \centering
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.40\textwidth]{screenshots/restaurantUI/ErrorMessage.png}
+    \caption{Restaurant UI - Error Message}
+    \label{fig:restaurantUI_error}
+\end{figure}
 
 The remove section is very similar to the add section, except they show lists for a user to select an element to remove. Similarly, a message feedback box is shown to inform the user of the changes to the ontology.
 
-There is also a section for searching and editing ingredients, components and dishes. This section was also inspired by the feedback from Study 1 (see Section \ref{section:Study1Results}). In the search page for a component, a user can scroll through all existing component and select one to edit.
+There is also a section for searching and editing ingredients, components and dishes. This section was also inspired by the feedback from Study 1 (see Section \ref{section:Study1Results}). In the search page for an ingredient, component or dish, a user can scroll through a list of all existing entities and select one to edit.
 
 \begin{figure}[h]
     \centering
@@ -40,11 +101,11 @@ There is also a section for searching and editing ingredients, components and di
     \label{fig:restaurantUI_edit_dish}
 \end{figure}
 
-Upon selection, the user is presented with a page that allows them to edit their selection. Figure \ref{fig:restaurantUI_edit_dish} shows the Edit Dish Page, which allows them to select new components for their dish, remove existing ones and change some properties about the dish.
+Upon selection, the user is presented with a page that allows them to edit their selection. The edit pages consist of a similar form of JComponents to the add pages. However, they are loaded containing all of the information about that entity. Figure \ref{fig:restaurantUI_edit_dish} shows the Edit Dish Page, which allows them to select new components for their dish, remove existing ones and change some properties about the dish.
 
 \subsection{Customer User Interface}
 
-The user interface for the customer also opens onto a main menu page where the user has 3 options. The user can search the menu, open the settings page or quit the application.
+The architecture of the Customer UI turned out as originally planned (see Figure \ref{fig:customerUI_architecture}). The user interface for the customer also opens onto a main menu page where the user has 3 buttons to navigate through the application. The user can search the menu, open the settings page or quit the application.
 
 The settings page contains one option, the option to hide calorific information. This option will disable the ability to filter by calories, and also hide how many calories are in a dish and a dish with the ingredients modified.
 
@@ -68,19 +129,35 @@ Clicking on a dish in the search page will take you to page specific to that dis
     \label{fig:customerUI_extras}
 \end{figure}
 
-The extras page (see Figure \ref{fig:customerUI_extras}) also contains the list of ingredients in the top left. However, this time clicking on one of the ingredients will remove it from the dish. There is a list of all ingredients in the bottom left of the page, and clicking on one of them will add it to the dish. On the right side of the page is a reset and calculate button. Clicking calculate will update the allergen and calorie information (also on the right hand side of the page). Because preparation is done on a dish level and not on an ingredient level, it is impossible to know if a dish will be Halal or Kosher purely based on the ingredients - so this information could not be included on this page.
+The extras page (see Figure \ref{fig:customerUI_extras}) also contains the list of ingredients in the top left. However, this time clicking on one of the ingredients will remove it from the dish. There is a list of all ingredients in the bottom left of the page, and clicking on one of them will add it to the dish. On the right side of the page is a ``Reset Dish'' and ``Calculate'' button. Clicking ``Calculate'' will update the allergen and calorie information, also on the right hand side of the page, to reflect the modifications the user has made to the dish. Clicking the ``Reset Dish'' button will reset the list in the top left to the original list of ingredients in that dish, and reset the dietary information on the right. Because preparation is done on a dish level and not on an ingredient level, it is impossible to know if a dish will be Halal or Kosher purely based on the ingredients - so this information could not be included on this page.
 
 \subsection{OntologyManager}
 
+The Ontology Manager class contains many methods for interacting with the ontology via the OWL API. There are methods for adding allergens, ingredients, components, and dishes to the ontology by creating the various necessary subclass axioms, and removing them by removing each axiom that contains that class. There are also methods for updating ingredients, components, and dishes by replacing the subclass axioms with the new updated axioms. They also use the OWLEntityRenamer \cite{owl_api_doc_2023} to map the old class name to the new one.
+
+The most challenging methods to write were the methods that searched or queried the ontology. For example, to retrieve the calories in an ingredient, the method gets a list of all the subclass axioms for that ingredient, checks for the one that contains the \textit{hasCalories} data property, and then use a regular expression (regex) approach to extract the number of calories from the string version of that axiom. While it is not the cleanest solution, and not one I would recommend, it fulfills the purpose that I need it to since I could not find an existing method in the OWL API that would extract literal values from an OWL class expression. A similar method is applied to other similar methods, such as whether a dish has a gluten free option.
 
 \section{Design Choices}
-There were many things that did not go to plan, or that had to be changed along the way. Study 1 (see Section \ref{section:Study1Results}) brought up problems I had not considered.
 
-Initially, I developed each user interface entirely in one class, with methods that would create and return a JFrame for each of the different pages. I would then change between JFrames by closing the old one and opening the new one. After making a few pages I soon realised this was a bad idea. I ended up making 19 different pages, and this would create a very convoluted class. After doing some research \cite{card_layout_2011}, I found that a better way to approach this was to make each page its own class, extending the JPanel class. Then, create a JPanel with the CardLayout layout that can switch between each page. CardLayout makes it so that each JComponent is added to a JPanel with a String that can be used to identify it, and then you can switch to the JPanel you desire by using its identifier. This improvement was worth the time it took to learn about, because it made my code much easier to navigate and therefore saved me time in the long run.
+There were many things that did not go to plan, or that had to be changed during development. Study 1 (see Section \ref{section:Study1Results}) brought up problems I had not considered.
 
-Another design choice that was made after my pilot study was to change the way I showed how things in a list were selected. Previously, users had a list of everything provided, and had to click on an element to select it. If a user wanted to select multiple elements in the list, they would have to hold the Control (Ctrl) key on their keyboard to do so. If Ctrl was not held, any previously selected elements would be unselected. This is similar to how file selection works in File Explorer, and it is the default selection model for a JList. However, as many of lists were long, it was not obvious that the previously selected elements were now unselected, as the user would have to scroll to check. My first solution was to change the selection model so that you only needed to click on each element to select it (no Ctrl required), and the only way to unselect an element was to click on it again. However, with such long lists of ingredients and components it would still not be clear what had been selected, and you would have to scroll through the entire list to check. This solution would therefore not comply with the reduction in short-term memory load principle that I set out to follow. Therefore, I ultimately decided on a different method where there is one list which contains all possible selections (List 1) and another list which contains all the selected elements (List 2). To select an element, the user would click on it in List 1. This will add it to List 2. To unselect an element, the user would click on it in List 2, and it will be removed from List 2. This makes it much more clear what has been selected as you can see all the elements in List 2 without seeing everything that has not been selected. It also supports the ability to select an element multiple times, which could be desirable in the case where a customer wants to add an ingredient twice to a dish. An example of this method can be seen in Figure \ref{fig:customerUI_extras}, where the list in the top left is List 2 and the list in the bottom left is List 1. A user can constantly see what is in their modified dish, which makes this task much easier.
+Initially, I developed each user interface entirely in one Java class, with methods that would create and return a JFrame for each of the different pages. I would then change between JFrames by closing the old one and opening the new one. After making a few pages I soon realised this was a bad idea. I ended up making 19 different pages, and this would create a very convoluted class. After doing some research \cite{card_layout_2011}, I found that a better way to approach this was to make each page its own class, extending the JPanel class. Then, create a JPanel with the CardLayout layout that can switch between each page. CardLayout makes it so that each JComponent is added to a JPanel with a String that can be used to identify it, and then you can switch to the JPanel you desire by using its identifier. This improvement was worth the time it took to learn about, because it made my code much easier to navigate and therefore saved me time in the long run.
 
-One final point that was raised in the studies was that the system should include information regarding whether dishes have a gluten free alternative. This was a simple addition to make, I added a boolean data property for a dish called \textit{hasGlutenFreeOption}. Then a tickbox can be used to enter the information while creating a dish.
+Another design choice that was made after my pilot study was to change the way I showed how things in a list were selected. Previously, users had a list of everything provided, and had to click on an element to select it. If a user wanted to select multiple elements in the list, they would have to hold the Control (Ctrl) key on their keyboard to do so. If Ctrl was not held, any previously selected elements would be deselected. This is similar to how file selection works in File Explorer, and it is the default selection model for a JList. However, as many of lists were long, it was not obvious that the previously selected elements were now deselected, as the user would have to scroll to check. My first solution was to change the selection model so that you only needed to click on each element to select it (no Ctrl required), and the only way to deselect an element was to click on it again. However, with such long lists of ingredients and components it would still not be clear what had been selected, and you would have to scroll through the entire list to check. This solution would therefore not comply with the reduction in short-term memory load principle that I set out to follow. Therefore, I ultimately decided on a different method where there is one list which contains all possible selections (List 1) and another list which contains all the selected elements (List 2). To select an element, the user would click on it in List 1. This will add it to List 2. To deselect an element, the user would click on it in List 2, and it will be removed from List 2. This makes it much more clear what has been selected as you can see all the elements in List 2 without seeing everything that has not been selected. It also supports the ability to select an element multiple times, which could be desirable in the case where a customer wants to add an ingredient to a dish twice - such as adding double cheese to a burger. 
+
+\begin{figure}[h]
+    \centering
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.35\textwidth]{screenshots/ListSelectOld.png}
+    \includegraphics[width=0.35\textwidth]{screenshots/ListSelectNew.png}
+    \caption[Comparison of two list selection models]{Comparison of two list selection models, pre-Study 1 (left) and final (right)}
+    \label{fig:list_selection_comparison}
+\end{figure}
+
+A comparison of these two methods can be seen in Figure \ref{fig:list_selection_comparison}, where (in the model on the right) the list in the at the top is List 1 and the list at the bottom is List 2. A user can constantly see what is selected, which makes this task much easier and gives the user reassurance they are in control of the application.
+
+
+One final point that was raised in the studies was that the system should include information regarding whether dishes have a gluten free alternative. This was a simple addition to make, I added a boolean data property for a dish called \textit{hasGlutenFreeOption}. Then a tick-box can be used to enter the information while creating a dish.
 
 % Local Variables:
 % mode: latex
