@@ -5,7 +5,7 @@ This chapter begins by outlining the requirements of the system that I built for
 \section{Requirements}
 \label{section:SystemRequirements}
 
-To critique the system, I have come up with a list of functional and non-functional requirements that the system should comply to. These are broken down into those which are compulsory, and those which would be good to include if time permits.
+To critique the system, I have come up with a list of functional and non-functional requirements that the system should comply with. These are broken down into those which are compulsory, and those which would be good to include if time permits.
 
 \subsection{Functional Requirements}
 \label{section:FunctionalRequirements}
@@ -14,11 +14,11 @@ Functional requirements for the system that are necessary to implement:
 
 \begin{itemize}
 \item The system needs to be able to store all dishes from the menu of a restaurant, along with the ingredients that make up that dish.
-\item The system should be able to produce a list of these dishes to the customer.
+\item The system should be able to produce a list of these dishes for the customer.
 \item The owner of a restaurant should be able to add to and manage the ingredients and dishes in the system.
 \item A customer needs to be able to query the system for dishes they desire.
-\item Therefore, the system should filter the dishes by various dietary requirements, such as diets, allergies and filter by calories.
-\item The system should have the option to hide calorie information to those who do not want to see it.
+\item Therefore, the system should filter the dishes by various dietary requirements, such as diets, allergies, and calories.
+\item The system should have the option to hide calorie information from those who do not want to see it.
 \end{itemize}
 
 Possible additions to the system:
@@ -80,7 +80,7 @@ The design for the system was to have the ontology in one file, and the two user
 
 \subsection{Ontology Design}
 
-My first ontology design was laid out as can be seen in Figure \ref{fig:init_ontology_design} and was based on the design in Figure \ref{fig:recipe_ontology_design}. It consisted of the following classes: \textbf{Dish}, \textbf{Component}, \textbf{Ingredient} and \textbf{Nutrient} with an object property \textit{hasX} to link them in that order. A \textbf{Dish} contains \textbf{Components}, which contains \textbf{Ingredients} which contains \textbf{Nutrients}. Then there are \textbf{Customers}, who \textit{canEat} a \textbf{Dish}. \textbf{Ingredient} has subclasses to categorise different food types: \textbf{CarbohydrateIngredient}, \textbf{DairyIngredient}, \textbf{FatIngredient}, \textbf{MeatIngredient}, \textbf{VegetableIngredient} and \textbf{OtherIngredient}. Calorie information is stored on an ingredient level, with a data property \textit{hasCalories}. \textbf{VegetarianDish} will be a subclass of \textbf{Dish} that will also be a defined class. It will be defined by \textit{ ``Dish and not(hasPart some MeatIngredient)''}. Similarly, \textbf{VeganDish} will be a defined class defined by \textit{ ``Dish and not((hasPart some MeatIngredient) or (hasPart some DairyIngredient) )''}.
+My first ontology design was laid out as can be seen in Figure \ref{fig:init_ontology_design} and was based on the design in Figure \ref{fig:recipe_ontology_design}. It consisted of the following classes: \textbf{Dish}, \textbf{Component}, \textbf{Ingredient} and \textbf{Nutrient} with object properties to link them in that order. A \textbf{Dish} contains \textbf{Components}, which contain \textbf{Ingredients}, which contain \textbf{Nutrients}. Then there are \textbf{Customers}, who \textit{canEat} a \textbf{Dish}. \textbf{Ingredient} has subclasses to categorise different food types: \textbf{CarbohydrateIngredient}, \textbf{DairyIngredient}, \textbf{FatIngredient}, \textbf{MeatIngredient}, \textbf{VegetableIngredient} and \textbf{OtherIngredient}. Calorie information is stored on an ingredient level, with a data property \textit{hasCalories}. \textbf{VegetarianDish} is a subclass of \textbf{Dish} and also a defined class. It is defined by \textit{ ``Dish and not(hasPart some MeatIngredient)''}. Similarly, \textbf{VeganDish} is a defined class defined by \textit{ ``Dish and not((hasPart some MeatIngredient) or (hasPart some DairyIngredient) )''}.
 
 \begin{figure}[h]
     \centering
@@ -112,15 +112,15 @@ I did not plan to use enumerations or instances in my ontology. I chose not to u
 
 \subsection{Restaurant UI Design}
 
-The user interfaces were designed to be simple but effective. They needed to contain all the functionality required of the system but no more. Where the concept of ontologies can be difficult to grasp, the user should not be put at any higher risk of being confused. On top of this, I aimed to follow \textit{The Eight Golden Rules of Interface Design} \cite{shneiderman}. Specifically, I wanted to make sure that the UI was consistent, gave informative feedback, allowed the easy reversal of actions, reduced the short-term memory load and let the user feel in control of the system. These five points were more applicable to this system, so I chose to make them a part of the success criteria.
+The user interfaces were designed to be simple but effective. They needed to contain all the functionality required of the system but no more. Where the concept of ontologies can be difficult to grasp, the user should not be put at any higher risk of being confused. On top of this, I aimed to follow \textit{the eight golden rules of interface design} \cite{shneiderman}. Specifically, I wanted to make sure that the UI was consistent, gave informative feedback, allowed the easy reversal of actions, reduced the short-term memory load and let the user feel in control of the system. These five points were more applicable to this system, so I chose to make them a part of the success criteria.
 
-To conform to the \textit{Golden Rules}, I set out to make sure to keep the appearance and terminology consistent throughout the system. Moreover, I designed back buttons on all pages to make navigation easy, and planned to display information boxes when changes are made to the ontology, such as when an entity is added or removed. Furthermore, I intended to make sure that the system behaves as expected and all actions and buttons are labelled correctly. Finally, I aimed to design the system in a way that meant that all necessary information was displayed on the screen, so that a user would not have to remember too much information.
+To conform to the \textit{Golden Rules}, I set out to make sure to keep the appearance and terminology consistent throughout the system. Moreover, I designed back buttons on all pages to make navigation easy, and planned to display information boxes when changes are made to the ontology, such as when an entity is added or removed. Furthermore, I intended to make sure that the system behaves as expected and that all actions and buttons are labelled correctly. Finally, I aimed to design the system in a way that meant that all necessary information was displayed on the screen so that a user would not have to remember too much information.
 
 \begin{figure}[h]
     \centering
     \captionsetup{justification=centering}
     \includegraphics[width=0.50\textwidth]{images/RestaurantUIArchitecture.jpg}
-    \caption{Overall Restaurant UI architecture}
+    \caption{Overall Restaurant UI Architecture}
     \label{fig:restaurantUI_architecture}
 \end{figure}
 
@@ -138,7 +138,7 @@ Upon entry to the system, the restaurant owner is shown the Main Menu Page. It c
 
 Each Add Page design contains a set of components to gather the necessary information about whatever is being added to the ontology. For example, the Add Ingredient Page design contains a text field - to enter the name of the ingredient, a drop-down box to select the type of ingredient that it is (Meat, Vegetable etc.) and a list to select all the allergies contained. There is also an input for the number of calories in the ingredient. The design for the Add Ingredient Page can be seen in Figure \ref{fig:restaurantUI_add_page_design}.
 
-Conversely, the design for a Remove Page contains a drop down list of all the ingredients or components or dishes etc. for the user to pick one to delete.
+Conversely, the design for a Remove Page contains a drop-down list of all the ingredients or components or dishes etc. for the user to pick one to delete.
 
 \begin{figure}[h]
     \centering
@@ -148,25 +148,25 @@ Conversely, the design for a Remove Page contains a drop down list of all the in
     \label{fig:restaurantUI_query_page_design}
 \end{figure}
 
-The design of the Search Dish Page (see Figure \ref{fig:restaurantUI_query_page_design}) is be split into two halves. The left hand side contains a list of results. The right hand side contains the filter menu, split into diets, calories and allergens. Once the user inputs their preferences, the ``Search'' button refreshes the list of results.
+The design of the Search Dish Page (see Figure \ref{fig:restaurantUI_query_page_design}) is split into two halves. The left-hand side contains a list of results. The right-hand side contains the filter menu, split into diets, calories and allergens. Once the user inputs their preferences, the ``Search'' button refreshes the list of results.
 
 \subsection{Customer UI Design}
 
-The Customer UI design needed to be simple; the customer needs to be able to make a decision on what they want to order quickly, and therefore this system needs to be straight forward. The architecture of the Customer UI can be seen in Figure \ref{fig:customerUI_architecture}. It only consists of five pages, the Main Page, the Settings Page, the Search Page, the View Dish Page and the Extras Page.
+The Customer UI design needed to be simple; the customer needs to be able to make a decision on what they want to order quickly, and therefore this system needs to be straightforward. The architecture of the Customer UI can be seen in Figure \ref{fig:customerUI_architecture}. It only consists of five pages, the Main Page, the Settings Page, the Search Page, the View Dish Page and the Extras Page.
 
 \begin{figure}[h]
     \centering
     \captionsetup{justification=centering}
     \includegraphics[width=0.50\textwidth]{images/CustomerUIArchitecture.jpg}
-    \caption{Overall Customer UI architecture}
+    \caption{Overall Customer UI Architecture}
     \label{fig:customerUI_architecture}
 \end{figure}
 
-The design starts at the Main Page, where the user is directed upon opening the application. From here, they can navigate to the Settings Page, or the Search Page. 
+The design starts at the Main Page, where the user is directed upon opening the application. From here, they can navigate to the Settings Page or the Search Page. 
 
 The Settings Page design consists of one checkbox option, whether the user wants to see calorie information or not.
 
-The Search Page design (see Figure \ref{fig:restaurantUI_query_page_design}) will look the same as it does in the Restaurant UI, where the user can filter for dishes based on requirements. However, each result will also be linked to a Dish View Page for that dish.
+The Search Page design (see Figure \ref{fig:restaurantUI_query_page_design}) looks the same as it does in the Restaurant UI, where the user can filter for dishes based on requirements. However, each result is also linked to a Dish View Page for that dish.
 
 The Dish View Page design contains all the information about a single dish. It presents a list of ingredients in the dish, as well as the allergen, dietary and calorific data for that specific dish. It also contains a button to navigate to the Extras Page for that dish.
 
@@ -178,31 +178,31 @@ The Dish View Page design contains all the information about a single dish. It p
     \label{fig:customerUI_extras_design}
 \end{figure}
 
-The Extras Page for a dish is where a customer can modify the dish, by adding or removing ingredients, and calculate new dietary information. The design for this page (see Figure \ref{fig:customerUI_extras_design}) is split into two sides. The left hand side contains the dietary data. The right hand side contains two lists, the top one for removing ingredients that are currently in the dish. The bottom list is for selecting which ingredients should be added to the dish. The calculate button updates the data on the left hand side.
+The Extras Page for a dish is where a customer can modify the dish, by adding or removing ingredients, and calculate new dietary information. The design for this page (see Figure \ref{fig:customerUI_extras_design}) is split into two sides. The left-hand side contains the dietary data. The right-hand side contains two lists, the top one for removing ingredients that are currently in the dish. The bottom list is for selecting which ingredients should be added to the dish. The calculate button updates the data on the left-hand side.
 
 \subsection{Menu}
 
-I chose to use the Honest Burgers \cite{honest_burgers_2023} menu to fill my ontology with information for multiple reasons. First, the online menu contains a full list of ingredients for each dish. Second, it also provides lots of information about what allergens are contained in each dish, and whether they are suitable for vegans, vegetarians and whether the dish is Halal. Finally, they have also published the calorie information for their dishes \cite{honest_burgers_nutritional_2022}, which would help me calculate calories for their ingredients.
+I chose to use the Honest Burgers \cite{honest_burgers_2023} menu to fill my ontology with information for multiple reasons. First, the online menu contains a full list of ingredients for each dish. Second, it also provides lots of information about what allergens are contained in each dish, whether they are suitable for vegans and vegetarians, and whether the dish is Halal. Finally, they have also published the calorie information for their dishes \cite{honest_burgers_nutritional_2022}, which would help me calculate calories for their ingredients.
 
 \section{Evaluation Plan}
 
-To test and evaluate the ontology system, I planned to conduct two user studies, where I would ask participants to carry out certain tasks using the system, such as adding or removing a dish from the ontology, and searching for dishes with certain parameters. These tasks cover each aspect of the functional requirements of the system to completely evaluate how successfully the system meets the criteria. I would then ask questions to assess how successful the system was at meeting all requirements. An example question is asking the user how fast they found the system to respond to their actions. Responses for these kind of questions were recorded using a Likert scale.
+To test and evaluate the ontology system, I planned to conduct two user studies, where I would ask participants to carry out certain tasks using the system, such as adding or removing a dish from the ontology and searching for dishes with certain parameters. These tasks cover each aspect of the functional requirements of the system to completely evaluate how successfully the system meets the criteria. I would then ask questions to assess how successful the system was at meeting all requirements. An example question is asking the user how fast they found the system to respond to their actions. Responses to this kind of question were recorded using a Likert scale.
 
-I planned the evaluation to be carried out in two studies. The first study (Study 1) would be carried out during development, so I could gauge what improvements still needed to be made to the system. This was important as I would be able to identify whether I was on the right track with the project, and gain feedback on what does and does not work. Then, I would carry out a second user study (Study 2) after development on the system has finished to see how well the system fits the requirements set out. Ideally, I would carry out a series of continuous feedback sessions - where users can repeatedly give feedback on the system for me to improve. However, given the time constraints of the project, I did not expect this to be possible.
+I planned the evaluation to be carried out in two studies. The first study (Study 1) would be carried out during development, so I could gauge what improvements still needed to be made to the system. This was important as I would be able to identify whether I was on the right track with the project and gain feedback on what does and does not work. Then, I would carry out a second user study (Study 2) after development on the system has finished, testing how well the system fits the requirements set out. Ideally, I would carry out a series of continuous feedback sessions - where users can repeatedly give feedback on the system for me to improve. However, given the time constraints of the project, I did not expect this to be possible.
 
-Each user study would be split into two smaller studies, one of the user interface for the customer, and one of the user interface for the restaurant owner. The participants would be split into two groups and requested to act the role of either a customer or restaurant owner. Each study would be tailored towards what those two roles should be able to achieve from their separate interfaces. For example, the participants who play the role of a customer would be asked to conduct searches for many different dietary requirements. On the other hand, the participants playing the restaurant owner would be asked to add new dishes to the ontology and remove others. I particularly wanted the test whether, given a dish and a list of ingredients it contains, a participant was able to create the dish in the ontology by making their own components with no guidance. See Appendix \ref{app:study1} for the full list of tasks and questions in Study 1, and Appendix \ref{app:study2} for Study 2.
+Each user study would be split into two smaller studies, one of the user interface for the customer, and one of the user interface for the restaurant owner. The participants would be split into two groups and requested to act in the role of either a customer or restaurant owner. Each study would be tailored towards what those two roles should be able to achieve from their separate interfaces. For example, the participants who play the role of a customer would be asked to conduct searches for many different dietary requirements. On the other hand, the participants playing the restaurant owner would be asked to add new dishes to the ontology and remove others. I particularly wanted the test whether, given a dish and a list of ingredients it contains, a participant was able to create the dish in the ontology by making their own components with no guidance. See Appendix \ref{app:study1} for the full list of tasks and questions in Study 1, and Appendix \ref{app:study2} for Study 2.
 
-The participants taking the customer study would not be given any instruction on how to use the system, as real customers would not and should not require training to use the system. However, the owner of the restaurant would be told how the system works before the Study 1, but not before the Study 2. This is because in the real world, they would only receive training when initially learning the system, and should not need to relearn every time they want to use the system. Since a restaurant does not usually change it's menu that often, they would not be using the system frequently.
+The participants taking the customer study would not be given any instruction on how to use the system, as real customers would not and should not require training to use the system. However, the owner of the restaurant would be told how the system works before Study 1, but not before Study 2. This is because, in the real world, they would only receive training when initially learning the system, and should not need to relearn every time they want to use the system. Since a restaurant does not usually change its menu that often, the owner would not be using the system frequently.
 
-It is important that the participants of the study are comfortable and give an honest review of the system. To do this, I aim to avoid putting them under any pressures. I would not place them under any time constraints to complete the tasks, and make sure that when I propose the study to them that the time estimation is accurate. It is also important that the participant does not feel any pressure to falsely speak well of the system when it is in fact failing. To do this, before the study I would make it clear to the participants that they are not being judged based on whether they were able to complete the tasks, and that the results are solely a reflection on how well the system is built and not their abilities. I would also make sure they knew that I wanted to hear about all problems as I want to know how to improve the system.
+It is important that the participants of the study are comfortable and give an honest review of the system. To do this, I aim to avoid putting them under any pressure. I would not place them under any time constraints to complete the tasks, and make sure that when I propose the study to them that the time estimation is accurate. It is also important that the participant does not feel any pressure to falsely speak well of the system when it is in fact failing. To do this, before the study, I would make it clear to the participants that they are not being judged based on whether they were able to complete the tasks, and that the results are solely a reflection of how well the system is built and not their abilities. I would also make sure they knew that I wanted to hear about all problems as I want to know how to improve the system.
 
-I chose to have 3 participants per role for my study, as I found in Study 1 (see Section \ref{section:Study1Results}) that this number was the most appropriate. The big issues that I expected were brought up by all participants, and everything else was small or personal preferences that were low priority issues to fix.
+I chose to have 3 participants per role for my study, as I found in Study 1 (see Section \ref{section:Study1Results}) that this number was the most appropriate. The big issues that I expected were brought up by all participants, and everything else was small or personal preferences that were low-priority issues to fix.
 
 \subsection{Ethics}
 
-I aimed to carry out the studies out in an ethical way by following the university ethical guidance \cite{staffnet_2016}. All participants are over 18 and able to fully consent to taking part. No participant is coerced into completing the study, and they are free to withdraw at any point. No personal information is stored about them, or any information that can be used to identify them. The only information that is collected is whether they were able to complete all the tasks, and the feedback they give, which is both qualitative and quantitative.
+I aimed to carry out the studies in an ethical way by following The University of Manchester's ethical guidance \cite{staffnet_2016}. All participants are over 18 and able to fully consent to take part. No participant is coerced into completing the study, and they are free to withdraw at any point. No personal information is stored about them, or any information that can be used to identify them. The only information that is collected is whether they were able to complete all the tasks, and the feedback they give, which is both qualitative and quantitative.
 
-On top of this, no harm is inflicted on the participants, and I make it clear how I am use the information I collect. 
+On top of this, no harm is inflicted on the participants, and I make it clear how I use the information that I collect. 
 
 % Local Variables:
 % mode: latex
